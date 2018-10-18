@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassScheduleCourseMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassScheduleCourse">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_schedule_id" jdbcType="INTEGER" property="classScheduleId" />
+    <result column="chapter_id" jdbcType="INTEGER" property="chapterId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="class_date" jdbcType="DATE" property="classDate" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="class_order" jdbcType="INTEGER" property="classOrder" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="live_room_id" jdbcType="VARCHAR" property="liveRoomId" />
+    <result column="video_id" jdbcType="VARCHAR" property="videoId" />
+    <result column="video_date" jdbcType="DATE" property="videoDate" />
+    <result column="video_status" jdbcType="INTEGER" property="videoStatus" />
+    <result column="ppt_url" jdbcType="VARCHAR" property="pptUrl" />
+    <result column="ppt_date" jdbcType="DATE" property="pptDate" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="teacher_userId" jdbcType="INTEGER" property="teacherUserid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="video_back_url" jdbcType="VARCHAR" property="videoBackUrl" />
+    <result column="mt_id" jdbcType="VARCHAR" property="mtId" />
+    <result column="mt_video_id" jdbcType="VARCHAR" property="mtVideoId" />
+    <result column="authority_user_id" jdbcType="INTEGER" property="authorityUserId" />
+    <result column="operator_company" jdbcType="INTEGER" property="operatorCompany" />
+    <result column="cc_room_id" jdbcType="VARCHAR" property="ccRoomId" />
+    <result column="publisher_pass" jdbcType="VARCHAR" property="publisherPass" />
+    <result column="play_pass" jdbcType="VARCHAR" property="playPass" />
+    <result column="lecture_id" javaType="INTEGER" property="lectureId" />
+  </resultMap>
+</mapper>

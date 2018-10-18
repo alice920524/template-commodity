@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.PayDiscountDetailMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.PayDiscountDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="discount_id" jdbcType="INTEGER" property="discountId" />
+    <result column="discount_code" jdbcType="VARCHAR" property="discountCode" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="discount" jdbcType="VARCHAR" property="discount" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="use_condition" jdbcType="VARCHAR" property="useCondition" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="used_date" jdbcType="TIMESTAMP" property="usedDate" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="commod_id" jdbcType="INTEGER" property="commodId" />
+    <result column="discount_type" jdbcType="VARCHAR" property="discountType" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="user_visible" jdbcType="INTEGER" property="userVisible" />
+    <result column="course_type" jdbcType="INTEGER" property="courseType" />
+  </resultMap>
+
+  <select id="selectDiscountList" resultType="com.duia.commodity.common.dto.DiscountDTO">
+    SELECT
+      pdd.id AS discountDetailId,
+      pdd.discount_code AS code,
+      pdd.discount AS price,
+      pdd.discount_type AS type,
+      pdd.start_date AS startDate,
+      pdd.end_date AS endDate,
+      pdd.create_date AS createDate,
+      pdd.sku_id AS skuId,
+      pdd.commod_id AS comId,
+      pdd.sku_name AS skuName,
+      pdd.course_type AS courseType
+    FROM
+    pay_discount_detail pdd
+    INNER JOIN
+    back_app_type_sku bats
+    ON bats.sku = pdd.sku_id
+    WHERE
+    bats.app_type = #{appType}
+    AND
+    pdd.user_id = #{userId}
+    AND
+    pdd.user_visible = 1
+    AND
+    pdd.`status`=0
+    AND
+    pdd.start_date &lt;= NOW()
+    AND
+    pdd.end_date &gt;= DATE_FORMAT(NOW(),'%Y-%m-%d')
+    AND
+    pdd.discount_type = 'pt'
+    ORDER BY pdd.create_date DESC,pdd.id ASC
+  </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.VoucherDetailMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.VoucherDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="use_order_id" jdbcType="INTEGER" property="useOrderId" />
+    <result column="voucher_id" jdbcType="INTEGER" property="voucherId" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <select id="selectYHTQDiscountList" resultType="com.duia.commodity.common.dto.DiscountDTO">
+    SELECT
+    vd.price,
+    'yhtq' AS type,
+    vd.start_date AS startDate,
+    vd.end_date AS endDate,
+    vd.create_time AS createDate,
+    vd.sku AS skuId,
+    sd.dic_name AS skuName
+    FROM
+    voucher_detail vd
+    INNER JOIN
+    back_app_type_sku bats
+    ON bats.sku = vd.sku
+    LEFT JOIN
+    sys_dict sd
+    ON sd.dic_code = vd.sku AND sd.dic_type = 'item'
+    WHERE
+    bats.app_type = #{appType}
+    AND
+    vd.user_id = #{userId}
+    AND
+    vd.`status`=0
+    AND
+	vd.deleted = 0
+    AND
+    vd.end_date &gt;= NOW()
+    ORDER BY vd.create_time DESC
+  </select>
+</mapper>

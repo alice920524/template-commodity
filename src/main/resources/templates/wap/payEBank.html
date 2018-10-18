@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>Title</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/rest.css" th:href="@{${staticDomain}+'/style/wap/common/css/rest.css'}"/>
+    <link href="//test2.duia.com:8080/resources/wap/payEBank/css/wap_new.css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/common/css/wap_new.css'}"/>
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/util.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/util.js'}"></script>
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/jquery-1.9.1.min.js" th:src="@{${staticDomain} +'/js/wap/common/js/jquery-1.9.1.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/pccs.js" th:src="@{${staticDomain} +'/js/wap/common/js/pccs.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="//test2.duia.com:8080/dist/js/wap/payEBank/payEBank.js" th:src="@{${staticDomain} +'/js/wap/payEBank/payEBank.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+    <script th:inline="javascript">
+        var staticBasePath=[[${staticDomain}]];
+    </script>
+</head>
+<body>
+<div class="wap-loginWrap" id="second" style="position: absolute;height: 100%;left:0;">
+    <div class="bank-return">
+        网上银行支付
+        <div class="bank-rebut" onclick="window.history.back();"><img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-prev.png" width="10" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-prev.png'}"/><span>返回</span></div>
+    </div>
+    <ul class="sh-m4-con wy-new" id="short-bank">
+        <li class=" clearfix" data="pay_type_sxy_3" data-banktype="1001">
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-pic3.png" width="70" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-pic3.png'}"/>
+
+            <div class="sh-m4-text">
+                <p class="sh-m4-zf">招商银行</p>
+
+                <p>CHINA MERCHANTS BANK</p>
+            </div>
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-next.png" class="sh-m4-xz" width="20" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-next.png'}"/>
+        </li>
+        <!--<li class=" clearfix" data="pay_type_sxy_9" data-banktype="1002">-->
+            <!--<img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-pic4.png" width="70" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-pic4.png'}"/>-->
+
+            <!--<div class="sh-m4-text">-->
+                <!--<p class="sh-m4-zf">中国工商银行</p>-->
+
+                <!--<p>INDUSTRIAL & COMMERCIAL BANK OF CHINA</p>-->
+            <!--</div>-->
+            <!--<img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-next.png" class="sh-m4-xz" width="20" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-next.png'}"/>-->
+        <!--</li>-->
+        <li class=" clearfix" data="pay_type_sxy_4" data-banktype="1003">
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-pic5.png" width="70" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-pic5.png'}"/>
+
+            <div class="sh-m4-text">
+                <p class="sh-m4-zf">中国建设银行</p>
+
+                <p>CHINA COMSTRUCTION BANK</p>
+            </div>
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-next.png" class="sh-m4-xz" width="20" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-next.png'}"/>
+        </li>
+        <li class=" clearfix" data="pay_type_sxy_33" data-banktype="1009">
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-pic8.png" width="70" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-pic8.png'}"/>
+
+            <div class="sh-m4-text">
+                <p class="sh-m4-zf">兴业银行</p>
+
+                <p>INDUSTRIAL BANK CO.，LTD.</p>
+            </div>
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-next.png" class="sh-m4-xz" width="20" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-next.png'}"/>
+        </li>
+        <li class=" clearfix" data="pay_type_sxy_69" data-banktype="1004">
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-pic17.png" width="70" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-pic17.png'}"/>
+
+            <div class="sh-m4-text">
+                <p class="sh-m4-zf">上海浦东发展银行</p>
+
+                <p>SHANGHAI PUDONG DEVELOPMENT BANK</p>
+            </div>
+            <img src="//test2.duia.com:8080/resources/wap/payEBank/images/bank-next.png" class="sh-m4-xz" width="20" th:src="@{${staticDomain}+'/image/wap/payEBank/images/bank-next.png'}"/>
+        </li>
+
+    </ul>
+</div>
+<input type="hidden" th:value="${payDomain}" id="payBasePath">
+</body>
+</html>

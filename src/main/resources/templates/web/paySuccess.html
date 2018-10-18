@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>成功</title>
+    <link rel="icon" th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/web/payOrder/css/paySucDefea.css?v='+${staticVersion}}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/resources/web/payOrder/css/paySucDefea.css" />-->
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <script th:inline="javascript">
+     var duiaBasePath=[[${duiaDomain}]];
+ </script>
+</head>
+<body>
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+
+<div class="pay-sussess">
+    <div class="pay-main-one">
+        <i></i>支付成功!
+    </div>
+    <div class="pay-main-two">
+        <div class="pay-main-tit">
+             <p>订单金额：<span th:text="${#numbers.formatDecimal(price,1,1)+'元'}">2980元</span></p>
+             <a th:href="${ucDomain}+'/'" th:if="${paid}">进入我的班级</a>
+             <a th:href="'/order/batch'+'?payNum='+${payNum}" th:if="${paid==false && payType != 'pay_type_umoney' && payType !=  'pay_type_coffee'}">继续支付</a>
+            <!--<span>请留意你的QQ，老师会添加你好友。</span>-->
+        </div>
+        <div class="pay-stu-message">
+            <div class="pay-reap ov" th:if="${address!=null}">
+                <label class="pay-label">收货信息：</label>
+                <div class="pay-text">
+                    <p th:text="${address.addressee}">猪小贱</p>
+                    <p th:text="${address.mobile}">18201337036</p>
+                    <p th:text="${address.province}">北京</p>
+                    <p th:text="${address.city}">北京市</p>
+                    <p th:text="${address.county}">丰台区</p>
+                    <p th:text="${address.detailAddress}" >马家堡嘉园5里18号楼890</p>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <label class="pay-label" >商品名称：</label>
+                    <div class="pay-text" th:text="${name}">12313</div>
+                </li>
+                <li>
+                    <label class="pay-label">支付时间：</label>
+                    <div class="pay-text" th:text="${payTime}">12313</div>
+                </li>
+                <li>
+                    <label class="pay-label">订单编号：</label>
+                    <div class="pay-text" th:text="${payNum}">12313</div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<input type="hidden" th:value="${payNum}" id="payNumId">
+<input type="hidden" id="userId" th:value="${session.user.id}">
+<input type="hidden" id="classId" th:value="${classId}">
+
+<div class="alert_mask">
+    <div id="alert_remove">
+        <div class="closed_alert" ></div>
+        <p class="alert_text">感谢同学购买对啊网课程，立即联系课程管家进行服务指南吧</p>
+        <div class="btn_box">
+            <p class="alert_yes zhiCustomBtn">好的</p>
+            <p class="alert_no">取消</p>
+        </div>
+    </div>
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<script src="//www.sobot.com/chat/frame/js/entrance.js?sysNum=16f9b0d146ee4031878f7b8f4646e6a0" class="zhiCustomBtn" id="zhichiScript" data-args="manual=true"></script>
+
+<script src="//common.duia.com/common/js/jquery-1.9.1.js"  type="text/javascript" charset="utf-8" ></script>
+<script th:src="@{ ${staticDomain}+'/js/web/payOrder/js/paySuccess.js?v='+${staticVersion}}" type="text/javascript"></script>
+<!--<script src="//test2.duia.com:8080/resources/web/payOrder/js/paySuccess.js"></script>-->
+</body>
+</html>

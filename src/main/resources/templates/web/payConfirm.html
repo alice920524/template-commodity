@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+    <title>确认订单</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="http://test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+   <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payConfirm.css" th:href="@{${staticDomain}+'/style/web/payOrder/css/payConfirm.css?v='+${staticVersion}}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/resources/web/payOrder/css/payConfirm.css"/>-->
+    <script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js?v=13843031043210431'}" type="text/javascript" charset="utf-8"></script>
+    <script src="//test2.duia.com:8080/dist/js/web/common/js/template.js"
+            th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript"
+            charset="utf-8"></script>
+    <script th:inline="javascript">
+        var _staticBasePath = [[${staticDomain}]];
+        var imageBasePath = [[${tuDomain}]];
+        var itemDomain = [[${itemDomain}]];
+        var _ucenterPath = [[${ucDomain}]];
+    </script>
+</head>
+<body>
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon" data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+                <p>确认订单信息</p>
+            </div>
+            <div class="pay-jd">
+                <span class="pay-num"></span>
+            </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="payCon-wap">
+        <p class="payCon-tit">课程信息</p>
+
+        <div class="payCon-con" id="payCon-con-data">
+            <script id="payCon-con-template" type="text/html">
+            {{if type==0}}
+            <table border="0" cellspacing="0" cellpadding="0" data-hasstudypack="{{commodity.hasStudyPack}}">
+                <tbody>
+                <tr>
+                    <td style="border-right:solid 1px #ddd;width:908px;">
+                        <div style="display: flex;display: -webkit-flex;">
+                            <em class="payCon-con-pic">
+                                <a target="_blank" th:href="${itemDomain}+'/c/{{commodity.comId}}.html?appType=999'"><img th:src="@{${tuDomain}+'/{{commodity.webImg}}'}" /></a>
+                                {{if commodity.courseType == 1}}
+                                <span class="sing_picZtkimg"></span>
+                                {{else}}
+                                <span class="sing_picXtbimg"></span>
+                                {{/if}}
+                            </em>
+                            <p class="payCon-con-name" data-id="{{commodity.comId}}">
+                                <em>
+                                    <a target="_blank" th:href="${itemDomain}+'/c/{{commodity.comId}}.html?appType=999'">{{commodity.name}}</a>
+                                </em>
+                                <span data-id="{{commodity.classTypeId}}">
+                                    {{if commodity.agreements.indexOf(0) > -1}}
+                                    <a class="studyBox" booktype="{{commodity.bookTypeChecked}}">书
+                                        {{if commodity.bookType == 0}}
+                                            <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                        {{else if commodity.bookType == 1}}
+                                            {{if commodity.bookTypeChecked == 1 || commodity.bookTypeChecked == 0}}
+                                            <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                            {{else if commodity.bookTypeChecked == 2}}
+                                            <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                            {{/if}}
+                                        {{/if}}
+                                        <!--<cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>-->
+                                    </a>
+                                    {{/if}}
+                                    {{if commodity.agreements.indexOf(6) > -1}}
+                                    <a class="priceBao" data-type="6">价</a>
+                                    {{/if}}
+                                    {{if commodity.agreements.indexOf(1) > -1 && commodity.insurance != null}}
+                                    <a class="InsuranceIcon" data-id="{{commodity.insurance.id}}" data-type="1">保</a>
+                                    {{else if commodity.agreements.indexOf(2) > -1}}
+                                    <a class="agree" data-type="2">议</a>
+                                    {{/if}}
+                                </span>
+                            </p>
+                        </div>
+                    </td>
+                    <td style="width:172px;text-align:center;"><em class="payCon-con-money">¥&nbsp;{{commodity.costPrice}}</em></td>
+                </tr>
+                </tbody>
+            </table>
+            {{else}}
+            <table border="0" cellspacing="0" cellpadding="0" data-hasstudypack="{{commoditySpecial.hasStudyPack}}">
+                <tbody>
+                <tr class="tit">
+                    <th class="combName" data-id="{{commoditySpecial.id}}" style="width:768px;">{{commoditySpecial.name}}</th>
+                    <th style="width:129px;"></th>
+                    <th style="width:183px;"></th>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="display: flex;display: -webkit-flex;">
+                        <em class="payCon-con-pic">
+                            <a target="_blank" th:href="${itemDomain}+'/c/{{commoditySpecial.comList[0].comId}}.html?appType=999'"><img th:src="@{${tuDomain}+'/{{commoditySpecial.comList[0].webImg}}'}" /></a>
+                            {{if commoditySpecial.comList[0].courseType == 1}}
+                            <span class="sing_picZtkimg"></span>
+                            {{else}}
+                            <span class="sing_picXtbimg"></span>
+                            {{/if}}
+                        </em>
+                        <p class="payCon-con-name" data-id="{{commoditySpecial.comList[0].comId}}">
+                            <em><a target="_blank" th:href="${itemDomain}+'/c/{{commoditySpecial.comList[0].comId}}.html?appType=999'">{{commoditySpecial.comList[0].name}}</a></em>
+                            <span data-id="{{commoditySpecial.comList[0].classTypeId}}">
+                                {{if commoditySpecial.comList[0].agreements.indexOf(0) > -1}}
+                                <a class="studyBox" booktype="{{commoditySpecial.comList[0].bookTypeChecked}}">书
+                                    <!--<cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>-->
+                                    {{if commoditySpecial.comList[0].bookType == 0}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                    {{else if commoditySpecial.comList[0].bookType == 1}}
+                                        {{if commoditySpecial.comList[0].bookTypeChecked == 1 || commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                        {{else if commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                        {{/if}}
+                                    {{/if}}
+                                </a>
+                                {{/if}}
+                                {{if commoditySpecial.comList[0].agreements.indexOf(6) > -1}}
+                                <a class="priceBao" data-type="6">价</a>
+                                {{/if}}
+                                {{if commoditySpecial.comList[0].agreements.indexOf(1) > -1 && commoditySpecial.comList[0].insurance != null}}
+                                <a class="InsuranceIcon" data-id="{{commoditySpecial.comList[0].insurance.id}}" data-type="1">保</a>
+                                {{else if commoditySpecial.comList[0].agreements.indexOf(2) > -1}}
+                                <a class="agree" data-type="2">议</a>
+                                {{/if}}
+                            </span>
+                        </p>
+                        </div>
+                    </td>
+                    <td><span>原价：</span>¥&nbsp;{{commoditySpecial.comList[0].costPrice}}</td>
+                    <td rowspan="{{commoditySpecial.comList.length}}">优惠价：<em class="payCon-con-money">¥&nbsp;{{commoditySpecial.costPrice}}</em></td>
+                </tr>
+                {{each commoditySpecial.comList as value index}}
+                {{if index > 0}}
+                <tr class="packCom">
+                    <td>
+                        <div style="display: flex;display: -webkit-flex;">
+                        <em class="payCon-con-pic">
+                            <a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999'"><img th:src="@{${tuDomain}+'/{{value.webImg}}'}" /></a>
+                            {{if value.courseType == 1}}
+                            <span class="sing_picZtkimg"></span>
+                            {{else}}
+                            <span class="sing_picXtbimg"></span>
+                            {{/if}}
+                        </em>
+                        <p class="payCon-con-name" data-id="{{value.comId}}">
+                            <em><a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999'">{{value.name}}</a></em>
+                            <span data-id="{{value.classTypeId}}">
+                                {{if value.agreements.indexOf(0) > -1}}
+                                <a class="studyBox" booktype="{{value.bookTypeChecked}}">书
+                                    {{if value.bookType == 0}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                    {{else if value.bookType == 1}}
+                                        {{if value.bookTypeChecked == 1 || value.bookTypeChecked == 0}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                        {{else if value.bookTypeChecked == 2}}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                        {{/if}}
+                                    {{/if}}
+                                </a>
+                                {{/if}}
+                                {{if value.agreements.indexOf(6) > -1}}
+                                <a class="priceBao" data-type="6">价</a>
+                                {{/if}}
+                                {{if value.agreements.indexOf(1) > -1 && value.insurance != null}}
+                                <a class="InsuranceIcon" data-id="{{value.insurance.id}}" data-type="1">保</a>
+                                {{else if value.agreements.indexOf(2) > -1}}
+                                <a class="agree" data-type="2">议</a>
+                                {{/if}}
+                            </span>
+                        </p>
+                        </div>
+                    </td>
+                    <td><span>原价：</span>¥&nbsp;{{value.costPrice}}</td>
+                </tr>
+                {{/if}}
+                {{/each}}
+                </tbody>
+            </table>
+            {{/if}}
+            </script>
+        </div>
+
+    </div>
+    <div class="payCon-wap info" style="display:none;">
+        <div id="study">
+            <script id="address-template" type="text/html">
+            <p class="payCon-tit"><i>寄送地址</i></p>
+            <div class="kong" style="display:none;">
+                <div style="clear: left"><span><i></i>添加地址</span></div>
+                <p class="o-tip">* 请填写寄送地址</p>
+            </div>
+            <div class="comShow" style="cursor: pointer;display:none;" id="studyShow">
+                <div class="address">
+                    <div class="name"><label>收件人：</label><p class="studyName"></p></div>
+                    <div class="tel"><label>手机号：</label><p class="studyTel"></p></div>
+                </div>
+                <div class="addr"><label>地&emsp;址：</label>
+                    <p style="width: 600px;">
+                        <span class="addr1"></span><span class="addr2"></span><span class="addr3"></span><span class="addr4"></span>
+                    </p>
+                </div>
+                <a href="javascript:void(0)" class="mes-mod">修改</a>
+                <div style="clear: both;"></div>
+            </div>
+            </script>
+        </div>
+    </div>
+    <div class="payCon-wap you">
+        <div class="payConinput">
+            <p class="payCon-tit">优惠券</p>
+            <div>
+                <div><input type="text" id="comVal"/></div>
+                <a class="use">使用</a>
+                <a class="cancel">取消</a>
+                <div class="tip" id="tip"></div>
+            </div>
+        </div>
+
+        <!-- 优惠券 -->
+        <div class="couponBox">
+            <ul class="couponOption">
+                <li class="on">可使用优惠券（<span></span>）</li>
+                <li>不可使用优惠券（<span></span>）</li>
+            </ul>
+            <div class="couponSize"><!--couponUnavailable 不可用  couponPrivilege 特权  couponOrdinary 普通 couponOverdue 过期 couponUse 使用-->
+                <div class="couponPrev"></div>
+                <div class="couponNext"></div>
+
+                <div class="couponPage">
+                    <script id="couponBox-template" type="text/html">
+                    {{if data != ''}}
+                    {{each data.list as couponlist index}}
+
+                    <div class="couponStyle {{if index%4 == 3}}couponStyleRig{{/if}} {{if data.page == 1 && index < 1 && data.status == 1}}couponMoneyBig{{/if}} {{if couponlist.type == 'pt'}}couponSelectBack{{else if couponlist.type == 'yhtq'}}couponPrivilege{{/if}}">
+                        <div class="couponCon">
+                            <div class="couponMoney" data-code="{{couponlist.code}}">
+                                <em><i>¥</i><span class="couponPrice">{{couponlist.price}}</span></em>
+                                <p>（无门槛使用）</p>
+                                {{if data.status == 1}}
+                                <cite class="{{if data.page == 1 && index < 1}}couponSelect{{/if}}"></cite>
+                                {{/if}}
+                            </div>
+                            <div class="couponInfo">
+                                {{if couponlist.type == 'pt'}}
+                                <a>普通券</a>
+                                {{else if couponlist.type == 'yhtq'}}
+                                <a style="background-color:#FF8B1A">特权券</a>
+                                {{/if}}
+                                {{if couponlist.comName == ''}}
+                                {{if couponlist.courseType == 0}}
+                                <p>限购“{{couponlist.skuName}}”学科下系统班课程</p>
+                                {{else if couponlist.courseType == 1}}
+                                <p>限购“{{couponlist.skuName}}”学科下专题课课程</p>
+                                {{else if couponlist.courseType == -1}}
+                                <p>限购“{{couponlist.skuName}}”学科下全部课程</p>
+                                {{/if}}
+                                {{/if}}
+                                {{if couponlist.comName != ''}}
+                                <p>限购“{{couponlist.skuName}}”学科下“{{couponlist.comName}}”课程</p>
+                                {{/if}}
+                                <em>{{couponlist.startDate | dateFormat:'yyyy.MM.dd'}}-{{couponlist.endDate |　dateFormat:'yyyy.MM.dd'}}</em>
+                            </div>
+                        </div>
+                        {{if data.status == 2}}
+                        <div class="couponTips"></div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                    {{if data.list == ''}}
+                    <div class="couponEmpty">
+                        <img th:src="@{${staticDomain}+'/image/web/payOrder/img/nocoupon.png'}" />
+                        {{if data.status == 1}}
+                        <p>您暂时没有可用的优惠券哦~</p>
+                        {{/if}}
+                        {{if data.status == 2}}
+                        <p>您暂时没有不可用的优惠券哦~</p>
+                        {{/if}}
+                    </div>
+                    {{/if}}
+                    </script>
+                </div>
+
+                <div class="couponPageNum"><span>1</span>/<span>5</span></div>
+            </div>
+
+        </div>
+
+        <div class="addPrice" style="display:none;">
+            <h3>加价购</h3>
+            <ul style="display:block;" id="addPriceCon">
+                <script id="addPrice-template" type="text/html">
+                {{each data as value index}}
+                <li class="{{if index%3 == 2}}right{{/if}}" style="{{if index%3 == 0}}clear:both{{/if}}">
+                    <div class="packCheck" data-index="" onclick="packCheckbed($(this))"></div>
+                    <dl class="single" data-id="{{value.extraRId}}">
+                        <dt class="sing_pic">
+                            <a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999'"><img th:src="@{${tuDomain}+'/{{value.webImg}}'}" /></a>
+                            {{if value.courseType == 1}}
+                            <span class="sing_picZtkimg"></span>
+                            {{else}}
+                            <span class="sing_picXtbimg"></span>
+                            {{/if}}
+                        </dt>
+                        <dd class="sing_con" data-id="{{value.comId}}">
+                            {{if value.insurance != null}}
+                            <p data-id="{{value.insurance.id}}"><i>加价购</i><a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999'">{{value.name}}</a></p>
+                            {{else}}
+                            <p title="{{value.name}}"><i>加价购</i><a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999'">{{value.name}}</a></p>
+                            {{/if}}
+                            <span  data-id="{{value.classTypeId}}">
+                                {{if value.agreements.indexOf(0) > -1}}
+                                <a class="studyBox">书
+                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                    {{if value.bookType == 0 }}
+                                        <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                    {{else if value.bookType == 1}}
+                                        {{if data.comsku == value.skuId}}
+                                            {{if data.combooktype == 1 || data.combooktype == 0}}
+                                                 <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                            {{/if}}
+                                            {{if data.combooktype == 2}}
+                                                <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                            {{/if}}
+                                        {{else if data.comsku != value.skuId}}
+                                            <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                        {{/if}}
+                                    {{/if}}
+                                </a>
+                                {{/if}}
+                                {{if value.agreements.indexOf(6) > -1}}
+                                <a class="priceBao" data-type="6">价</a>
+                                {{/if}}
+                                {{if value.agreements.indexOf(1) > -1 && value.insurance != null}}
+                                <a class="InsuranceIcon" data-id="{{value.insurance}}" data-type="1">保</a>
+                                {{else if value.agreements.indexOf(2) > -1}}
+                                <a class="agree" data-type="2">议</a>
+                                {{/if}}
+                            </span>
+                            {{if value.bookType == 1}}
+                            <div class="teachMatesel">
+                                {{if data.comsku == value.skuId}}
+                                    {{if data.combooktype == 1 || data.combooktype == 0}}
+                                        <cite teamateval="1">初中教材</cite>
+                                    {{/if}}
+                                    {{if data.combooktype == 2}}
+                                        <cite teamateval="2">高中教材</cite>
+                                    {{/if}}
+                                {{else if data.comsku != value.skuId}}
+                                    <cite teamateval="1">初中教材</cite>
+                                {{/if}}
+                                <i></i>
+                                <ul>
+                                    <!--<li>初中教材</li>
+                                    <li>高中教材</li>-->
+                                    {{if data.comsku == value.skuId}}
+                                        {{if data.combooktype == 2}}
+                                            <li type="1">初中教材</li>
+                                        {{/if}}
+                                        {{if data.combooktype == 1 || data.combooktype == 0}}
+                                            <li type="2">高中教材</li>
+                                        {{/if}}
+                                    {{else if data.comsku != value.skuId}}
+                                        <li type="2">高中教材</li>
+                                    {{/if}}
+                                </ul>
+                            </div>
+                            {{/if}}
+                        </dd>
+                    </dl>
+                    <div class="addPriceMoney">加价购：<em>¥&nbsp;<i>{{value.extraPrice}}</i></em>
+                        {{if value.guaType==2}}
+                        <s>¥&nbsp;{{value.secondPrice}}</s>
+                        {{else  if value.guaType==1}}
+                        <s>¥&nbsp;{{value.costPrice}}</s>
+                        {{/if}}
+                    </div>
+                </li>
+                {{/each}}
+                </script>
+            </ul>
+        </div>
+    </div>
+    <div class="payCon-money" >
+        <div class="payCon-ml">
+            <p>合计金额：<span id="montMoney"></span><span>元</span></p>
+            <p style="display: none;" id="payYhshow"><em>优惠券：</em><span style="color:#47c88a;">-<span id="closeMoney" style="color:#47c88a;"></span>元</span></p>
+            <p class="orderYouHui" style="display: none;">老生优惠：-<span style="color:#47c88a;" id="oldMoney"></span><span  style="color:#47c88a;">元</span>
+            </p>
+        </div>
+        <div class="payCon-mr">
+            <p>应付金额：<span id="userMoney"></span><em>元</em></p>
+            <a id="goPay">去结算</a>
+            <div class="tip"></div>
+        </div>
+    </div>
+
+</div>
+<!-- 提示取消选中优惠券 -->
+<div class="pointOutCoupon">
+    <div class="pointOutText"></div>
+</div>
+
+<div class="alert alert_safe">
+    <div class="mark"></div>
+    <div class="content">
+        <h3>在这里写下你的保险信息<i></i></h3>
+
+        <div class="con">
+            <div class="name">
+                <label>姓名</label>
+                <input id="name" type="text" oninput="if(this.value.length>15){this.value=this.value.substr(0,15)};"
+                       onblur="check($(this))"/>
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+            <div class="tel">
+                <label>手机号</label>
+                <input id="tel" type="text"
+                       oninput="this.value=this.value.replace(/\D/g,'');if(this.value.length>11){this.value=this.value.substr(0,11)};"
+                       onblur="check($(this))"/>
+
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+            <div class="id">
+                <label>身份证号</label>
+                <input id="id" type="text" oninput="if(this.value.length>18){this.value=this.value.substr(0,18)};"
+                       onblur="check($(this))"/>
+
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+            <div class="confirmId">
+                <label>再次输入身份证号</label>
+                <input id="confirmId" type="text"
+                       oninput="if(this.value.length>18){this.value=this.value.substr(0,18)};" onblur="check($(this))"/>
+
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)" onclick="safeSubmit()" class="submit">提交</a>
+            <a href="javascript:void(0)" class="reset">取消</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="alert_study alert">
+    <div class="mark"></div>
+    <div class="content" style="height: 400px;">
+        <h3>在这里写下你的收货地址<i></i></h3>
+        <div class="con">
+            <div class="name">
+                <label>姓名</label>
+                <input id="name" type="text" onblur="check($(this))"/>
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+            <div class="tel">
+                <label>手机号</label>
+                <input id="tel" type="text" onblur="check($(this))"/>
+                <div class="tip"><em></em></div>
+                <i></i>
+            </div>
+            <div class="select" style="margin-top: 20px;">
+                <div class="select-add" style="z-index: 100">
+                    <p class="select-text ">选择省/市/县</p>
+
+                    <p class="select-text" style="display: none;" id="select-text">
+                        <span>选择省</span><span>选择市</span><span>选择区县</span></p>
+                    <span class="drop"></span>
+                </div>
+                <div class="tip"><em></em></div>
+                <i></i>
+
+                <div class="select-area-wrap">
+                    <div class="cut-line" style="z-index: 300;"></div>
+                    <ul class="select-area clear" style="z-index: 1000;">
+                    </ul>
+                </div>
+            </div>
+            <div class="addr">
+                <label>详细地址</label>
+                <textarea id="addr" type="text" onblur="checkInfo($(this))"></textarea>
+                <div style="z-index:101;" class="tip"><em></em></div>
+                <i></i>
+            </div>
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)" onclick="stuSubmit()" class="submit">提交</a>
+            <a href="javascript:void(0)" class="reset">取消</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="alert alert_bg" style="display:none">
+    <div class="mark"></div>
+    <div class="alertCon">
+        <div class="title"></div>
+        <div class="content">
+
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)">知道了</a>
+        </div>
+        <span></span>
+    </div>
+</div>
+
+<!--<div class="alert_contact alert">-->
+    <!--<div class="mark"></div>-->
+    <!--<div class="content">-->
+        <!--<h3>在这里写下你的QQ<i></i></h3>-->
+
+        <!--<div class="con">-->
+            <!--<div class="qq">-->
+                <!--<label>QQ号</label>-->
+                <!--<input id="qqNum" type="text"-->
+                       <!--oninput="this.value=this.value.replace(/\D/g,'');if(this.value.length>15){this.value=this.value.substr(0,15)};"-->
+                       <!--onblur="checkInfo($(this))"/>-->
+
+                <!--<div class="tip"><em></em></div>-->
+                <!--<i></i>-->
+            <!--</div>-->
+            <!--<div class="info">-->
+                <!--<label>验证信息</label>-->
+                <!--<textarea id="info" type="text" onblur="checkInfo($(this))"></textarea>-->
+
+                <!--<div class="tip"><em></em></div>-->
+                <!--<i></i>-->
+                <!--<span style="clear:both;"></span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="btn">-->
+            <!--<a href="javascript:void(0)" onclick="contactSubmit()" class="submit">提交</a>-->
+            <!--<a href="javascript:void(0)" class="reset">取消</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!-- 报名成功 -->
+<div class="baoMSuccessful">
+    <dl>
+        <dt></dt>
+        <dd><em>报名成功</em><span>3 秒后自动跳转到班级~</span></dd>
+    </dl>
+</div>
+<!-- 停售/售完提示 -->
+<div class="pointOutBox">
+    <div class="pointOutText">此课程已停售，请重新选择</div>
+</div>
+
+<div th:insert="~{web/footer :: footer('')}"></div>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/common.js" th:src="@{${staticDomain} +'/js/wap/common/js/common.js?v=13843031043210431'}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="//test2.duia.com:8080/resources/wap/common/js/common.js"  type="text/javascript" charset="utf-8"></script>-->
+<script src="//test2.duia.com:8080/dist/js/web/common/js/checkInfo.js"
+        th:src="@{${staticDomain} +'/js/web/common/js/checkInfo.js?v=13843031043210431'}" type="text/javascript" charset="utf-8"></script>
+<script src="//test2.duia.com:8080/dist/js/web/payOrder/js/china_area.js"
+        th:src="@{${staticDomain} +'/js/web/payOrder/js/china_area.js'}" type="text/javascript"
+        charset="utf-8"></script>
+<script src="//test2.duia.com:8080/dist/js/web/payOrder/js/payConfirm.js?v=13843031043210431" th:src="@{ ${staticDomain}+'/js/web/payOrder/js/payConfirm.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+<script src="//test2.duia.com:8080/dist/js/web/payOrder/js/payConfirmNew.js?v=1234567890" th:src="@{ ${staticDomain}+'/js/web/payOrder/js/payConfirmNew.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="//test2.duia.com:8080/resources/web/payOrder/js/payConfirmNew.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="//test2.duia.com:8080/resources/web/payOrder/js/payConfirm.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="//common.test.duia.com/common/js/web4.0/tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/tools.js'}" type="text/javascript"></script>
+<script src="//common.test.duia.com/common/js/web4.0/duia_tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/duia_tools.js'}" type="text/javascript"></script>
+</body>
+<script>
+    $('body').on('mouseenter',' .period',function (e) {
+        elonmouseenter(e)
+    })
+    $('body').on('mouseout',' .period',function (e) {
+        elonmouseout(e)
+    })
+
+    function  elonmouseenter(event){
+
+        var e = event || window.event;
+        var xx = e.clientX
+        var yy = e.clientY
+        var txt =  $(e.target).text()
+        var p =  document.querySelector('.alertp');
+        if(!p){
+            var p = document.createElement('p');
+        }
+        p.style.left=xx+'px';
+        p.className='alertp';
+        p.style.position='fixed';
+        p.style.top=yy+"px";
+        p.innerHTML=txt
+        document.querySelector('body').appendChild(p)
+
+    }
+    function elonmouseout(e){
+        var p=	 document.querySelector('.alertp')
+        document.querySelector('body').removeChild(p)
+    }
+</script>
+</html>

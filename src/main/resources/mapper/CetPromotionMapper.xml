@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CetPromotionMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.CetPromotion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="total_score" jdbcType="REAL" property="totalScore" />
+    <result column="cloze_score" jdbcType="REAL" property="clozeScore" />
+    <result column="reading_score" jdbcType="REAL" property="readingScore" />
+    <result column="translate_score" jdbcType="REAL" property="translateScore" />
+    <result column="listening_score" jdbcType="REAL" property="listeningScore" />
+    <result column="is_first" jdbcType="INTEGER" property="isFirst" />
+    <result column="is_again" jdbcType="INTEGER" property="isAgain" />
+    <result column="is_making" jdbcType="INTEGER" property="isMaking" />
+    <result column="is_finish" jdbcType="INTEGER" property="isFinish" />
+    <result column="is_share" jdbcType="INTEGER" property="isShare" />
+    <result column="click_egg" jdbcType="INTEGER" property="clickEgg" />
+    <result column="click_buy" jdbcType="INTEGER" property="clickBuy" />
+    <result column="app_type" jdbcType="INTEGER" property="appType" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>海米管家支付-申请分期</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payOrder.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payOrder.css?v='+${staticVersion}}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//union.tenpay.com/bankList/css_col4.css"/>-->
+    <!------------------------新增start---------------------------->
+    <link rel="stylesheet" th:href="@{${staticDomain} +'/style/web/payOrder/css/payBd.css?v='+${staticVersion}}">
+    <!--<link rel="stylesheet" href="//test2.duia.com:8080/resources/web/payOrder/css/payBd.css">-->
+    <!------------------------新增end------------------------------>
+    <style>
+        .long-logo {
+            width: 1110px;
+        }
+
+        #J-chooseBankList {
+            overflow: hidden;
+        }
+
+        .long-logo input {
+            display: none;
+        }
+
+        .long-logo li {
+            width: 158px;
+            height: 54px;
+            border: 1px solid #ddd;
+            margin-right: 24px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .long-logo li label {
+            border: none;
+            width: 158px;
+            height: 54px;
+            cursor: pointer;
+        }
+
+        #J-chooseBankList li:last-child {
+            display: none;
+        }
+
+        .icon-box1 {
+            background-position: 25px -312px;
+        }
+
+        .icon-box2 {
+            background-position: 35px -358px;
+        }
+
+        .icon-box3 {
+            background-position: 30px -268px;
+        }
+
+        .icon-box4 {
+            background-position: 25px -223px;
+        }
+
+        .icon-box5 {
+            background-position: 40px -453px;
+        }
+
+        .icon-box6 {
+            background-position: 20px -673px;
+        }
+
+        .icon-box7 {
+            background-position: 35px -175px;
+        }
+
+        .icon-box8 {
+            background-position: 28px -2px;
+        }
+
+        .icon-box9 {
+            background-position: 26px -499px;
+        }
+
+        .icon-box10 {
+            background-position: 25px -125px;
+        }
+
+        .icon-box11 {
+            background-position: 35px -582px;
+        }
+
+        .icon-box12 {
+            background-position: 27px -42px;
+        }
+
+        .long-logo .icon-box13 {
+            background-position: 0 -725px;
+            width: 100px;
+            height: 25px;
+            margin: 16px 0 0 30px;
+        }
+
+        .icon-box14 {
+            background-position: 25px -82px;
+        }
+
+        .icon-box15 {
+            background-position: 25px -537px;
+        }
+
+        .icon-box16 {
+            background-position: 30px -407px;
+        }
+
+        .long-logo .icon-box17 {
+            background-position: 0 -755px;
+            width: 75px;
+            height: 25px;
+            margin: 13px 0 0 40px;
+        }
+
+        .long-logo .icon-box18 {
+            background-position: 0 -790px;
+            width: 80px;
+            height: 25px;
+            margin: 16px 0 0 36px;
+        }
+
+        .long-logo .icon-box19 {
+            background-position: 0 -820px;
+            width: 110px;
+            height: 25px;
+            margin: 14px 0 0 20px;
+        }
+
+        .long-logo .icon-box20 {
+            background-position: 0 -848px;
+            width: 100px;
+            height: 30px;
+            margin: 13px 0 0 28px;
+        }
+        /*弹窗*/
+        #alert_DQ{display: none}
+        .alert_pay{z-index: 2;width: 440px;height:196px;background: #fff;text-align: center;padding-top: 60px;position: fixed;top:50%;left: 50%;margin-top:-128px;margin-left:-220px  }
+        .alert_payTit{font-size: 18px;color: #333;line-height: 18px;}
+        .alert_paytext{font-size: 14px;line-height: 14px;color: #666;margin-top: 18px;}
+        .alert_payhaimiGo{border-radius: 4px;width: 98px;height: 34px;background: #47C78A;color: #fff;line-height: 34px;font-size: 12px;margin:60px auto 0}
+        .alert_payhaimiGo:hover{cursor: pointer}
+        .sanjaio{
+            position:absolute;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #fb2323;
+            left:106px;}
+        .alert_payGoBox{position: relative}
+        .alert_tishi{display: none;box-shadow: 1px 1px 5px rgba(0,0,0,.3);position: relative;top:-76px;line-height: 30px;color:#fff;font-size: 12px;background: #fb3232;width: 222px;margin:0 auto}
+        .goYZ{cursor: pointer;}
+        .alert_tishiS{text-align: center;display: none;box-shadow: 1px 1px 5px rgba(0,0,0,.3);position: absolute;top:-40px;left: -83px;line-height: 30px;color:#fff;font-size: 12px;background: #fb3232;width: 222px;margin:0 auto}
+        .LJYZ{position: relative}
+
+    </style>
+</head>
+<body>
+
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+<!--支付tc-->
+<div style="display: none;" id="orderOpen">
+    <div class="pay-popBlack"></div>
+    <div class="pay-popup">
+        <a class="pay-close"></a>
+
+        <p class="pay-pop-tit1">请在新打开的页面上完成付款</p>
+
+        <p class="pay-pop-tit2">付款完成前请勿关闭此窗口</p>
+
+        <div class="pay-pop-btn">
+            <a class="pay-btn1">已完成付款</a>
+            <a class="pay-btn2">付款遇到问题</a>
+        </div>
+        <a class="pay-select">选择其他付款方式<i></i></a>
+    </div>
+</div>
+<div id="alert_DQ">
+    <div class="pay-popBlack"></div>
+    <div class="alert_pay">
+        <p class="alert_payTit">支付尾款</p>
+        <p class="alert_paytext">申请贷款成功后，支付尾款就可以开通课程啦</p>
+        <div class="alert_payGoBox">
+            <p class="alert_payhaimiGo">去支付</p>
+            <div class="alert_tishi">
+                <p>贷款还未申请成功哦，请稍后再试</p>
+                <p class="sanjaio"></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon pay-control" data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+
+                <p>确认订单信息</p>
+            </div>
+            <div class="pay-jd">
+                <span class="pay-num"></span>
+            </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+    <!--订单内容-->
+    <!--<div class="pay-content">-->
+    <!--<div class="pay-empty">-->
+    <!--<img src="/resources/web/payOrder/img/pay-empty.png">-->
+    <!--<p>订单中无任何商品，请尝试重新购买课程。</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!------------------------------新增start--------------------------------------->
+
+    <div class="payhaimi">
+        <div class="payBdCoffee-head clearfix">
+             <div class="fl payBdCoffee-head-left"></div>
+             <div class="fl payBdCoffee-head-right">
+                 <p class="payBdCoffee-head-right-p1 font-24">你选择的<i style="color: #47c88a">海米管家</i>，请尽快完成贷款申请并支付尾款</p>
+                 <p class="payBdCoffee-head-right-p2 clearfix">
+                     <i class="fl color-666 font-14">应付金额:</i>
+                     <span class="fl color-fd6029 font-24" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="${#numbers.formatDecimal(childOrderList[0].realpayPrice+childOrderList[1].realpayPrice,1,1)}">2730</span>
+                     <em class="fl color-fd6029 font-16">元</em>
+                 </p>
+             </div>
+        </div>
+        <div class="payBdCoffee-main-div">
+            <p class="pay-type-name font-18 color-333">海米管家</p>
+            <p class="pay-type-text font-14 color-333">
+                <span>请在海米管家中认证个人信息通过后，进行款项支付。若贷款申请成功，可点击</span>
+                <span class="LJYZ"><span class="color-fd6029 goYZHM">立即验证</span><span >，支付尾款开课。</span>
+                    <span class="alert_tishiS">
+                        <span>贷款申请尚未完成，请完成申请后再试</span>
+                        <span style="display: block" class="sanjaio" ></span>
+                    </span>
+                </span>
+            </p>
+
+            <div class="pay-check clearfix">
+                <div class="pay-checkhaimi">
+                    <div class="fl payhaimi-logo"></div>
+                    <div class="fl loan-price-text font-14 clearfix">
+                        <span class="fl">贷款金额</span>
+                        <i class="fr loan-price-is" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="${#numbers.formatDecimal(childOrderList[0].realpayPrice,1,1)}+'元'">900.0元 </i>
+                    </div>
+                </div>
+
+                <div class="pay-checkhaimi">
+                    <div class="fl placeholder-father js-placeholder-father placeholder-realName-father js-placeholder-realName-father">
+                        <input type="text" class="placeholder-input-realName" name="realName" maxlength="15" />
+                        <label class="placeholder-label-realName font-14 color-999">真实姓名</label>
+                        <div class="tip js-tip" style="left: 0px;"></div>
+                    </div>
+                    <div class="fl placeholder-father js-placeholder-father placeholder-telephone-father js-placeholder-telephone-father">
+                        <input type="text" class="placeholder-input-telephone" name="telephone" maxlength="11" />
+                        <label class="placeholder-label-telephone font-14 color-999">手机号</label>
+                        <div class="tip js-tip"></div>
+                    </div>
+                    <div class="fl placeholder-father js-placeholder-father placeholder-email-father js-placeholder-email-father">
+                        <input type="text" class="placeholder-input-email" name="email" />
+                        <label class="placeholder-label-email font-14 color-999">邮箱</label>
+                        <div class="tip js-tip"></div>
+                    </div>
+                    <div class="fl placeholder-father js-placeholder-father placeholder-hmqishu-father js-placeholder-hmqishu-father">
+                        <div class="chcakQishuclick chcakQishuclickBgImg" type="0">选择期数</div>
+                        <ul class="chcakQishuBox">
+                            <li class="chcakQishu" type="3">3期</li>
+                            <li class="chcakQishu" type="6">6期</li>
+                            <li class="chcakQishu" type="12">12期</li>
+                        </ul>
+                        <div class="tip js-tip"></div>
+                    </div>
+                    <div class="fl placeholder-father js-placeholder-father placeholder-site-father js-placeholder-site-father">
+                        <input type="text" class="placeholder-input-site" name="site" maxlength="100" />
+                        <label class="placeholder-label-site font-14 color-999">详细地址</label>
+                        <div class="tip js-tip"></div>
+                    </div>
+                    <div class="fl payBd-go-loan font-14 color-fff tc" id="payHM-go-loan">去贷款</div>
+                </div>
+
+            </div>
+            <div class="pay_lcBox">
+                <p class="pay_lcTit">海米管家使用流程</p>
+                <ul class="pay_lc">
+                    <li>
+                        <p>1.下载海米管家APP</p>
+                        <img class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/hmImgone.png'}">
+                    </li>
+                    <li class="pay_lcTwo" style="margin:0 165px">
+                        <img class="payGe bdpayGeone" th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+
+                        <p>2.点击立即支付并使用APP扫描二维码申请分期</p>
+                        <img class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/hmImgtwo.png'}">
+
+                        <img  class="payGe bdpayGetwo" th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+                    </li>
+                    <li>
+                        <p>3.审核通过并支付首付款</p>
+                        <img class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/bdImglast.png'}">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+<input type="hidden" id="payNum" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[0].payNum}" />
+<input type="hidden" id="paidCount" th:if="${paidCount!=null}" th:value="${paidCount}" />
+<input type="hidden" id="payBCType" value="3" />
+<!------------------------------新增end----------------------------------------->
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<input type="hidden" th:value="${payDomain}" id="payBasePath">
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="http://test2.duia.com:8080/dist/js/web/common/js/template.js"
+        th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript"
+        charset="utf-8"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payOrder.js?v='+${staticVersion}}"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payCommon.js?v='+${staticVersion}}"></script>
+<!--<script src="//test2.duia.com:8080/resources/web/payOrder/js/payOrder.js"></script>-->
+</body>
+</html>

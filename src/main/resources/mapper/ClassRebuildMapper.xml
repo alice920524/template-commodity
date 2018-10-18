@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassRebuildMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassRebuild">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="apply_date" jdbcType="DATE" property="applyDate" />
+    <result column="apply_status" jdbcType="INTEGER" property="applyStatus" />
+    <result column="approve_date" jdbcType="DATE" property="approveDate" />
+    <result column="approve_view" jdbcType="VARCHAR" property="approveView" />
+    <result column="approver" jdbcType="INTEGER" property="approver" />
+    <result column="old_class_id" jdbcType="INTEGER" property="oldClassId" />
+    <result column="old_class_no" jdbcType="VARCHAR" property="oldClassNo" />
+    <result column="old_class_type_id" jdbcType="INTEGER" property="oldClassTypeId" />
+    <result column="old_class_type_name" jdbcType="VARCHAR" property="oldClassTypeName" />
+    <result column="old_teacher_name" jdbcType="VARCHAR" property="oldTeacherName" />
+    <result column="new_class_id" jdbcType="INTEGER" property="newClassId" />
+    <result column="new_class_no" jdbcType="VARCHAR" property="newClassNo" />
+    <result column="new_class_type_id" jdbcType="INTEGER" property="newClassTypeId" />
+    <result column="new_class_type_name" jdbcType="VARCHAR" property="newClassTypeName" />
+    <result column="new_teacher_name" jdbcType="VARCHAR" property="newTeacherName" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="updater" jdbcType="INTEGER" property="updater" />
+    <result column="url_1" jdbcType="VARCHAR" property="url1" />
+    <result column="url_2" jdbcType="VARCHAR" property="url2" />
+    <result column="url_3" jdbcType="VARCHAR" property="url3" />
+    <result column="old_teacher_id" jdbcType="INTEGER" property="oldTeacherId" />
+    <result column="new_teacher_id" jdbcType="INTEGER" property="newTeacherId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="qq_no" jdbcType="VARCHAR" property="qqNo" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="is_mail" jdbcType="INTEGER" property="isMail" />
+    <result column="new_order_id" jdbcType="INTEGER" property="newOrderId" />
+    <result column="new_cost_price" jdbcType="DOUBLE" property="newCostPrice" />
+    <result column="new_book_price" jdbcType="DOUBLE" property="newBookPrice" />
+    <result column="new_order_price" jdbcType="DOUBLE" property="newOrderPrice" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="one_rmb_rebuild" jdbcType="INTEGER" property="oneRmbRebuild" />
+  </resultMap>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    select t.* from class_rebuild t where t.new_order_id = #{orderId}
+  </select>
+</mapper>

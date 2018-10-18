@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.BookMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.Book">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="kingdee_id" jdbcType="INTEGER" property="kingdeeId" />
+    <result column="kingdee_price" jdbcType="DOUBLE" property="kingdeePrice" />
+    <result column="kingdee_name" jdbcType="VARCHAR" property="kingdeeName" />
+    <result column="book_code" jdbcType="VARCHAR" property="bookCode" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="cost_price" jdbcType="DOUBLE" property="costPrice" />
+    <result column="s_cost_price" jdbcType="DOUBLE" property="sCostPrice" />
+    <result column="performance_price" jdbcType="DOUBLE" property="performancePrice" />
+    <result column="handle" jdbcType="INTEGER" property="handle" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="synchronize_time" jdbcType="TIMESTAMP" property="synchronizeTime" />
+    <result column="synchronizor" jdbcType="INTEGER" property="synchronizor" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+  </resultMap>
+
+  <select id="findBookByClassTypeId" resultMap="BaseResultMap">
+    SELECT
+    b.*
+    FROM
+    book_relation br
+    INNER JOIN
+    book b
+    ON br.book_id = b.id
+    WHERE
+    br.relation_type = 0
+    AND
+    br.relation_id = #{classTypeId}
+    AND
+    br.deleted = 0
+  </select>
+
+  <select id="findBookByUpgradeId" resultMap="BaseResultMap">
+    SELECT
+    b.*
+    FROM
+    book_relation br
+    INNER JOIN
+    book b
+    ON br.book_id = b.id
+    WHERE
+    br.relation_type = 6
+    AND
+    br.relation_id = #{upgradeId}
+    AND
+    br.deleted = 0
+  </select>
+</mapper>

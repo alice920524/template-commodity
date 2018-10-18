@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>对啊学习规划师</title>
+    <meta name="format-detection" content="telephone = no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//test2.duia.com:80/resources/wap/wxCount/css/wxCount.css" />-->
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/wap/wxCount/css/wxCount.css?v='+${staticVersion}}"/>
+    <script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <script th:inline="javascript">
+        var _statistics = [[${aiDomain}]];
+        var _open_id = [[${openid}]];
+    </script>
+</head>
+<body>
+    <div id="pop1">
+        <div class="dialogue1">
+            <ul>
+                <li class="text1">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <a>同学你好</a>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+                <li style="margin-top: .5rem;" class="text2">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <p>都说爱学习的人运气都超级好，首先向热爱学习的您致敬！</p>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+                <li class="text text3">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <p>我是您的专业学习规划师，查询考试报名信息，领取免费学习资料，了解正式班级课程信息，请留下您
+                            的微信号，我会给您发送学习资料，答疑解惑！
+                        </p>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dialogue2">
+            <ul>
+                <li class="text4">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <a>非常感谢您的信任</a>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+                <li class="text5">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <a>别忘记您的微信添加好友信息</a>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+                <li class="text6">
+                    <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/touxiang.png'}" class="image_head">
+                    <div class="bor">
+                        <a>我会第一时间添加您哟</a>
+                        <img th:src="@{${staticDomain}+'/image/wap/wxCount/images/xz.png'}" class="xz">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="pop-up1">
+            <a class="course_Consult">
+                <span>选择您要咨询的课程</span>
+                <div class="arrow1"></div>
+            </a>
+            <div class="wx_input">
+                <input type="text" placeholder="输入微信号" id="wx_number" maxlength="20">
+            </div>
+            <div class="submit submitClick">
+                <a>提交</a>
+                <div class="go1"></div>
+            </div>
+        </div>
+    </div>
+    <div id="pop2">
+        <div class="pop-up2 pop2">
+            <h2>请告诉我们您的考试内容</h2>
+            <h3>将会赠送对应的学习资料</h3>
+            <div class="skuList">
+                <ul>
+                    <li value="8">
+                        <span>会计职称</span>
+                        <a></a>
+                    </li>
+                    <li value="31">
+                        <span>注册会计师</span>
+                        <a></a>
+                    </li>
+                    <li value="755">
+                        <span>CMA美国注册会计师</span>
+                        <a></a>
+                    </li>
+                    <li value="1">
+                        <span>会计实操</span>
+                        <a></a>
+                    </li>
+                    <li value="118">
+                        <span>教师资格证</span>
+                        <a></a>
+                    </li>
+                    <li value="754">
+                        <span>人力资源管理</span>
+                        <a></a>
+                    </li>
+                    <li value="563">
+                        <span>公务员</span>
+                        <a></a>
+                    </li>
+                    <li value="370">
+                        <span>建造/消防</span>
+                        <a></a>
+                    </li>
+                    <li value="361">
+                        <span>证券/银行/基金</span>
+                        <a></a>
+                    </li>
+                    <li value="7">
+                        <span>平面/UI/室内设计</span>
+                        <a></a>
+                    </li>
+                    <li value="369">
+                        <span>自考专科/本科</span>
+                        <a></a>
+                    </li>
+                    <li value="8">
+                        <span>其他</span>
+                        <a></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/md5.min.js'}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/duia_util.js'}"></script>
+<!--<script type="text/javascript" charset="utf-8" src="//test2.duia.com:80/resources/wap/wxCount/js/wxCount.js"></script>-->
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/wxCount/js/wxCount.js?v='+${staticVersion}}"></script>
+</html>

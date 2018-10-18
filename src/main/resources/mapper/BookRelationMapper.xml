@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.BookRelationMapper">
+    <resultMap id="BaseResultMap" type="com.duia.commodity.model.BookRelation">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="relation_id" jdbcType="INTEGER" property="relationId"/>
+        <result column="relation_type" jdbcType="INTEGER" property="relationType"/>
+        <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="adjust_price" jdbcType="DOUBLE" property="adjustPrice"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+    </resultMap>
+
+    <!-- 查询图书商品详情信息 -->
+    <select id="selectBookCommodityDetails" resultType="com.duia.commodity.common.dto.BookRDTO">
+      select
+        b.id as id,
+        b.sku as sku,
+        b.kingdee_id as kingdeeId,
+        b.kingdee_price as kingdeePrice,
+        b.kingdee_name as kingdeeName,
+        b.book_code as bookCode,
+        b.book_name as bookName,
+        b.cost_price as costPrice,
+        b.performance_price as performancePrice,
+        br.adjust_price adjustPrice
+       from book_relation br
+      left join book b on br.book_id = b.id
+      where br.relation_id = #{relationId} and br.relation_type = #{relationType}
+      and br.deleted = 0 and b.status=1
+    </select>
+</mapper>

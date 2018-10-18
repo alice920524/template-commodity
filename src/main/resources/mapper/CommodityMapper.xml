@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CommodityMapper">
+    <resultMap id="BaseResultMap" type="com.duia.commodity.model.Commodity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cost_price" jdbcType="DOUBLE" property="costPrice"/>
+        <result column="real_price" jdbcType="DOUBLE" property="realPrice"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="cover_url" jdbcType="VARCHAR" property="coverUrl"/>
+        <result column="sku_id" jdbcType="INTEGER" property="skuId"/>
+        <result column="course_type" jdbcType="INTEGER" property="courseType"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="updator" jdbcType="INTEGER" property="updator"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="count_num" jdbcType="INTEGER" property="countNum"/>
+        <result column="current_num" jdbcType="INTEGER" property="currentNum"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="base" jdbcType="INTEGER" property="base"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="class_no" jdbcType="VARCHAR" property="classNo"/>
+        <result column="shelf_on_time" jdbcType="TIMESTAMP" property="shelfOnTime"/>
+        <result column="shelf_off_time" jdbcType="TIMESTAMP" property="shelfOffTime"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="qq_num" jdbcType="VARCHAR" property="qqNum"/>
+        <result column="address_mark" jdbcType="INTEGER" property="addressMark"/>
+        <result column="vip_mark" jdbcType="INTEGER" property="vipMark"/>
+        <result column="validity" jdbcType="INTEGER" property="validity"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="class_type_id" jdbcType="INTEGER" property="classTypeId"/>
+    </resultMap>
+
+    <resultMap id="commodityBaseDTOResultMap" type="com.duia.commodity.common.dto.CommodityBaseDTO">
+        <id column="com_id" jdbcType="INTEGER" property="comId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="real_price" jdbcType="DOUBLE" property="realpayPrice"/>
+        <result column="cost_price" jdbcType="DOUBLE" property="costPrice"/>
+        <result column="first_price" jdbcType="DOUBLE" property="firstPrice"/>
+        <result column="second_price" jdbcType="DOUBLE" property="secondPrice"/>
+        <result column="class_type_id" jdbcType="INTEGER" property="classTypeId"/>
+        <result column="web_img" jdbcType="VARCHAR" property="webImg"/>
+        <result column="app_img" jdbcType="VARCHAR" property="appImg"/>
+        <result column="address_mark" jdbcType="INTEGER" property="hasStudyPack"/>
+        <result column="insurance" jdbcType="INTEGER" property="insuranceStatus"/>
+        <result column="book_price" jdbcType="DOUBLE" property="studyPackPrice"/>
+        <result column="course_type" jdbcType="INTEGER" property="courseType"/>
+        <result column="gua_mul" jdbcType="INTEGER" property="guaMul"/>
+        <result column="gua_type" jdbcType="INTEGER" property="guaType"/>
+    </resultMap>
+
+    <!--=============================================commodity return SQL=========================================================-->
+    <sql id="commodityBaseDTO">
+        c.id AS com_id,
+        c.`name`,
+        c.real_price,
+        c.cost_price,
+        c.first_price,
+        c.second_price,
+        c.gua_mul,
+        c.course_type,
+        c.cover_url AS web_img,
+        c.cover_url_three AS app_img,
+        c.address_mark,
+        c.book_price,
+        c.class_type_id
+    </sql>
+
+    <!--加价购商品返回对象-->
+    <sql id="addMoneyCommodityResultCommodityDTO">
+        c.id,
+        c.name,
+        c.type,
+        c.cover_url AS coverUrl,
+        c.class_type_id AS classTypeId,
+        c.cost_price AS realPrice,
+        cebr.extra_price AS price,
+        cebr.address_mark AS addressMark
+    </sql>
+
+    <!--=============================================commodity return SQL=========================================================-->
+
+    <select id="countByComIdAndAppType" resultType="int">
+        SELECT
+        count(c.id)
+        FROM
+        commodity c
+        LEFT JOIN terminal_display td ON c.class_type_id = td.relation_id
+        WHERE
+        c.id = #{comId}
+        AND c.status = 1
+        AND td.relation_type = 0
+        AND td.terminal = #{appType}
+    </select>
+
+    <select id="selectByIdList" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+        commodity
+        WHERE
+        id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectCommodityDTOBySpecialId" resultMap="commodityBaseDTOResultMap">
+        SELECT
+        c.id AS com_id,
+        c.`name`,
+        c.real_price,
+        c.course_type,
+        c.cover_url AS web_img,
+        c.cover_url_three AS app_img,
+        c.address_mark,
+        c.book_price,
+        c.class_type_id,
+        csr.cost_price,
+        csr.gua_mul,
+        csr.gua_type,
+        ct.insurance,
+        ct.book_type AS  bookType
+
+        FROM
+        commodity_special_relation csr
+        LEFT JOIN
+        commodity c
+        ON csr.com_id = c.id
+        LEFT JOIN
+        class_type ct
+        ON c.class_type_id = ct.id
+        WHERE csr.special_id = #{specialId}
+        ORDER BY c.id ASC
+    </select>
+
+    <!--根据对象参数获取商品信息-->
+    <select id="selectCommodityByParam" resultType="com.duia.commodity.common.dto.CommodityDTO">
+        SELECT
+        c.id,
+        c.name,
+        c.cost_price AS price,
+        c.first_price AS firstPrice,
+        c.second_price AS secondPrice,
+        c.gua_mul AS guaMul,
+        c.real_price AS realPrice,
+        c.class_type_id as classTypeId,
+        c.sku_id AS skuId,
+        c.type,
+        c.course_type AS courseType,
+        c.cover_url AS coverUrl,
+        c.cover_url_three AS wapCoverUrl,
+        c.address_mark as addressMark,
+        c.book_price as bookPrice
+
+        FROM
+        commodity c
+        WHERE
+        <if test="commodityStatus!=null">
+            c.status = #{commodityStatus} AND
+        </if>
+        c.id IN
+        <foreach item="param" index="index" collection="params" open="(" separator="," close=")">
+            #{param.comId}
+        </foreach>
+        ORDER BY c.id ASC
+    </select>
+
+    <!--根据对象参数获取商品信息-->
+    <select id="selectSpecialCommodityByParam" resultType="com.duia.commodity.common.dto.CommodityDTO">
+        SELECT
+        c.id,
+        c.name,
+        c.real_price AS realPrice,
+        c.class_type_id as classTypeId,
+        c.sku_id AS skuId,
+        c.type,
+        c.course_type AS courseType,
+        c.cover_url AS coverUrl,
+        c.cover_url_three AS wapCoverUrl,
+        c.address_mark as addressMark,
+        c.book_price as bookPrice,
+        csr.gua_mul AS guaMul,
+        csr.gua_type AS guaType,
+        csr.cost_price AS price
+
+        FROM
+        commodity_special_relation csr
+        INNER JOIN
+        commodity c
+        ON c.id = csr.com_id
+        WHERE
+        csr.special_id = #{specialId} AND
+        <if test="commodityStatus!=null">
+            c.status = #{commodityStatus} AND
+        </if>
+        c.id IN
+        <foreach item="param" index="index" collection="params" open="(" separator="," close=")">
+            #{param.comId}
+        </foreach>
+        ORDER BY c.id ASC
+    </select>
+
+</mapper>

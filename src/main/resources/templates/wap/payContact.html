@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="//www.w3.org/1999/xhtml" xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>联系方式</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <script src="//test2.duia.com:8080/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/style/wap/payOrder/css/payConfirm.css" th:href="@{${staticDomain}+'/style/wap/payOrder/css/payConfirm.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<!--<div class="indent_top js-indent-top" style="display: none;">-->
+    <!--<a>联系方式</a>-->
+<!--</div>-->
+<!--<div class="message">-->
+    <!--<div class="relation_m">-->
+        <!--<a>-->
+            <!--<input  id="qq" placeholder="你的QQ号" onblur="check($(this))" onfocus="hideError($(this))" oninput="this.value=this.value.replace(/\D/g,''); if(value.length>11)value=value.slice(0,15);" type="number">-->
+        <!--</a>-->
+        <!--<i></i>-->
+    <!--</div>-->
+    <!--<div class="relation_m">-->
+        <!--<a>-->
+            <!--<input  id="indent_m" placeholder="添加你QQ好友时需要填写的验证信息，若无可不填" maxlength="100" type="text">-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->
+
+    <!--<div class="submitC js-submitC">-->
+        <!--<a>提交</a>-->
+    <!--</div>-->
+<input type="hidden" th:value="${session.user.id}" class="paysit-id">
+</body>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/util.js" th:src="@{${staticDomain} +'/js/wap/common/js/util.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}"></script>
+<script src="//test2.duia.com:8080/dist/js/web/common/js/jquery.cookie.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/jquery.cookie.js'}"></script>
+<script src="//test2.duia.com:8080/js/wap/payOrder/js/paySite.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/payOrder/js/paySite.js?v='+${staticVersion}}"></script>
+</html>

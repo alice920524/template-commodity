@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassesMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.Classes">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_no" jdbcType="VARCHAR" property="classNo" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="enroll_num" jdbcType="INTEGER" property="enrollNum" />
+    <result column="enroll_des" jdbcType="VARCHAR" property="enrollDes" />
+    <result column="enroll_class_hour" jdbcType="INTEGER" property="enrollClassHour" />
+    <result column="visit1_start_date" jdbcType="DATE" property="visit1StartDate" />
+    <result column="visit1_end_date" jdbcType="DATE" property="visit1EndDate" />
+    <result column="visit2_start_date" jdbcType="DATE" property="visit2StartDate" />
+    <result column="visit2_end_date" jdbcType="DATE" property="visit2EndDate" />
+    <result column="visit3_start_date" jdbcType="DATE" property="visit3StartDate" />
+    <result column="visit3_end_date" jdbcType="DATE" property="visit3EndDate" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="teacher_userId" jdbcType="INTEGER" property="teacherUserid" />
+    <result column="visit_teacher_id" jdbcType="INTEGER" property="visitTeacherId" />
+    <result column="visit_teacher_userId" jdbcType="INTEGER" property="visitTeacherUserid" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="class_schedule_id" jdbcType="INTEGER" property="classScheduleId" />
+    <result column="authority_user_id" jdbcType="INTEGER" property="authorityUserId" />
+    <result column="validity" jdbcType="INTEGER" property="validity" />
+    <result column="appointment_up" jdbcType="INTEGER" property="appointmentUp" />
+    <result column="appointment_up_time" jdbcType="TIMESTAMP" property="appointmentUpTime" />
+    <result column="teachers" jdbcType="VARCHAR" property="teachers" />
+  </resultMap>
+
+
+    <select id="selectOneByClassId" resultMap="BaseResultMap">
+        SELECT
+        cs.id,
+        cs.class_no,
+        cs.class_type_id,
+        cs.teachers,
+        cs.authority_user_id
+        FROM
+        classes cs
+        WHERE
+        cs.id = #{classId}
+    </select>
+</mapper>

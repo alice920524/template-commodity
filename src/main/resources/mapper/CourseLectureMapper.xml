@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CourseLectureMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.CourseLecture">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="chapter_id" jdbcType="INTEGER" property="chapterId" />
+    <result column="lecture_name" jdbcType="VARCHAR" property="lectureName" />
+    <result column="lecture_order" jdbcType="INTEGER" property="lectureOrder" />
+    <result column="lecture_type" jdbcType="INTEGER" property="lectureType" />
+    <result column="lecture_content_type" jdbcType="INTEGER" property="lectureContentType" />
+    <result column="lecture_material_url" jdbcType="VARCHAR" property="lectureMaterialUrl" />
+    <result column="lecture_video_url" jdbcType="VARCHAR" property="lectureVideoUrl" />
+    <result column="lecture_ppt_url" jdbcType="VARCHAR" property="lecturePptUrl" />
+    <result column="lecture_ppt_pagenum" jdbcType="INTEGER" property="lecturePptPagenum" />
+    <result column="video_other_url" jdbcType="VARCHAR" property="videoOtherUrl" />
+    <result column="video_id" jdbcType="VARCHAR" property="videoId" />
+    <result column="video_length" jdbcType="VARCHAR" property="videoLength" />
+    <result column="quiz_num" jdbcType="INTEGER" property="quizNum" />
+    <result column="publish_state" jdbcType="INTEGER" property="publishState" />
+    <result column="publish_date" jdbcType="DATE" property="publishDate" />
+    <result column="file_title" jdbcType="VARCHAR" property="fileTitle" />
+    <result column="lecture_converswf_url" jdbcType="VARCHAR" property="lectureConverswfUrl" />
+    <result column="conver_time" jdbcType="TIMESTAMP" property="converTime" />
+    <result column="conver_fail_num" jdbcType="INTEGER" property="converFailNum" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="cost_type" jdbcType="INTEGER" property="costType" />
+    <result column="videoSize" jdbcType="VARCHAR" property="videosize" />
+    <result column="videoUrl" jdbcType="VARCHAR" property="videourl" />
+    <result column="praise_count" jdbcType="INTEGER" property="praiseCount" />
+    <result column="ls_video_id" jdbcType="VARCHAR" property="lsVideoId" />
+    <result column="letv_video_id" jdbcType="INTEGER" property="letvVideoId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="lecture_audio_url" jdbcType="VARCHAR" property="lectureAudioUrl" />
+    <result column="lecture_handouts_url" jdbcType="VARCHAR" property="lectureHandoutsUrl" />
+    <result column="study_num" jdbcType="VARCHAR" property="studyNum" />
+    <result column="cc_video_id" jdbcType="VARCHAR" property="ccVideoId" />
+    <result column="player_type" jdbcType="INTEGER" property="playerType" />
+    <result column="server_type" jdbcType="INTEGER" property="serverType" />
+    <result column="vcloud_video_id" jdbcType="INTEGER" property="vcloudVideoId" />
+    <result column="vcloud_video_url" jdbcType="VARCHAR" property="vcloudVideoUrl" />
+    <result column="lecture_desc" jdbcType="LONGVARCHAR" property="lectureDesc" />
+    <result column="exam_points" jdbcType="LONGVARCHAR" property="examPoints" />
+  </resultMap>
+</mapper>

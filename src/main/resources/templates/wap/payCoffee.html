@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <!--禁用苹果数字变为蓝色-->
+    <meta name="format-detection" content="telephone = no"/>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+    <title>咖啡易融支付</title>
+    <link type="text/css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/common/css/wapRestRem.css'}" />
+    <script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/payOrder/css/payCoffee.css?v='+${staticVersion}}" />
+    <script th:inline="javascript">
+        var _staticBasePath = [[${staticDomain}]];
+    </script>
+</head>
+<body>
+<!--头部start-->
+<div class="header" id="header" style="display: none;">
+    <i class="go-back-i" onclick="history.go(-1);">
+        <img class="imgW-100" src="//static.duia.com/pro/image/wap/common/img/headBack.png">
+    </i>
+    <i>咖啡易融支付</i>
+    <!--<span>-->
+        <!--<img class="imgW-100"  th:if="${session.user!=null}" th:src="${tuDomain}+'/'+${session.user.picUrl}"/>-->
+        <!--<img class="imgW-100"  th:if="${session.user==null}" th:src="@{${staticDomain}+'/image/wap/skuIndex/img/head.png'}"  onclick="signIn();"/>-->
+    <!--</span>-->
+</div>
+<!--头部end-->
+<!--正文部分start-->
+<div class="payCoffee" id="payCoffee">
+    <div class="payCoffee-top">
+        <div class="payCoffee-top1">
+            <div class="payCoffee-top1-image-div"></div>
+            <div class="clearfloat payCoffee-top1-p-div">
+                <p class="fl color-47c88a font-30r">分期信息验证</p>
+                <p class="fr color-999 font-30r">支付首付款</p>
+            </div>
+        </div>
+        <div class="isSpread-fgx-dashed"></div>
+        <div class="payCoffee-top2">
+            <div class="font-26r color-999 clearfloat payCoffee-top2-top">
+                <span class="fl color-47c88a">分期金额</span>
+                <span class="fl" style="margin-left: .49rem;">=</span>
+                <span class="fl" style="margin-left: .49rem;">订单金额</span>
+                <span class="fl" style="margin-left: .56rem;">-</span>
+                <span class="fr">首付款</span>
+            </div>
+            <div class="font-26r color-999 clearfloat payCoffee-top2-bottom">
+                <span class="fl color-47c88a tc" style="margin-left: .71rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[0].realpayPrice, 1, 1)}">￥10000.0</span>
+                <span class="fl tc" style="margin-left: .93rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[0].realpayPrice+childOrderList[1].realpayPrice, 1, 1)}">￥10000.0</span>
+                <span class="fl tc" style="margin-left: .93rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[1].realpayPrice, 1, 1)}">￥10000.0</span>
+            </div>
+        </div>
+    </div>
+    <div class="isSpread-fgx"></div>
+    <div style="height: .2rem;"></div>
+    <div class="isSpread-fgx"></div>
+    <div class="payCoffee-main">
+        <div class="payCoffee-main-title clearfloat">
+            <span class="fl">分期信息验证</span>
+            <i class="fl font-24r">请先在咖啡易融APP申请对应金额的贷款</i>
+        </div>
+        <div class="isSpread-fgx"></div>
+        <div class="payCoffee-main-write">
+            <div class="input-container">
+                <div>真实姓名</div>
+                <input class="input-realName js-input-realName" type="text" value="" name="realName" placeholder="请填写您的姓名，2~15个字符" maxlength="15" autocomplete="off" />
+            </div>
+            <div class="isSpread-fgx"></div>
+            <div class="input-container">
+                <div>手机号码</div>
+                <input class="input-telephone js-input-telephone" type="tel" value="" name="telephone" oninput="this.value=this.value.replace(/\D/g,'');" placeholder="请填写您的手机号码" maxlength="11" autocomplete="off" />
+            </div>
+            <div class="isSpread-fgx"></div>
+            <div class="input-container">
+                <div><div style="width: 1.1rem;display: flex;justify-content: space-between"><i>验</i><i>证</i><i>码</i></div></div>
+                <input class="input-checkCode js-input-checkCode" type="url" value="" name="checkCode" placeholder="请填写咖啡易融验证码" autocomplete="off" />
+            </div>
+            <div class="isSpread-fgx"></div>
+            <div class="input-container">
+                <div><div style="width: 1.1rem;display: flex;justify-content: space-between"><i>期</i><i>数</i></div></div>
+                <input class="input-number js-input-number" type="tel" value="" name="number" oninput="this.value=this.value.replace(/\D/g,'');" placeholder="请填写期数" maxlength="2" autocomplete="off" />
+            </div>
+        </div>
+        <div class="isSpread-fgx"></div>
+    </div>
+    <!--<div style="height: 2.30rem;"></div>-->
+    <div class="payCoffee-bottom tc" id="payCoffeeCheck">信息验证</div>
+</div>
+<!--隐藏域start-->
+<input type="hidden" id="payNum" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[0].payNum}" />
+<input type="hidden" id="payNumTwo" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[1].payNum}" />
+<input type="hidden" id="paidCount" th:if="${paidCount!=null}" th:value="${paidCount}" />
+<input type="hidden" id="payBCType" value="2" />
+<input type="hidden" th:if="${payDomain!=null}" th:value="${payDomain}" id="payBasePath" />
+<input type="hidden" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[1].id}" id="orderIdTwo" />
+<!--隐藏域end-->
+<!--正文部分end-->
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/fastclick.min.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/runFastclick.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/payOrder/js/payCoffee.js?v='+${staticVersion}}"></script>
+</body>
+</html>

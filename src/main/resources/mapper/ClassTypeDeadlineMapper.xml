@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassTypeDeadlineMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassTypeDeadline">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" />
+    <result column="class_type_id" property="classTypeId" />
+    <result column="use_date" jdbcType="VARCHAR" property="useDate" />
+    <result column="deadline" jdbcType="DATE" property="deadline" />
+    <result column="updator" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="gua_type" jdbcType="INTEGER" property="guaType" />
+    <result column="delay_first" jdbcType="TIMESTAMP" property="delayFirst" />
+    <result column="delay_second" jdbcType="TIMESTAMP" property="delaySecond" />
+  </resultMap>
+
+  <!--<select id="selectByClassTypeIdAndUseDate" resultMap="BaseResultMap">-->
+    <!--select class_type_id, use_date, deadline -->
+    <!--from -->
+    <!--class_type_deadline where class_type_id = #{classTypeId} and use_date = #{useDate}-->
+  <!--</select>-->
+</mapper>

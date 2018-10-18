@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>咖啡易融支付-支付尾款</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payBct.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payBct.css?v='+${staticVersion}}"/>
+    <script src="//test2.duia.com:8082/dist/js/web/payOrder/js/pay_batch.js"
+            th:src="@{${staticDomain} +'/js/web/payOrder/js/pay_batch.js?v='+${staticVersion}}" type="text/javascript"
+            charset="utf-8"></script>
+</head>
+<body>
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon pay-control" data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+                <p>确认订单信息</p>
+            </div>
+            <div class="pay-jd">
+                <span class="pay-num"></span>
+            </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pay-fp">
+        <div class="pay-fpOne">
+            <i class="pay-fpL"></i>
+
+            <div class="pay-fpR">
+                <p class="pay-fphint">恭喜你已经通过咖啡易融贷款<span th:text="${childOrderList[0].realpayPrice}">2600</span>元,<span>请支付尾款开通课程</span></p>
+            </div>
+        </div>
+        <div class="pay-fpTwo">
+            <p>咖啡易融</p>
+
+            <div class="pay-fptable">
+                <div class="pay-fp-tittle">已完成<span th:text="${paidCount}">1</span>笔支付，还需支付<i id="payFpSize"></i>笔
+                </div>
+                <table class="pay-table">
+                    <thead>
+                    <th width="160">款项</th>
+                    <th width="220">金额</th>
+                    <th width="150">状态</th>
+                    <th width="220">支付方式</th>
+                    <th width="200">选择银行</th>
+                    <th width="130">操作</th>
+                    </thead>
+                    <tr align="center" class="pay-yzf" th:each="com:${childOrderList}" th:id="${com.id}"
+                        th:data-status="${com.payStatus}" th:data-payType="${com.payType}" th:data-bankType="${com.bankType}">
+                        <td class="pay-num" style="text-align: center;" th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}">分期</td>
+                        <td class="pay-num" style="text-align: center;" th:if="${(com.payStatus=='pay_status_non' || com.payStatus=='pay_status_success') && comStat.index==1}">尾款</td>
+                        <!--未支付-->
+                        <td th:if="${com.payStatus}=='pay_status_non'"><span
+                                th:text="${#numbers.formatDecimal(com.realpayPrice,1,1)}" class="payFpMoney"></span>元
+                        </td>
+                        <td class="pay-wzftext" th:if="${com.payStatus}=='pay_status_non'">未支付</td>
+                        <td class="pay_type" style="position: relative;" th:if="${com.payStatus}=='pay_status_non'">
+                            <!--<em><i></i></em>-->
+                            <select class="pay-list">
+                                <!--<p><span></span><i></i></p>-->
+                                <!--<ul style="display: none;background:#fff;position: relative; z-index: 11;">-->
+                                <!--<li>招商银行</li>-->
+                                <!--<li>支付宝</li>-->
+                                <!--</ul>-->
+                            </select>
+                        </td>
+                        <td align="center" class="bank_type" style="position: relative;"
+                            th:if="${com.payStatus}=='pay_status_non'"><!--<em style="right:32px;"><i></i></em>-->
+                            <select style="width:138px;" class="pay-list">
+                                <!--<p><span>招商银行</span><i></i></p>-->
+                                <!--<ul style="display: none;background:#fff;position: relative;z-index: 11;">-->
+                                <!--<li>招商银行</li>-->
+                                <!--<li>支付宝</li>-->
+                                <!--</ul>-->
+                            </select>
+                        </td>
+                        <td th:if="${com.payStatus}=='pay_status_non'"><a class="goPay" target="_blank">去支付</a></td>
+
+                        <!--已验证-->
+                        <td th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}">
+                            <span th:text="${#numbers.formatDecimal(com.realpayPrice,1,1)}" class="payFpMoney"></span>元
+                        </td>
+                        <td th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}" style="cursor: default;">已验证</td>
+                        <td th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}">
+                            <div>咖啡易融</div>
+                        </td>
+                        <td th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}">
+                            <div style="text-align: center;">咖啡易融</div>
+                        </td>
+                        <td th:if="${(com.payStatus=='pay_status_through' || com.payStatus=='pay_status_success') && comStat.index==0}"><a style="cursor: default;">已验证</a></td>
+
+                        <!--已支付-->
+                        <td th:if="${com.payStatus=='pay_status_success' && comStat.index==1}"><span
+                        th:text="${#numbers.formatDecimal(com.realpayPrice,1,1)}" class="payFpMoney"></span>元
+                        </td>
+                        <td th:if="${com.payStatus=='pay_status_success' && comStat.index==1}">已支付</td>
+                        <td th:if="${com.payStatus=='pay_status_success' && comStat.index==1}">
+                        <div class="pay-yzf-btn pay_type">支付平台</div>
+                        </td>
+                        <td th:if="${com.payStatus=='pay_status_success' && comStat.index==1}">
+                        <div style="width:136px;left:45%;" class="pay-yzf-btn bank_type" id="payType"></div>
+                        </td>
+                        <td th:if="${com.payStatus=='pay_status_success' && comStat.index==1}"><a>已支付</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="pay_lcBox">
+            <p class="pay_lcTit">咖啡易融使用流程</p>
+            <ul class="pay_lc">
+                <li>
+                    <p>1.下载咖啡易融APP </p>
+                    <img class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeeone.png'}">
+                </li>
+                <li class="pay_lcTwo" style="margin:0 178px;">
+                    <img class="payGe CopayGeone"  th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+
+                    <p>2.在咖啡易融APP上申请分期并得到验证码</p>
+                    <img  class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeetwo.png'}">
+
+                    <img class="payGe CopayGetwo" th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+
+                </li>
+                <li>
+                    <p>3.验证兑换码并支付首付款</p>
+                    <img  class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeelast.png'}">
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="payNum" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[0].payNum}" />
+<input type="hidden" id="payNumTwo" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[1].payNum}" />
+<input type="hidden" id="payBCType" value="2" />
+<input type="hidden" id="paidCount" th:if="${paidCount!=null}" th:value="${paidCount}">
+<div th:insert="~{web/footer :: footer('')}"></div>
+<input type="hidden" th:value="${payDomain}" id="payBasePath"/>
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="//test2.duia.com:8082/dist/js/web/payOrder/js/payFp.js" th:src="@{${staticDomain} +'/js/web/payOrder/js/payFp.js'}" type="text/javascript" charset="utf-8"></script>-->
+<script th:inline="javascript">
+    //    var payBasePath=[[payBasePath]];
+    $("tbody tr").each(function () {
+        var payTypeObj = $(this).find("td.pay_type").find("select");
+        var bankTypeObj = $(this).find("td.bank_type").find("select");
+        initPayTypeItems(payTypeObj, bankTypeObj);
+    });
+    var payTypeMapping = {
+        "pay_type_zfb": "支付宝",
+        "pay_type_wxsm": "微信支付",
+        "pay_type_tenpay": "财付通",
+//        "pay_type_kjzf": "银联快捷",
+        "pay_type_jd": "京东支付"
+    };
+    var bankMapping = {
+        "1003": "中国建设银行",
+        "1002": "中国工商银行",
+        "1001": "招商银行",
+        "1005": "中国农业银行",
+        "1052": "中国银行",
+        "1028": "中国邮政",
+        "1020": "交通银行",
+        "1022": "中国光大银行",
+        "1009": "兴业银行",
+        "1027": "广发银行",
+        "1010": "平安银行",
+        "1006": "中国民生银行",
+        "1021": "中信银行",
+        "1032": "北京银行",
+        "1004": "浦发银行",
+        "1082": "上海农商银行",
+        "1008": "深圳发展银行",
+        "1054": "南京银行",
+        "1056": "宁波银行",
+        "1076": "东亚银行"
+    };
+    var yPay = $('.pay-table tbody tr').size();
+    var dPay =  parseInt( $('.pay-fp-tittle span').html());
+    $('#payFpSize').text(yPay-dPay);
+    for (var i = 0; i < $("table tbody tr").length; i++) {
+        var payType = $(".pay-yzf").eq(i);
+        var dataPatType=payType.attr('data-payType');
+        if (dataPatType == 'pay_type_tenpay') {
+            var bankType = payType.attr("data-bankType");
+            if (bankType) {
+                payType.find("#payType").html(bankMapping[bankType]);
+            } else {
+                payType.find("#payType").html('财付通');
+            }
+        } else {
+            payType.find("#payType").html(payTypeMapping[dataPatType]);
+        }
+    }
+    var payBasePath = $("#payBasePath").val();
+    $(".goPay").click(function () {
+        var payNum = $("#payNumTwo").val();
+        var payList = $(this).parent().parent().find(".pay_type").find(".pay-list").val();
+        var payType = $(this).parent().parent().find(".bank_type").find(".pay-list").val();
+        if (payList == 2) {
+            /*网上银行跳转*/
+            setTimeout(function () {
+                /*$(".bank_type .pay-list option").each(function () {
+                    if ($(this).val() == $(".bank_type .pay-list").val()) {
+//                        window.location = payBasePath + "/pay/tenpay?payNum=" + payNum + '&bankType=' + $(this).val();
+                        alert(payType);
+                        window.open(payBasePath + "/pay/tenpay?payNum=" + payNum + '&bankType=' + payType);
+                        //$('.goPay').attr('href',payBasePath + "/pay/tenpay?payNum=" + payNum + '&bankType=' + $(this).val())
+                    }
+                });*/
+                window.open(payBasePath + "/pay/tenpay?payNum=" + payNum + '&bankType=' + payType);
+            }, 100)
+        } else {
+            if (payType == 'pay_type_zfb') {/*支付宝跳转*/
+                //$(this).attr('href',payBasePath + '/pay/alipay?payNum=' + payNum);
+                window.open(payBasePath + '/pay/alipay?payNum=' + payNum);
+            } else if (payType == 'pay_type_wxsm') {/*微信跳转*/
+                //$(this).attr('href','/pay/wx?payNum=' + payNum);
+                window.open('/pay/wx?payNum=' + payNum);
+            } else if (payType == 'pay_type_tenpay') {/*财付通跳转*/
+                //$(this).attr('href',payBasePath + '/pay/tenpay?payNum=' + payNum);
+                window.open(payBasePath + '/pay/tenpay?payNum=' + payNum);
+            } else if (payType == 'pay_type_kjzf') {/*银联快捷跳转*/
+                //$(this).attr('href',payBasePath + '/pay/unionpay?payNum=' + payNum)
+                window.open(payBasePath + '/pay/unionpay?payNum=' + payNum);
+            } else if (payType == 'pay_type_jd') {/*京东支付*/
+                //$(this).attr('href',payBasePath + '/pay/jd?payNum=' + payNum);
+                window.open(payBasePath + '/pay/jd?payNum=' + payNum);
+            }
+        }
+    })
+</script>
+<script src="http://test2.duia.com:8080/dist/js/web/common/js/template.js"
+        th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript"
+        charset="utf-8"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payOrder.js?v='+${staticVersion}}"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payCommon.js?v='+${staticVersion}}"></script>
+</body>
+</html>

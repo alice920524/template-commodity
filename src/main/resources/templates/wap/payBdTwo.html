@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <!--禁用苹果数字变为蓝色-->
+    <meta name="format-detection" content="telephone = no"/>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+    <title>百度有钱花支付</title>
+    <link type="text/css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/common/css/wapRestRem.css'}" />
+    <script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/payOrder/css/payCoffee.css?v='+${staticVersion}}" />
+</head>
+<body>
+<!--头部start-->
+<div class="header" id="header" style="display: none;">
+    <i class="go-back-i" onclick="history.go(-1);">
+        <img class="imgW-100" src="//static.duia.com/pro/image/wap/common/img/headBack.png">
+    </i>
+    <i>百度有钱花支付</i>
+    <!--<span>-->
+    <!--<img class="imgW-100"  th:if="${session.user!=null}" th:src="${tuDomain}+'/'+${session.user.picUrl}"/>-->
+    <!--<img class="imgW-100"  th:if="${session.user==null}" th:src="@{${staticDomain}+'/image/wap/skuIndex/img/head.png'}"  onclick="signIn();"/>-->
+    <!--</span>-->
+</div>
+<!--头部end-->
+<!--正文部分start-->
+<div class="payCoffeeTwo">
+    <div class="payCoffeeTwo-top">
+        <div class="payCoffeeTwo-top1">
+            <div class="payCoffeeTwo-top1-image-div"></div>
+            <div class="clearfloat payCoffeeTwo-top1-p-div">
+                <p class="fl color-47c88a font-30r">申请教育分期</p>
+                <p class="fr color-47c88a font-30r">支付首付款</p>
+            </div>
+        </div>
+        <div class="isSpread-fgx-dashed"></div>
+        <div class="payCoffeeTwo-top2">
+            <div class="font-26r color-999 clearfloat payCoffeeTwo-top2-top">
+                <span class="fl color-47c88a">首付款</span>
+                <span class="fl" style="margin-left: .63rem;">=</span>
+                <span class="fl" style="margin-left: .49rem;">订单金额</span>
+                <span class="fl" style="margin-left: .53rem;">-</span>
+                <span class="fr">分期金额</span>
+            </div>
+            <div class="font-26r color-999 clearfloat payCoffeeTwo-top2-bottom">
+                <span class="fl color-47c88a tc" style="margin-left: .56rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[1].realpayPrice, 1, 1)}">￥10000.0</span>
+                <span class="fl tc" style="margin-left: .99rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[0].realpayPrice+childOrderList[1].realpayPrice, 1, 1)}">￥10000.0</span>
+                <span class="fl tc" style="margin-left: .88rem;" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="'￥'+${#numbers.formatDecimal(childOrderList[0].realpayPrice, 1, 1)}">￥10000.0</span>
+            </div>
+        </div>
+    </div>
+    <div class="isSpread-fgx"></div>
+    <div style="height: .2rem;"></div>
+    <div class="isSpread-fgx"></div>
+    <div class="payCoffeeTwo-main">
+        <div class="payCoffeeTwo-main-title clearfloat">
+            <span class="fl">支付首付款</span>
+            <i class="fl font-24r">支付成功后立即开通课程权限</i>
+        </div>
+        <div class="isSpread-fgx"></div>
+        <div class="payType-box js-payType-box" id="payType-box-wap" style="display: none;">
+            <div class="pay-type js-pay-type clearfloat zfb">
+                <img class="fl type-icon-img icon-zfb" th:src="${staticDomain}+'/image/wap/payOrder/img/icon2.png'">
+                <p class="fl">支付宝wap支付</p>
+                <i class="fr on js-on"></i>
+            </div>
+            <div class="isSpread-fgx"></div>
+            <div class="pay-type js-pay-type clearfloat wsyh">
+                <img class="fl type-icon-img icon-wsyh" th:src="${staticDomain}+'/image/wap/payOrder/img/icon3.png'">
+                <p class="fl">网上银行支付</p>
+                <i class="fr"></i>
+            </div>
+            <div class="isSpread-fgx"></div>
+        </div>
+        <div class="payType-box js-payType-box" id="payType-box-H5" style="display: none;">
+            <div class="pay-type js-pay-type clearfloat" pay_type="pay_type_zfb">
+                <!--<span class="fl">-->
+                <img class="fl type-icon-img icon-zfb" th:src="${staticDomain}+'/image/wap/payOrder/img/icon2.png'">
+                <!--</span>-->
+                <p class="fl">支付宝支付</p>
+                <i class="fr on js-on"></i>
+            </div>
+            <div class="isSpread-fgx"></div>
+            <div class="pay-type js-pay-type clearfloat" pay_type="pay_type_wxzf">
+                <img class="fl type-icon-img icon-wxzf" th:src="${staticDomain}+'/image/wap/payOrder/img/payCoffee-icon-wx.jpg'">
+                <p class="fl">微信支付</p>
+                <i class="fr"></i>
+            </div>
+        </div>
+        <div class="isSpread-fgx"></div>
+    </div>
+    <div th:if="${appType!=null && appType==998}" style="height: 2.30rem;"></div>
+    <div class="payCoffeeTwo-bottom tc" id="goPay">立即支付</div>
+    <input type="hidden" id="payNum" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[0].payNum}" />
+    <input type="hidden" id="payNumTwo" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[1].payNum}" />
+    <input type="hidden" id="payBCType" value="1" />
+    <input type="hidden" id="paidCount" th:if="${paidCount!=null}" th:value="${paidCount}" />
+    <input type="hidden" th:if="${payDomain!=null}" th:value="${payDomain}" id="payBasePath" />
+    <input type="hidden" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[1].id}" id="orderIdTwo" />
+</div>
+<!--正文部分end-->
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/fastclick.min.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/runFastclick.js'}"></script>
+<script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/payOrder/js/payCoffee.js?v='+${staticVersion}}"></script>
+</body>
+</html>

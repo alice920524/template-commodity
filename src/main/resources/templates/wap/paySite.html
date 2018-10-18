@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="//www.w3.org/1999/xhtml" xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>寄送地址</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/style/wap/payOrder/css/payConfirm.css" th:href="@{${staticDomain}+'/style/wap/payOrder/css/payConfirm.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<div class="indent_top js-indent-top" style="display: none;">
+    <a>寄送地址</a>
+</div>
+<div class="indent_top_blank" style="height:.88rem;display:none;"></div>
+<div class="message">
+    <div class="site">
+        <a>
+            <span>收件人</span>
+            <input  value="" class="space_1" onblur="check($(this))" onfocus="hideError($(this))" maxlength="15" type="text"/>
+        </a>
+        <i></i>
+    </div>
+    <div class="site">
+        <a>
+            <span>联系方式</span>
+            <input value=""  class="space_2" onblur="check($(this))" onfocus="hideError($(this))" oninput="this.value=this.value.replace(/\D/g,''); if(value.length>11)value=value.slice(0,11);" type="number"/>
+        </a>
+        <i></i>
+    </div>
+    <div class="site">
+        <a>
+            <span>所在地区</span>
+            <p></p>
+        </a>
+        <i></i>
+        <div class="show-area">
+            <div class="area-one">
+                <p class="p-name"></p>
+            </div>
+            <div class="area-one">
+                <p class="city-name"></p>
+            </div>
+            <div class="area-one">
+                <p class="county-name"></p>
+            </div>
+        </div>
+
+    </div>
+    <div class="site">
+        <a>
+            <span>详细地址</span>
+            <input  class="space_3" onblur="check($(this))" onfocus="hideError($(this))" maxlength="50" type="text"/>
+        </a>
+        <i></i>
+    </div>
+</div>
+<div class="submit js-submit">
+    <a>提交</a>
+</div>
+<div class="select-area-wrap">
+
+    <div class="select-area">
+        <div class="select-title">
+            <p class="select-title-text">所在地区</p>
+            <span class="select-close"></span>
+        </div>
+        <div class="show-select clear">
+            <div class="area-one color show">
+                <p class="area-one-name">请选择</p>
+                <p class="bottom-line show"></p>
+            </div>
+            <div class="area-one">
+                <p class="area-one-name">请选择</p>
+                <p class="bottom-line"></p>
+            </div>
+            <div class="area-one">
+                <p class="area-one-name">请选择</p>
+                <p class="bottom-line"></p>
+            </div>
+
+        </div>
+        <ul class="area-list">
+
+        </ul>
+    </div>
+</div>
+<div class="alertTs"> 地址填写不规范</div>
+<input type="hidden" th:value="${session.user.id}" class="paysit-id">
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/util.js" th:src="@{${staticDomain} +'/js/wap/common/js/util.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="//common.duia.com/common/js/jquery-1.9.1.js"  type="text/javascript" charset="utf-8" ></script>
+<script src="//test2.duia.com:8080/dist/js/web/common/js/jquery.cookie.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/jquery.cookie.js'}"></script>
+<script src="//test2.duia.com:8080/js/wap/payOrder/js/china_area.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/payOrder/js/china_area.js?v='+${staticVersion}}"></script>
+<script src="//test2.duia.com:8080/resources/wap/payOrder/js/paySite.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/payOrder/js/paySite.js?v='+${staticVersion}}"></script>
+<!--<script src="//test2.duia.com:8080/resources/wap/payOrder/js/paySite.js" type="text/javascript" charset="utf-8"></script>-->
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>保险条款</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="<%=apiPath%>/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <script src="<%=apiPath%>/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="<%=apiPath%>/style/wap/commondity/css/skuDetailInfo.css" th:href="@{${staticDomain}+'/style/wap/commondity/css/skuDetailInfo.css?v='+${staticVersion}}"/>
+    <style type="text/css">
+        html,body{background: #fff}
+        .section{padding:0 .3rem 1.5rem;overflow: auto;color:#323233;font-size:.26rem;line-height: .4rem;}
+        .section p{margin-top: .4rem;font-size:.28rem;}
+        .bottom:after{display:none;}
+        .bottom a{float:left;width:50%;text-align: center;line-height: 1.1rem}
+        .bottom a.no{color:#333;background:#e6e6e6;}
+        .bottom a.yes{color:#fff;background:#FF5D24;}
+    </style>
+</head>
+<body>
+<div class="header" style="display: none;">保险条款</div>
+<div class="section" th:utext="${content}" style="background: #fff;">
+</div>
+<div class="bottom">
+    <a href="javascript:void(0)" class="no">取消</a>
+    <a href="javascript:void(0)" class="yes">同意条款</a>
+</div>
+<script src="<%=apiPath %>/js/wap/common/js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.7.2.min.js'}"></script>
+<script>
+    $(function(){
+        var appType = GetQueryString("appType");
+        var os = GetQueryString("os");
+        if(appType!=null && appType!=998){
+            $(".section").css("margin-top","0");
+            $('.header').hide();
+        }else{
+            $(".header").show();
+        }
+        if(os==1 && appType==1){
+           $('.bottom').hide();
+        }
+    });
+    $(".bottom a").on('click', function () {
+        if($(this).attr("class") == "yes"){
+            window.location.href = GetQueryString("apiPath")+"/c/"+GetQueryString("comId")+".html?appType="+GetQueryString("appType")+'&os='+GetQueryString("os")+"#insurance";
+        }else{
+            window.history.back(-1);
+        }
+    });
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return r[2];
+        return null;
+    }
+
+</script>
+
+</body>
+</html>

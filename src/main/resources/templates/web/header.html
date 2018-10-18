@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<body>
+<div th:fragment="header(name)">
+<div class="header">
+    <div class="t-width">
+        <a class="t-logo" th:href="@{${duiaDomain}}" target="_blank"><img src="http://test2.duia.com:8080/resources/web/common/img/logo.png" th:src="${staticDomain+'/image/web/common/img/logo.png'}" width="100" /> </a>
+        <p th:text="${name}"></p>
+        <div class="login"><img src="http://test2.duia.com:8080/resources/web/common/img/touxiang.png" th:if="${session.user!=null}" th:src="${tuDomain+session.user.picUrl}"/></div>
+    </div>
+</div>
+<script th:if="${session.user!=null}" th:src="@{${ssoDomain}+'/uc/webPushScript?userId='+${session.user.id}+'&time='+${#dates.createNow().getTime()}}"></script>
+</div>
+</body></html>

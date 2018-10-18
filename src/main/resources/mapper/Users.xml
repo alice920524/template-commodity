@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.UsersMapper">
+    <resultMap id="BaseResultMap" type="com.duia.commodity.model.Users">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="pic_url_mid" jdbcType="VARCHAR" property="picUrlMid"/>
+        <result column="pic_url_min" jdbcType="VARCHAR" property="picUrlMin"/>
+        <result column="vip" jdbcType="INTEGER" property="vip"/>
+    </resultMap>
+
+    <select id="findUserById" resultType="com.duia.commodity.model.Users">
+        SELECT
+        u.id,u.username,u.mobile,u.email,u.pic_url as picUrl,u.pic_url_mid as picUrlMid,u.pic_url_min as picUrlMin,u.vip
+        FROM
+        users u
+        WHERE
+        u.id = #{userId}
+    </select>
+</mapper>

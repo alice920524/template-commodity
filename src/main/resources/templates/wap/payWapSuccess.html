@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>支付成功</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/wapRest.css"
+          th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/payOrder/css/pay.css"
+          th:href="@{${staticDomain}+'/style/wap/payOrder/css/pay.css?v='+${staticVersion}}"/>
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8"
+            th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+</head>
+<body>
+<!--<div class="pay_top">-->
+    <!--&lt;!&ndash;<img src="/resources/wap/payOrder/img/x.png" th:src="${staticDomain}+'/image/wap/payOrder/img/x.png' ">&ndash;&gt;-->
+    <!--<h3>支付结果</h3>-->
+<!--</div>-->
+<div class="pay_sc">
+    <div>
+        <img src="/resources/wap/payOrder/img/icon6.png" th:src="${staticDomain}+'/image/wap/payOrder/img/icon6.png' ">
+        <p>
+            <span>订单支付成功！</span>
+            <a>请留意你的QQ，老师会添加你好友。</a>
+        </p>
+
+    </div>
+</div>
+<div class="pay_text">
+    <a>商品名称：<i th:text="${name}"></i></a>
+    <!--<a>订单编号：<i th:text="${payNum}"></i></a>-->
+    <!--<a>支付时间：<i th:text="${payTime}"></i></a>-->
+    <!--<a th:unless="${#strings.isEmpty(address)}">收货信息：<i th:text="${address.addressee}" th:if="${!#strings.isEmpty(address.addressee)}"></i>&nbsp;<i th:text="${address.mobile}" th:if="${!#strings.isEmpty(address.mobile)}"></i></a>-->
+    <!--<a th:unless="${#strings.isEmpty(address)}">收货地址：<i th:text="${address.province}" th:if="${!#strings.isEmpty(address.province)}"></i>&nbsp;<i th:text="${address.city}" th:if="${!#strings.isEmpty(address.city)}"></i>&nbsp;<i th:text="${address.county}" th:if="${!#strings.isEmpty(address.county)}"></i>&nbsp;<i th:text="${address.detailAddress}" th:if="${!#strings.isEmpty(address.detailAddress)}"></i></a>-->
+    <a>支付金额：<i th:text="${price}"></i></a>
+</div>
+<!--<div class="class_access">-->
+    <!--进入我的班级-->
+<!--</div>-->
+<a class="downLoadBox" href="//a.app.qq.com/o/simple.jsp?pkgname=com.duia.duiaapp">
+    下载【对啊课堂】
+</a>
+<div class="howClassBox">
+    <img th:src="${staticDomain}+'/image/wap/payOrder/img/howClass.png' ">
+</div>
+
+<input type="hidden" id="sku" th:value="${sku}" />
+<input type="hidden" id="appType" th:value="${appType}" />
+<input type="hidden" id="duiaBasePath" th:value="${duiaDomain}" />
+<input type="hidden" id="classId" th:value="${classId}" />
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}"></script>
+<script>
+    $(function(){
+        $(".class_access").click(function(){
+            var appType = $("#appType").val();
+            if(appType!=998 && appType!=999 && appType!=null && appType!=''){
+                if(appType == 1 || appType == 6 || appType == 7){
+                    var classId = $("#classId").val();
+                    if(classId!=null && classId!=''){
+                        window.location.href='{"classId":"'+$("#classId").val()+'"}';
+                    }
+                }else{
+                    window.location.href='{"appId":"0","sku":"'+$("#sku").val()+'"}';
+                }
+            }else{
+                window.location.href = $("#duiaBasePath").val()+'/mobile/class/index';
+            }
+        });
+    });
+</script>
+</body>
+</html>

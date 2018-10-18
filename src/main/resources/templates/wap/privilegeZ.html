@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>优惠组合</title>
+    <!--禁用苹果数字变为蓝色-->
+    <meta name="format-detection" content="telephone = no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/commondity/css/skuDetailInfo.css" th:href="@{${staticDomain}+'/style/wap/commondity/css/skuDetailInfo.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/order/css/order.css" th:href="@{${staticDomain}+'/style/wap/order/css/order.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<div class="header js-header">优惠组合<span><img src="//static.test.duia.com/dev/image/wap/commondity/img/head.png" alt="" th:if="${session.user!=null}" th:src="${tuDomain+session.user.picUrl}"/></span></div>
+<div class="section js-section">
+    <div class="single js-single" onclick="typeHref($(this))" style="margin:0;border-top:0;">
+        <p class="title">单门课购买<i class="up"></i></p>
+    </div>
+    <div class="pack js-pack" onclick="typeHref($(this))" th:if="${tc}">
+        <p class="title">选择套餐<i class="up"></i></p>
+    </div>
+    <div class="comb js-comb">
+        <p class="title" onclick="isOpen($(this))">选择组合<i></i></p>
+        <div class="con js-con open" th:each="groupOne:${specialList}"  th:attr="data-discountPrice=${groupOne.discountPrice},data-groupId=${groupOne.id}">
+            <div class="tit">
+                <p th:text="${groupOne.name}">五科超值套餐</p>
+                <span class="price js-gropu-sumPrice" th:attr="realSumPrice=${#numbers.formatDecimal(price, 1, 1)}" th:text="'￥'+${#numbers.formatDecimal(price, 1, 1)}"></span>
+                    <i class="js-save" style="display: none;"></i>
+            </div>
+            <ul>
+                <!--特殊商品第一是单品-->
+                <li th:attr="data_price=${#numbers.formatDecimal(price, 1, 1)}">
+                    <p><i></i><span th:text="${name}"></span></p>
+                    <span  id="js-specialSingle-price" th:text="'￥'+${#numbers.formatDecimal(price, 1, 1)}"></span>
+                </li>
+                <li th:each="commodity:${groupOne.commodityList}" th:attr="data_price=${#numbers.formatDecimal(commodity.costPrice, 1, 1)}">
+                    <p><i th:attr="data-commodityId=${commodity.id}"></i><span th:text="${commodity.name}">五大行业高薪就业</span></p>
+                    <span th:text="'￥'+${#numbers.formatDecimal(commodity.costPrice, 1, 1)}" class="js-groupCommodity-costPrice">￥4250</span>
+                </li>
+            </ul>
+            <a class="zhBtn js-zhBtn">去报名</a>
+        </div>
+    </div>
+</div>
+<script src="//common.duia.com/common/js/jquery-1.9.1.js"  type="text/javascript" charset="utf-8" ></script>
+<script src="//common.test.duia.com/common/js/web4.0/tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/tools.js'}" type="text/javascript"></script>
+<script src="//common.test.duia.com/common/js/web4.0/duia_tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/duia_tools.js'}" type="text/javascript"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/util.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/util.js'}"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/order/js/order.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/order/js/order.js?v='+${staticVersion}}"></script>
+</body>
+</html>

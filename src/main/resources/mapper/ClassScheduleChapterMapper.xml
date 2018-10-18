@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassScheduleChapterMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassScheduleChapter">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_schedule_id" jdbcType="INTEGER" property="classScheduleId" />
+    <result column="chapter_name" jdbcType="VARCHAR" property="chapterName" />
+    <result column="chapter_order" jdbcType="INTEGER" property="chapterOrder" />
+  </resultMap>
+
+  <resultMap id="SelectByClassIdResultMap" type="com.duia.commodity.common.dto.ChapterDTO">
+    <id column="chapter_id"  property="id" />
+    <result column="chapter_name"  property="name" />
+    <collection property="courseList" ofType="com.duia.commodity.common.dto.CourseDTO">
+      <id column="course_id"  property="id" />
+      <result column="course_name"  property="name" />
+      <result column="course_courseDate"  property="courseDate" />
+      <result column="course_startTime"  property="startTime" />
+      <result column="course_endTime"  property="endTime" />
+      <result column="type"  property="type" />
+      <result column="play_type"  property="playType" />
+      <result column="lecture_id"  property="lectureId" />
+      <result column="video_length" property="videoLength" />
+    </collection>
+  </resultMap>
+
+  <select id="selectByClassId" resultMap="SelectByClassIdResultMap">
+    SELECT
+    chapter.id AS chapter_id,
+    chapter.chapter_name AS chapter_name,
+    course.id AS course_id,
+    course.course_name AS course_name,
+    course.class_date AS course_courseDate,
+    course.start_time AS course_startTime,
+    course.end_time AS course_endTime,
+    course.type,
+    course.play_type,
+    course.lecture_id
+    from
+    class_course_relation ccr
+    left join class_schedule_course course ON ccr.class_schedule_detail_id = course.id
+    left join class_schedule_chapter chapter ON course.chapter_id = chapter.id
+    where ccr.class_id = #{classId}
+    ORDER BY chapter.chapter_order,course.class_order
+  </select>
+</mapper>

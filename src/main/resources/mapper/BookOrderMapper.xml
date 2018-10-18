@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.BookOrderMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.BookOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_time" jdbcType="VARCHAR" property="orderTime" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="pay_num" jdbcType="VARCHAR" property="payNum" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="program_name" jdbcType="VARCHAR" property="programName" />
+    <result column="program_id" jdbcType="INTEGER" property="programId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="realpay_price" jdbcType="DOUBLE" property="realpayPrice" />
+    <result column="cost_price" jdbcType="DOUBLE" property="costPrice" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="delete_mark" jdbcType="INTEGER" property="deleteMark" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="os" jdbcType="INTEGER" property="os" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+  </resultMap>
+
+  <select id="confirmOrder" resultType="com.duia.commodity.common.dto.BookCommidityDTO">
+    SELECT
+             id,sku,price,title,subtitle,cover_url as coverUrl
+    from book_commodity WHERE id=#{comId} AND status=1;
+  </select>
+
+  <!-- 订单支付
+       categoryName 返回的是商品名称-->
+  <select id="payOrder" resultType="com.duia.commodity.dto.BookOrderPayDTO">
+    SELECT
+      id,
+      user_id as userId,
+      category_name as categoryName,
+      program_name as programName,
+      cost_price as costPrice,
+      pay_status AS  payStatus
+    from book_order WHERE user_id=#{userId} AND pay_num=#{payNum}
+  </select>
+</mapper>

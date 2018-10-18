@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassStudentMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassStudent">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
+    <result column="user_guide" jdbcType="INTEGER" property="userGuide" />
+    <result column="student_type" jdbcType="INTEGER" property="studentType" />
+    <result column="temp_class" jdbcType="INTEGER" property="tempClass" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="yx_teamid" jdbcType="VARCHAR" property="yxTeamid" />
+    <result column="yx_open" jdbcType="INTEGER" property="yxOpen" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_detail_id" jdbcType="INTEGER" property="orderDetailId" />
+    <result column="change_his" jdbcType="INTEGER" property="changeHis" />
+    <result column="rebuild_his" jdbcType="INTEGER" property="rebuildHis" />
+    <result column="dropout_status" jdbcType="INTEGER" property="dropoutStatus" />
+    <result column="mode" jdbcType="INTEGER" property="mode" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <select id="selectByClassId" resultType="com.duia.commodity.common.dto.ClassesStudentDTO">
+    SELECT
+    u.id,
+    u.username AS name,
+    u.pic_url AS imageUrl,
+    cs.pay_time AS buyTime
+    FROM
+    class_student cs
+    JOIN class_student_detail csd ON cs.student_id = csd.id
+    JOIN users u ON u.id = csd.user_id
+    WHERE
+    cs.class_id = #{classId} and cs.deleted = 0
+    ORDER BY
+    cs.pay_time DESC
+  </select>
+
+  <select id="findUserIsBuyClassId" resultType="int">
+    select count(1) from class_student cs join class_student_detail csd ON cs.student_id = csd.id join users u ON u.id = csd.user_id
+    where  cs.class_id = #{classId} and u.id = #{userId} and cs.student_type = 1 and cs.deleted = 0
+  </select>
+
+  <!-- 查询学员购买的班级 -->
+  <select id="findUserIsBuyClassIdStudentId" resultMap="BaseResultMap">
+    select id from class_student cs
+    where  cs.class_id = #{classId} and cs.student_id = #{studentId}
+    and cs.student_type = 1 and cs.deleted = 0 order by id desc limit 0, 1
+  </select>
+
+  <select id="selectHasServiceClassByOrderId" resultType="long">
+    select cs.class_id
+    from class_student cs
+    JOIN classes c on c.id = cs.class_id
+    JOIN class_type ct on c.class_type_id = ct.id
+    where cs.order_id = #{orderId}
+    order by ct.has_service desc, ct.id asc
+    limit 0, 1
+  </select>
+</mapper>

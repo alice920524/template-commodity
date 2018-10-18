@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:fragment="footer(name)">
+        <link th:href="@{${staticDomain}+'/style/web/foot/css/foot.css?v='+${staticVersion}}" rel="stylesheet">
+        <div class="foot">
+            <div class="foot_cen">
+                <ul>
+                    <li style="margin-left: 0;"><a href="//www.duia.com/info/about" target="_blank">关于我们</a></li>
+                    <li><a href="//zhaopin.duia.com/web/jc/g-c/396" target="_blank">加入对啊</a></li>
+                    <li><a href="//www.duia.com/user/vip" target="_blank">会员服务</a></li>
+                    <li><a th:href="@{${ucDomain}+'/bootYs.html'}" target="_blank">隐私条款</a></li>
+                    <li><a th:href="@{${ucDomain}+'/bootUser'}" target="_blank">用户协议</a></li>
+                    <li><a th:href="@{${ucDomain}+'/bootfv.html'}" target="_blank">法律声明</a></li>
+                    <li><a href="//duia.kf5.com/hc/kb/article/1043983/?from=draft" target="_blank">联系我们</a></li>
+                    <li><a target="_blank" th:href="@{${ucDomain}+'/bootHz.html'}">商务合作</a></li>
+                    <li><a th:href="@{${skuDomain}+'/complain?skuId='+${sku}}" target="_blank">投诉建议</a></li>
+                    <p onclick="window.open('//help.duia.com/hc/','_blank')">帮助中心</p>
+                </ul>
+                <ul style="margin-top:10px;" >
+                    <li style="margin-left: 0;cursor: default;">友情链接：</li>
+                    <li class="foot-link" style="margin-left: 26px;" onclick="window.open('//www.duia.com/t/overturn/index.html')">入行学院</li>
+                    <li class="foot-link" style="margin-left: 40px;" onclick="window.open('http://www.kuaijishizi.com/')">会计狮</li>
+                    <li  class="foot-link" style="margin-left: 54px;" onclick="window.open('http://www.shejiniu.net/')">设计牛</li>
+                </ul>
+
+                <div class="foot_qr">
+                    <img th:src="${staticDomain}+'/image/web/foot/img/qr_code.png'" />
+                </div>
+            </div>
+            <em>
+                <a style="cursor: default;">Copyright©2013-2018</a>
+                <a style="cursor: default;">北京对啊网教育科技有限公司版权所有</a>
+            </em>
+            <span>
+             <b onclick="window.open('http://www.miibeian.gov.cn/')">京ICP备14031391号 -1</b>
+             <b onclick="window.open('http://www.miibeian.gov.cn/')">京ICP证150435号</b>
+             <b onclick="window.open('http://www.miibeian.gov.cn/')">京B2-20160044</b>
+             <b onclick="window.open('http://www.miibeian.gov.cn/')">出版物经营许可证新出发京零字第石160011号</b>
+             <b>京网文[2018] 5630-432号</b>
+             <b onclick="window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11030102010215')">
+             <img th:src="${staticDomain}+'/image/web/common/img/picWb.png'" width="20" height="20" style="cursor: pointer;position: absolute;"/>
+                 <a style="margin-left: 24px">京公网安备11030102010215号</a>
+             </b>
+        </span>
+            <div class="foot_bq">
+                <div>
+                    <a style="margin-left: 0;" href="http://www.itrust.org.cn/home/index/itrust_certifi/wm/PJ2017033001" target="_blank" class="icon-wrap1">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon1.png'" width="28" height="28" />-->
+                        <span class="foot-bottom-icon1 foot-bottom-icon"></span>
+                        <i>网信认证</i>
+                    </a>
+                    <a href="http://www.315online.com.cn/member/315170003.html" target="_blank" class="icon-wrap2">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon2.png'" width="19" height="22" style="margin-top: -4px;" />-->
+                        <span class="foot-bottom-icon2 foot-bottom-icon"></span>
+                        <i>网上交易保障中心</i>
+                    </a>
+                    <a href="//credit.szfw.org/CX20170401033517210978.html" target="_blank"class="icon-wrap3">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon3.png'" width="26" height="26"/>-->
+                        <span class="foot-bottom-icon3 foot-bottom-icon"></span>
+                        <i>互联网3.15 银牌诚信</i>
+                    </a>
+                    <a href="//credit.szfw.org/CX82030000161820170328.html" target="_blank" class="icon-wrap4">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon4.png'" width="26" height="26"/>-->
+                        <span class="foot-bottom-icon4 foot-bottom-icon"></span>
+                        <i>诚信示范单位</i>
+                    </a>
+                    <a href="//ss.knet.cn/verifyseal.dll?sn=e14082611010753057lfxa000000&ct=df&a=1&pa=0.5740728406235576" target="_blank" class="icon-wrap5">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon5.png'" width="25" height="26"/>-->
+                        <span class="foot-bottom-icon5 foot-bottom-icon"></span>
+                        <i>可信网站</i>
+                    </a>
+                    <a href="//www.anquan.org/authenticate/cert/?site=www.duia.com&at=realname" target="_blank" class="icon-wrap6">
+                        <!--<img th:src="${staticDomain}+'/image/web/foot/img/icon6.png'" width="28" height="25"/>-->
+                        <span class="foot-bottom-icon6 foot-bottom-icon"></span>
+                        <i>实名认证</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

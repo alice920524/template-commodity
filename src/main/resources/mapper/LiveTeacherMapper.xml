@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.LiveTeacherMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.LiveTeacher">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="teach_num" jdbcType="VARCHAR" property="teachNum" />
+    <result column="teach_name" jdbcType="VARCHAR" property="teachName" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="teacher_type" jdbcType="INTEGER" property="teacherType" />
+    <result column="cover_url" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="live_pic_url" jdbcType="VARCHAR" property="livePicUrl" />
+    <result column="app_big_pic" jdbcType="VARCHAR" property="appBigPic" />
+    <result column="app_pic" jdbcType="VARCHAR" property="appPic" />
+    <result column="app_head_pic" jdbcType="VARCHAR" property="appHeadPic" />
+    <result column="teach_real_name" jdbcType="VARCHAR" property="teachRealName" />
+    <result column="yx_account" jdbcType="VARCHAR" property="yxAccount" />
+    <result column="yx_token" jdbcType="VARCHAR" property="yxToken" />
+    <result column="yx_type" jdbcType="INTEGER" property="yxType" />
+    <result column="yx_pic" jdbcType="VARCHAR" property="yxPic" />
+    <result column="yx_qq" jdbcType="VARCHAR" property="yxQq" />
+    <result column="yx_describe" jdbcType="VARCHAR" property="yxDescribe" />
+    <result column="course_qq" jdbcType="VARCHAR" property="courseQq" />
+    <result column="course_qq_name" jdbcType="VARCHAR" property="courseQqName" />
+    <result column="course_pic" jdbcType="VARCHAR" property="coursePic" />
+    <result column="authority_user_id" jdbcType="INTEGER" property="authorityUserId" />
+  </resultMap>
+
+  <select id="findByAuthUserId" resultMap="BaseResultMap">
+    SELECT *
+    FROM
+    live_teacher
+    WHERE
+    flag = 1
+    AND
+    authority_user_id = #{authUserId};
+  </select>
+</mapper>

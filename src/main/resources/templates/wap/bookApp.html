@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>领取</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link type="text/css" rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/common/css/wapRestRem.css'}" />
+    <script type="text/javascript" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/app/wxApp/css/wxApp.css'}"/>
+    <!--<link rel="stylesheet" type="text/css" href="http://test2.duia.com:8080/resources/app/wxApp/css/wxApp.css" />-->
+    <script th:inline="javascript">
+        var _statistics = [[${aiDomain}]];
+        var _open_id = [[${openid}]];
+    </script>
+    <style>
+        .top{width: 100%;
+            display: block;
+            margin: 0 auto;
+            padding-top: .5rem;
+        }
+        .iptBox{margin-top: .5rem;width: 5.3rem;}
+    </style>
+</head>
+<body>
+
+<div class="wxAppAllOne">
+    <img class="top" th:src="@{${staticDomain}+'/image/app/wxApp/img/bookImg.png'}">
+    <input class="iptBox" maxlength="30" placeholder="输入微信号"/>
+    <div class="btnBigbox">
+        <div class="btnBox btnBoxClick">
+            <div style="margin-left: 35%;">立即领取</div>
+            <div class="btn bookBtn"></div>
+        </div>
+    </div>
+</div>
+
+<img class="wxAppAll" th:src="@{${staticDomain}+'/image/app/wxApp/img/wxAppAll.png'}">
+<style>
+    .btnBox{    width: 5.9rem;
+        background: #54dbe8;
+        color: #fff;
+        padding: .3rem 0;
+        border-radius: .1rem; margin-bottom: .6rem;}
+</style>
+<script src="//common.duia.com/common/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/md5.min.js'}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/web/common/js/duia_util.js'}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/app/wxApp/js/wxApp.js?v='+${staticVersion}}"></script>
+<!--<script src="http://test2.duia.com:8080/resources/app/wxApp/js/wxApp.js"></script>-->
+
+
+</body>
+</html>

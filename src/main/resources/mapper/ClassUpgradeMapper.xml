@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassUpgradeMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassUpgrade">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="before_classid" jdbcType="INTEGER" property="beforeClassid" />
+    <result column="after_classid" jdbcType="INTEGER" property="afterClassid" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="valid_status" jdbcType="INTEGER" property="validStatus" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="before_date" jdbcType="DATE" property="beforeDate" />
+    <result column="enroll_num" jdbcType="INTEGER" property="enrollNum" />
+    <result column="address_mark" jdbcType="INTEGER" property="addressMark" />
+    <result column="study_pack_price" jdbcType="DOUBLE" property="studyPackPrice" />
+    <result column="limit_amount" jdbcType="INTEGER" property="limitAmount" />
+    <result column="has_limit" jdbcType="INTEGER" property="hasLimit" />
+  </resultMap>
+</mapper>

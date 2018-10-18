@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>账号无订单</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payFp.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payFp.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon " data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+                <p>确认订单信息</p>
+            </div>
+                <div class="pay-jd">
+                    <span class="pay-num"></span>
+                </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+    <!--订单内容-->
+    <div class="pay-content">
+         <div class="pay-empty" style="text-align: center;">
+             <img  th:src="${staticDomain}+'/image/web/payOrder/img/noOrder.png'"/>
+             <p>啊哦，你的账号没有需要确认的订单~</p>
+         </div>
+    </div>
+
+</div>
+</body>
+</html>

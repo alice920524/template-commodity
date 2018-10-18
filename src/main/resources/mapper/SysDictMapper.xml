@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.SysDictMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.SysDict">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dic_type" jdbcType="VARCHAR" property="dicType" />
+    <result column="dic_code" jdbcType="INTEGER" property="dicCode" />
+    <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+    <result column="dic_order" jdbcType="INTEGER" property="dicOrder" />
+    <result column="valid_sign" jdbcType="INTEGER" property="validSign" />
+    <result column="is_default" jdbcType="INTEGER" property="isDefault" />
+    <result column="dic_short" jdbcType="VARCHAR" property="dicShort" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="qqKey" jdbcType="VARCHAR" property="qqkey" />
+    <result column="mgrKey" jdbcType="VARCHAR" property="mgrkey" />
+    <result column="vip_sku" jdbcType="VARCHAR" property="vipSku" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="dic_image" jdbcType="VARCHAR" property="dicImage" />
+    <result column="videoQqKey" jdbcType="VARCHAR" property="videoqqkey" />
+    <result column="videoQqKeyDesc" jdbcType="VARCHAR" property="videoqqkeydesc" />
+    <result column="duibaDesc" jdbcType="VARCHAR" property="duibadesc" />
+    <result column="visible" jdbcType="INTEGER" property="visible" />
+    <result column="live_desc" jdbcType="VARCHAR" property="liveDesc" />
+    <result column="forum" jdbcType="VARCHAR" property="forum" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="live_playback" jdbcType="VARCHAR" property="livePlayback" />
+    <result column="app_function" jdbcType="VARCHAR" property="appFunction" />
+    <result column="app_function_sp" jdbcType="VARCHAR" property="appFunctionSp" />
+    <result column="app_qq" jdbcType="VARCHAR" property="appQq" />
+    <result column="app_xiaoneng" jdbcType="VARCHAR" property="appXiaoneng" />
+    <result column="ad_href" jdbcType="VARCHAR" property="adHref" />
+    <result column="ad_img" jdbcType="VARCHAR" property="adImg" />
+    <result column="ad_bg" jdbcType="VARCHAR" property="adBg" />
+    <result column="app_baoban" jdbcType="VARCHAR" property="appBaoban" />
+    <result column="sp_href" jdbcType="VARCHAR" property="spHref" />
+    <result column="sp_img" jdbcType="VARCHAR" property="spImg" />
+    <result column="sp_bg" jdbcType="VARCHAR" property="spBg" />
+    <result column="domainUrl" jdbcType="VARCHAR" property="domainurl" />
+    <result column="tk_href" jdbcType="VARCHAR" property="tkHref" />
+    <result column="tk_img" jdbcType="VARCHAR" property="tkImg" />
+    <result column="tk_bg" jdbcType="VARCHAR" property="tkBg" />
+    <result column="live_playBack_new" jdbcType="VARCHAR" property="livePlaybackNew" />
+    <result column="web_teacher" jdbcType="VARCHAR" property="webTeacher" />
+    <result column="template" jdbcType="LONGVARCHAR" property="template" />
+  </resultMap>
+
+    <select id="findSysDictBysku" resultType="String">
+        SELECT
+        s.qqKey
+        FROM
+        sys_dict s
+        WHERE
+        s.id = #{sku}
+    </select>
+</mapper>

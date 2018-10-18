@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.PayOrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.PayOrderDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="course_type" jdbcType="INTEGER" property="courseType" />
+    <result column="com_id" jdbcType="INTEGER" property="comId" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    <result column="com_cost_price" jdbcType="DOUBLE" property="comCostPrice" />
+    <result column="com_real_price" jdbcType="DOUBLE" property="comRealPrice" />
+    <result column="com_cover_url" jdbcType="VARCHAR" property="comCoverUrl" />
+    <result column="com_num" jdbcType="INTEGER" property="comNum" />
+    <result column="com_type" jdbcType="INTEGER" property="comType" />
+    <result column="com_mode" jdbcType="INTEGER" property="comMode" />
+    <result column="special_com_id" jdbcType="INTEGER" property="specialComId" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="subjectFlag" jdbcType="VARCHAR" property="subjectflag" />
+    <result column="gifts" jdbcType="INTEGER" property="gifts" />
+    <result column="study_package_price" jdbcType="DOUBLE" property="studyPackagePrice" />
+    <result column="class_type_validity" jdbcType="INTEGER" property="classTypeValidity" />
+    <result column="buy_type" jdbcType="INTEGER" property="buyType" />
+    <result column="mode" jdbcType="INTEGER" property="mode" />
+    <result column="deadline" jdbcType="DATE" property="deadline" />
+    <result column="validity" jdbcType="INTEGER" property="validity" />
+    <result column="address_mark" jdbcType="INTEGER" property="addressMark" />
+    <result column="book_type" jdbcType="INTEGER" property="bookType" />
+    <result column="agreements" jdbcType="VARCHAR" property="agreements" />
+    <result column="insurance_price" jdbcType="DOUBLE" property="insurancePrice" />
+    <result column="gua_type" jdbcType="INTEGER" property="guaType" />
+    <result column="allow_gua" jdbcType="INTEGER" property="allowGua" />
+    <result column="face_recognition" jdbcType="INTEGER" property="faceRecognition" />
+  </resultMap>
+
+  <select id="selectOrderCommodityName" resultType="string">
+    SELECT
+    com_name
+    FROM
+    pay_order_detail
+    WHERE
+    order_id = #{orderId}
+    AND
+    com_type = 6
+    AND
+    buy_type IN (0,1)
+    ORDER BY id ASC
+  </select>
+
+  <select id="selectTipsByPayNum" resultMap="BaseResultMap">
+     SELECT
+     pod.id,
+     pod.order_id,
+     pod.validity as validity,
+     pod.mode,
+     pod.com_name,
+     pod.gua_type,
+     pod.class_type_id,
+     pod.buy_type,
+     pod.allow_gua,
+     pod.face_recognition,
+     pod.com_id
+     FROM
+     pay_order po
+     INNER JOIN
+     pay_order_detail pod ON pod.order_id = po.id
+     WHERE po.pay_num = #{payNum} AND pod.com_type = 6 AND pod.buy_type IN(0,1)
+  </select>
+
+</mapper>

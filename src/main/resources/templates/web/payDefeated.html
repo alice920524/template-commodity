@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>失败</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/paySucDefea.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/paySucDefea.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+<div class="pay-sussess">
+    <div class="pay-main-one pay-defeatedbg">
+        <i></i>支付失败!
+    </div>
+    <div class="pay-main-two">
+        <div class="pay-main-tit">
+            <p>订单金额：<span th:text="${#numbers.formatDecimal(price,1,1)+'元'}">2980元</span></p>
+            <a class="pay-defa-btn">重新支付</a>
+            <span>我们没有收到你的付款，请重新支付试试。</span>
+        </div>
+        <div class="pay-stu-message">
+            <ul>
+                <li>
+                    <label class="pay-label">商品名称：</label>
+
+                    <div class="pay-text" th:text="${name}">12313</div>
+                </li>
+                <li>
+                    <label class="pay-label">支付时间：</label>
+
+                    <div class="pay-text" id="payTime" th:text="${payTime}">12313</div>
+                </li>
+                <li>
+                    <label class="pay-label">订单编号：</label>
+
+                    <div class="pay-text" th:text="${payNum}" id="payNum">12313</div>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script>
+    $('.pay-defa-btn').click(function () {
+        var payNum= $('#payNum').text().replace("-01","")
+        window.location.href = "/order/payment?num=" + payNum + '&appType=999';
+    });
+    var c = new Date();
+    var payTime = c.getFullYear() + '.' + (c.getMonth() + 1) + "." + c.getDate() + '   ' + c.getHours() + ':' + c.getMinutes() + ':' + c.getSeconds()
+    $('#payTime').text(payTime)
+</script>
+</body>
+</html>

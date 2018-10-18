@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>保险条款</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="<%=apiPath%>/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <script src="<%=apiPath%>/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <style type="text/css">
+        .section{padding:0 .3rem 1.5rem;overflow: auto;color:#323233;font-size:.26rem;line-height: .4rem;}
+        .section p{margin-top: .4rem;font-size:.28rem;}
+    </style>
+</head>
+<body>
+<div class="section" th:utext="${content}" style="background: #fff;">
+</div>
+</body>
+</html>

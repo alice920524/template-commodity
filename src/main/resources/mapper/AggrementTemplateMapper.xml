@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.AggrementTemplateMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.AggrementTemplate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="expense" jdbcType="DOUBLE" property="expense" />
+    <result column="validity" jdbcType="INTEGER" property="validity" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="insurance_exam_dates" jdbcType="VARCHAR" property="insuranceExamDates" />
+    <result column="gua_type" jdbcType="INTEGER" property="guaType" />
+    <result column="video_type" jdbcType="INTEGER" property="videoType" />
+    <result column="cc_video_id" jdbcType="VARCHAR" property="ccVideoId" />
+    <result column="vcloud_video_id" jdbcType="INTEGER" property="vcloudVideoId" />
+
+  </resultMap>
+
+  <select id="selectInsuranceByClassTypeIdList" resultType="com.duia.commodity.common.dto.InsuranceDTO">
+    SELECT
+    ag.id,
+    ag.title AS name,
+    ag.content,
+    ag.expense AS price
+    FROM
+    aggrement_template ag
+    INNER JOIN agreement_template_relation atr
+    on atr.agreement_id = ag.id
+    WHERE
+    atr.relation_id IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    AND atr.agreement_type=1
+    AND ag.validity = 1
+    AND atr.relation_type=0
+  </select>
+
+  <!--通过商品ID及协议ID查询-->
+  <select id="selectInsuranceAggrementTemplate" resultMap="BaseResultMap">
+    SELECT
+      at.id,
+      at.sku,
+      atr.relation_id AS class_type_id,
+      atr.gua_type,
+      at.type,
+      at.title,
+      at.company,
+      at.expense,
+      at.validity,
+      at.content,
+      at.insurance_exam_dates,
+      at.video_type,
+      at.cc_video_id,
+      at.vcloud_video_id
+    FROM
+    aggrement_template at
+    INNER JOIN
+    agreement_template_relation atr
+    ON atr.agreement_id = at.id
+    INNER JOIN
+    commodity c
+    ON
+    c.class_type_id = atr.relation_id
+    WHERE
+    at.id = #{aggId} AND at.type = 1  AND c.id = #{comId}
+
+  </select>
+
+  <select id="selectAggrementTemplateByOrderDetailId" resultMap="BaseResultMap">
+    SELECT
+    ag.*
+    FROM
+    class_student_agreement csa
+    LEFT JOIN
+    aggrement_template ag
+    ON
+    csa.aggrement_template_id = ag.id
+    WHERE
+    csa.order_detail_id = #{orderDetailId} AND ag.type = #{aggType}
+  </select>
+
+  <select id="selectByClassTypeIdAndType" resultMap="BaseResultMap">
+     SELECT
+      at.id,
+      at.sku,
+      atr.relation_id AS class_type_id,
+      atr.gua_type,
+      at.type,
+      at.title,
+      at.company,
+      at.expense,
+      at.validity,
+      at.content,
+      at.insurance_exam_dates,
+      at.video_type,
+      at.cc_video_id,
+      at.vcloud_video_id
+     FROM
+     aggrement_template at
+     INNER JOIN agreement_template_relation atr
+        ON `at`.id = atr.agreement_id
+     WHERE atr.relation_id = #{classTypeId} AND atr.relation_type = 0 AND atr.agreement_type = #{type} AND atr.gua_type = #{guaType};
+  </select>
+
+  <select id="selectByClassId" resultMap="BaseResultMap">
+    SELECT
+    at.id,
+    at.sku,
+    atr.relation_id AS class_type_id,
+    atr.gua_type,
+    at.type,
+    at.title,
+    at.company,
+    at.expense,
+    at.validity,
+    at.content,
+    at.insurance_exam_dates,
+    at.video_type,
+    at.cc_video_id,
+    at.vcloud_video_id
+    FROM
+    agreement_template_relation atr
+    LEFT JOIN
+    aggrement_template at ON atr.agreement_id = at.id
+    WHERE
+    atr.relation_id = #{classTypeId} AND atr.relation_type = 0 AND at.validity = 1
+  </select>
+
+
+
+</mapper>

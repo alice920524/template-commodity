@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassTypeEvaluateMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassTypeEvaluate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="eval_date" jdbcType="TIMESTAMP" property="evalDate" />
+    <result column="eval_status" jdbcType="INTEGER" property="evalStatus" />
+    <result column="reply_date" jdbcType="TIMESTAMP" property="replyDate" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+    <result column="reply_status" jdbcType="INTEGER" property="replyStatus" />
+    <result column="authority_user_id" jdbcType="INTEGER" property="authorityUserId" />
+  </resultMap>
+
+    <select id="selectByClassIdAndUserId" resultMap="BaseResultMap">
+        SELECT
+        cte.id,
+        cte.user_id,
+        cte.class_id,
+        cte.star,
+        cte.content,
+        cte.reply_content
+        FROM
+        class_type_evaluate cte
+        WHERE
+        cte.user_id = #{userId} and cte.class_id=#{classId} and eval_status=1  limit 1;
+    </select>
+
+    <!--评价内容-->
+    <select id="selectEvaluateContentByClassTypeId" resultType="com.duia.commodity.common.dto.ClassTypeEvaluateDTO">
+       SELECT
+           u.username,
+           u.mobile,
+           u.pic_url as headPicUrl,
+           u.union_name as  unionName,
+           c.id,
+           c.star,
+           c.content,
+           c.eval_date as evalDate,
+           c.eval_status as evalStatus,
+           c.reply_date as replyDate,
+           c.reply_content as replyContent,
+           c.reply_status as replyStatus,
+           c.top,
+           c.top_time as toptime
+        FROM class_type_evaluate c  LEFT JOIN users u
+        ON u.id=c.user_id WHERE c.eval_status=1 AND approve=1 AND  c.class_type_id=#{classTypeId}
+        order by c.top DESC, c.eval_date DESC
+    </select>
+
+    <!--评价计数-->
+    <select id="selectEvaluateCountByClassTypeId" resultType="Integer">
+        SELECT
+        count(c.id)
+        FROM class_type_evaluate c
+        WHERE c.eval_status=1 AND approve=1 AND c.class_type_id=#{classTypeId}
+    </select>
+
+
+
+</mapper>

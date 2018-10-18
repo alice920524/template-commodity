@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassTypeMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassType">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="qq_num" jdbcType="VARCHAR" property="qqNum" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="cover_url" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="base" jdbcType="INTEGER" property="base" />
+    <result column="course_code" jdbcType="VARCHAR" property="courseCode" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="course_type" jdbcType="INTEGER" property="courseType" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="vip_sku" jdbcType="VARCHAR" property="vipSku" />
+    <result column="cover_url_two" jdbcType="VARCHAR" property="coverUrlTwo" />
+    <result column="cover_url_three" jdbcType="VARCHAR" property="coverUrlThree" />
+    <result column="address_mark" jdbcType="INTEGER" property="addressMark" />
+    <result column="vip_mark" jdbcType="INTEGER" property="vipMark" />
+    <result column="validity" jdbcType="INTEGER" property="validity" />
+    <result column="iosComId" jdbcType="INTEGER" property="ioscomid" />
+    <result column="benefit_mark" jdbcType="INTEGER" property="benefitMark" />
+    <result column="benefit_price" jdbcType="INTEGER" property="benefitPrice" />
+    <result column="is_msb" jdbcType="INTEGER" property="isMsb" />
+    <result column="book_price" jdbcType="DOUBLE" property="bookPrice" />
+    <result column="has_study_pack" jdbcType="INTEGER" property="hasStudyPack" />
+    <result column="study_pack_id" jdbcType="INTEGER" property="studyPackId" />
+    <result column="description_two" jdbcType="VARCHAR" property="descriptionTwo" />
+    <result column="insurance" jdbcType="INTEGER" property="insurance" />
+    <result column="cert_exam" jdbcType="INTEGER" property="certExam" />
+    <result column="cert_exam_expense" jdbcType="DOUBLE" property="certExamExpense" />
+    <result column="guarantee_aggrement" jdbcType="INTEGER" property="guaranteeAggrement" />
+    <result column="coupon" jdbcType="INTEGER" property="coupon" />
+    <result column="schedule_time" jdbcType="INTEGER" property="scheduleTime" />
+    <result column="cover_url_discount" jdbcType="VARCHAR" property="coverUrlDiscount" />
+    <result column="cover_url_discount_use" jdbcType="INTEGER" property="coverUrlDiscountUse" />
+    <result column="class_forum" jdbcType="INTEGER" property="classForum" />
+    <result column="audit_rules" jdbcType="INTEGER" property="auditRules" />
+    <result column="vip_courses" jdbcType="VARCHAR" property="vipCourses" />
+    <result column="exclusive_courses" jdbcType="VARCHAR" property="exclusiveCourses" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type_order" jdbcType="INTEGER" property="typeOrder" />
+    <result column="guarantee_status" jdbcType="INTEGER" property="guaranteeStatus" />
+    <result column="refund_status" jdbcType="INTEGER" property="refundStatus" />
+    <result column="mode" jdbcType="INTEGER" property="mode" />
+    <result column="has_service" jdbcType="INTEGER" property="hasService" />
+    <result column="service_key" jdbcType="VARCHAR" property="serviceKey"/>
+    <result column="key_type" jdbcType="INTEGER" property="keyType" />
+    <result column="robot_id" jdbcType="VARCHAR" property="robotId" />
+    <result column="reception_mode" jdbcType="INTEGER" property="receptionMode" />
+    <result column="has_limit" jdbcType="INTEGER" property="hasLimit" />
+    <result column="limit_amount" jdbcType="INTEGER" property="limitAmount" />
+    <result column="face_recognition" jdbcType="INTEGER" property="faceRecognition" />
+    <result column="price_protect" jdbcType="INTEGER" property="priceProtect" />
+    <result column="gua_mul" jdbcType="INTEGER" property="guaMul" />
+    <result column="first_price" jdbcType="DOUBLE" property="firstPrice" />
+    <result column="first_data" jdbcType="VARCHAR" property="firstData" />
+    <result column="second_price" jdbcType="DOUBLE" property="secondPrice" />
+    <result column="second_data" jdbcType="VARCHAR" property="secondData" />
+    <result column="voucher_id" jdbcType="INTEGER" property="voucherId" />
+    <result column="voucher_able" jdbcType="INTEGER" property="voucherAble" />
+    <result column="voucher" jdbcType="INTEGER" property="voucher" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="book_type" jdbcType="INTEGER" property="bookType" />
+  </resultMap>
+
+  <!--<select id="selectStudyPackagePriceByComIds" resultType="double">-->
+    <!--SELECT-->
+    <!--sum(ct.book_price)-->
+    <!--FROM-->
+    <!--commodity c-->
+    <!--LEFT JOIN class_type ct ON c.class_type_id = ct.id-->
+    <!--WHERE-->
+    <!--c.id IN-->
+    <!--<foreach item="item" index="index" collection="array" open="(" separator="," close=")">-->
+      <!--#{item}-->
+    <!--</foreach>-->
+    <!--AND ct.address_mark = 2-->
+  <!--</select>-->
+
+  <!-- 查询班型下的总人数 -->
+  <select id="findClassTypeCountNum" resultType="int">
+      select count(1) from class_type  ct
+      join classes cs on ct.id = cs.class_type_id
+      join class_student csd on cs.id = csd.class_id  where ct.id = #{classTypeId}
+  </select>
+
+  <!-- 根据orderId查询有学习包班型id -->
+  <!--<select id="findClassTypeIdByOrderId" resultMap="BaseResultMap">-->
+    <!--SELECT id,title,price from class_type where id in (-->
+    <!--SELECT class_type_id from pay_order_detail where order_id= #{orderId} and com_type=6 AND buy_type=0 and gifts=0)-->
+    <!--and address_mark=2;-->
+  <!--</select>-->
+
+  <select id="findClassTypeMapperById" resultMap="BaseResultMap">
+      SELECT ct.* FROM class_type ct  WHERE ct.id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CrmSaleHandoverNewMapper">
+  <resultMap id="CrmSaleHandoverNewResultMap" type="com.duia.commodity.model.CrmSaleHandoverNew">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="qq_num" jdbcType="VARCHAR" property="qqNum" />
+    <result column="sale_id" jdbcType="INTEGER" property="saleId" />
+    <result column="sale_name" jdbcType="VARCHAR" property="saleName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="accept_day" jdbcType="INTEGER" property="acceptDay" />
+    <result column="sale_status" jdbcType="INTEGER" property="saleStatus" />
+    <result column="teach_status" jdbcType="INTEGER" property="teachStatus" />
+    <result column="finance_status" jdbcType="INTEGER" property="financeStatus" />
+    <result column="colse_status" jdbcType="INTEGER" property="colseStatus" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="back_status" jdbcType="INTEGER" property="backStatus" />
+    <result column="back_num" jdbcType="DOUBLE" property="backNum" />
+    <result column="dep_id" jdbcType="INTEGER" property="depId" />
+    <result column="grp_id" jdbcType="INTEGER" property="grpId" />
+    <result column="sale_email" jdbcType="VARCHAR" property="saleEmail" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="pay_num" jdbcType="VARCHAR" property="payNum" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="program_name" jdbcType="VARCHAR" property="programName" />
+    <result column="program_id" jdbcType="INTEGER" property="programId" />
+    <result column="realpay_price" jdbcType="DOUBLE" property="realpayPrice" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="cost_price" jdbcType="DOUBLE" property="costPrice" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="back_source" jdbcType="INTEGER" property="backSource" />
+    <result column="order_batch" jdbcType="INTEGER" property="orderBatch" />
+    <result column="order_instal" jdbcType="INTEGER" property="orderInstal" />
+    <result column="class_type_info" jdbcType="VARCHAR" property="classTypeInfo" />
+    <result column="order_batch_status" jdbcType="INTEGER" property="orderBatchStatus" />
+    <result column="is_tmall" jdbcType="INTEGER" property="isTmall" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="achievement" jdbcType="INTEGER" property="achievement" />
+    <result column="teach_finish_time" jdbcType="VARCHAR" property="teachFinishTime" />
+    <result column="batch_audit_status" jdbcType="INTEGER" property="batchAuditStatus" />
+    <result column="finance_time" jdbcType="VARCHAR" property="financeTime" />
+    <result column="old_balance" jdbcType="DOUBLE" property="oldBalance" />
+    <result column="study_package_price" jdbcType="DOUBLE" property="studyPackagePrice" />
+    <result column="is_mail" jdbcType="INTEGER" property="isMail" />
+    <result column="qq_validate" jdbcType="VARCHAR" property="qqValidate" />
+    <result column="installment_num" jdbcType="INTEGER" property="installmentNum" />
+    <result column="installment_rate" jdbcType="DOUBLE" property="installmentRate" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="rate" jdbcType="DOUBLE" property="rate" />
+  </resultMap>
+
+  <resultMap id="CrmSaleHandoverNewDtoResultMap" type="com.duia.commodity.dto.CrmSaleHandoverNewDto" extends="CrmSaleHandoverNewResultMap">
+    <result property="buyerNick" column="buyer_nick"/>
+    <result property="receiverName" column="receiver_name"/>
+    <result property="receiverState" column="receiver_state"/>
+    <result property="receiverCity" column="receiver_city"/>
+    <result property="receiverDistrict" column="receiver_district"/>
+    <result property="receiverAddress" column="receiver_address"/>
+    <result property="receiverMobile" column="receiver_mobile"/>
+    <result property="receiverPhone" column="receiver_phone"/>
+  </resultMap>
+
+</mapper>

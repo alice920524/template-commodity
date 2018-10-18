@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>优惠套餐</title>
+    <!--禁用苹果数字变为蓝色-->
+    <meta name="format-detection" content="telephone = no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/common/css/wapRest.css" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <script src="//test2.duia.com:8080/dist/js/wap/common/js/fit.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/commondity/css/skuDetailInfo.css" th:href="@{${staticDomain}+'/style/wap/commondity/css/skuDetailInfo.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/wap/order/css/order.css" th:href="@{${staticDomain}+'/style/wap/order/css/order.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<div class="header js-header">优惠套餐<span><img src="//static.test.duia.com/dev/image/wap/commondity/img/head.png" alt="" th:if="${session.user!=null}" th:src="${tuDomain+session.user.picUrl}"/></span></div>
+<div class="section js-section">
+    <div class="single js-single" onclick="typeHref($(this))" style="margin:0;border-top:0;">
+        <p class="title" onclick="isOpen($(this))">单门课购买<i class="up"></i></p>
+    </div>
+    <div class="pack js-pack">
+        <p class="title" onclick="isOpen($(this))">选择套餐<i></i></p>
+        <div class="con js-con open" th:each="item:${specialList}" th:attr="data-packageId=${item.id}">
+            <div class="tit" >
+                <p th:text="${item.name}"></p>
+                <span class="price js-package-sumPrice" th:text="'￥'+${#numbers.formatDecimal(item.realPrice, 1, 1)}"></span>
+                <i th:text="'立省'+(${#numbers.formatDecimal((item.costPrice-item.realPrice), 1, 1)})"></i>
+            </div>
+            <ul>
+                <!--特殊商品第一是单品-->
+                <li>
+                    <p th:text="${name}"></p>
+                    <span th:text="'￥'+${#numbers.formatDecimal(price, 1, 1)}"></span>
+                </li>
+                <li th:each="commodity:${item.commodityList}">
+                    <p th:text="${commodity.name}"></p>
+                    <span class="js-packageCommodity-costPrice" th:text="'￥'+${#numbers.formatDecimal(commodity.costPrice, 1, 1)}" th:attr="data-commodityid=${commodity.id}"></span>
+                </li>
+            </ul>
+            <a class="tcBtn js-tcBtn" >去报名</a>
+        </div>
+    </div>
+    <div class="comb js-comb" onclick="typeHref($(this))" th:if="${zh}">
+        <p class="title" onclick="isOpen($(this))">选择组合<i class="up"></i></p>
+    </div>
+</div>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/jquery-1.9.1.min.js" th:src="@{${staticDomain} +'/js/wap/common/js/jquery-1.9.1.min.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="//common.test.duia.com/common/js/web4.0/tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/tools.js'}" type="text/javascript"></script>
+<script src="//common.test.duia.com/common/js/web4.0/duia_tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/duia_tools.js'}" type="text/javascript"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/util.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/common/js/util.js'}"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/order/js/order.js" type="text/javascript" charset="utf-8" th:src="@{${staticDomain}+'/js/wap/order/js/order.js?v='+${staticVersion}}"></script>
+</body>
+</html>

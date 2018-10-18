@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.BookCommodityMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.BookCommodity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="cover_url" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
+  <!--查询图书商品信息-->
+  <select id="selectBookCommodity" resultMap="BaseResultMap">
+    SELECT
+      bc.*
+    FROM
+      book_commodity bc
+    INNER JOIN
+      terminal_display td
+      ON bc.id = td.relation_id AND td.relation_type = 5
+    WHERE
+      bc.id = #{comId} AND td.terminal = #{appType}
+  </select>
+
+</mapper>

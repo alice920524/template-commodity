@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>教师资格考试成绩查询 | 对啊网</title>
+    <script th:src="@{${staticDomain}+'/js/wap/common/js/jquery-1.9.1.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{${staticDomain}+'/js/wap/common/js/fit.js'}"></script>
+    <link rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/common/css/wapRest.css'}"/>
+    <link rel="stylesheet" th:href="@{${staticDomain}+'/style/wap/resultSerch/css/resultSerch.css?v='+${staticVersion}}">
+    <!--<link rel="stylesheet" href="//test2.duia.com:8080/resources/wap/resultSerch/css/resultSerch.css">-->
+    <script th:inline="javascript">
+        var _staticBasePath = [[${staticDomain}]];
+        var imageBasePath = [[${tuDomain}]];
+    </script>
+</head>
+<body>
+<!--<p th:text="${sid}"></p>-->
+<input type="hidden" id="sid">
+<!--<img src="/wap/ntce/score/captcha" id="img">-->
+<div id="result">
+    <div class="resultBg">
+        <div class="title">
+            <img th:src="@{${staticDomain}+'/image/wap/resultSerch/img/serch.png'}">
+            <span>成绩查询</span>
+        </div>
+        <div class="notice">
+            <p class="first">查询须知:</p>
+            <p>1.请准确填写报考人的“姓名”、“身份证号”字段;</p>
+            <p class="sec">2.本页面仅提供单次查询使用，不保留查询结果，如有需要，请自行保留;</p>
+            <p class="sec">3.本功能为方便内部学员使用，请勿用作其他用途;</p>
+        </div>
+    </div>
+    <div class="iptStyle">
+        <div class="divStyle">
+            <span class="fl">姓名</span>
+            <input type="text" class="fl name" placeholder="请填写您的姓名">
+        </div>
+    </div>
+    <div class="iptStyle">
+        <div class="divStyle">
+            <span class="fl">证件号码</span>
+            <input class="fl personId" placeholder="请填写您的身份证号">
+        </div>
+    </div>
+    <div class="iptStyle borderBottom">
+        <div class="divNoStyle">
+            <span class="fl">验证码</span>
+            <input type="url" class="fl code" placeholder="请填写验证码">
+            <img th:src="@{'/wap/ntce/score/captcha?sid='+${sid}}" class="numPic fr" onclick="imgClick(this)" onerror="errorImgs()">
+            <i class="numPicRe fr" onclick="refreshImg(this)">刷新</i>
+        </div>
+    </div>
+    <div class="sureDiv">
+        <input type="button" value="确定" class="sureBtn" onclick="sureClick(this)">
+    </div>
+    <!--底部-->
+    <div class="footerDuia">
+        - 对啊·重塑职业未来 -
+    </div>
+    <!--<span class="loadingImg"></span>-->
+</div>
+
+<!-- 测试通过-->
+<div id="testAdopt">
+    <div class="testBg clear">
+        <!--通过了-->
+        <div id="adopt">
+            <div class="title">恭喜通过</div>
+            <div class="content">恭喜你通过本次考试，我们需要乘胜追击，继续准备面试，一举拿下合格证吧！</div>
+            <input type="button" value="准备面试" class="fl interviewBtn" onclick=" NTKF.im_openInPageChat('kf_9751_1482201240253')">
+            <input type="button" value="@好友" class="fr shareBtn">
+        </div>
+
+        <!--全部通过，继续准备-->
+        <div id="adoptAll">
+            <div class="title">恭喜通过</div>
+            <div class="content">恭喜你通过本次考试，但我们还没到达终点！点击下方按钮，继续进行招聘准备吧！</div>
+            <input type="button" value="继续准备" class="fl interviewBtn" onclick=" NTKF.im_openInPageChat('kf_9751_1482201240253')">
+            <input type="button" value="@好友" class="fr shareBtn">
+        </div>
+
+        <!--没有通过-->
+        <div id="noAdopt">
+            <div class="title">很遗憾</div>
+            <div class="content">很遗憾本次考试没有通过，调整下心态下次再战，重新备考吧！</div>
+            <input type="button" value="重新备考" class="reTest" onclick=" NTKF.im_openInPageChat('kf_9751_1482201240253')">
+        </div>
+        <!--未找到-->
+        <div id="isFound">
+            <div class="title">未查到</div>
+            <div class="content">啊哦，没有查询到信息！</div>
+            <input type="button" value="重新查询" class="reSerch">
+        </div>
+    </div>
+    <!--个人信息及成绩-->
+    <div class="main">
+        <!--笔试通过&未通过-->
+        <div id="isAdopt">
+            <div class="person">
+                <span class="margin20">姓名:</span><span class="margin75 name"></span><span class="margin20">证件号码:</span><span class="code"></span>
+            </div>
+            <div class="pen"><span class="testLast">笔试</span>成绩</div>
+            <table class="testBox" cellspacing="0">
+                <tr class="firstLine">
+                    <td style="width:20%;">科目</td>
+                    <td>报告分</td>
+                    <td>合格与否</td>
+                    <td>准考证号</td>
+                    <td>考试批次</td>
+                    <td>有效期限</td>
+                    <td style="width:12%;">考试省份</td>
+                </tr>
+            </table>
+            <div class="remarks">
+                <span class="colorred margin15">备注:</span><span class="color9a">报告分满分120分，70分及以上为合格。</span>
+            </div>
+        </div>
+
+        <!--面试通过&未通过-->
+        <div id="interview" class="clear">
+            <div class="pen"><span class="testLast">面试</span>成绩</div>
+            <table class="interviewList" cellspacing="0">
+                <tr class="interviewFir">
+                    <td>科目</td>
+                    <td>合格与否</td>
+                    <td>准考证号</td>
+                    <td>考试批次</td>
+                    <td>考试省份</td>
+                </tr>
+            </table>
+            <div class="remarks">
+                <span class="colorred margin15">备注:</span><span class="color9a">面试合格与否由各省教育行政部门确定。</span>
+            </div>
+        </div>
+
+        <!--考试合格证明-->
+        <div id="testHg" class="clear">
+            <div class="pen">考试合格证明</div>
+            <table class="testHgList" cellspacing="0">
+                <tr class="testHgFir">
+                    <td>考试类别</td>
+                    <td>证明编号</td>
+                    <td>有效期限</td>
+                </tr>
+            </table>
+            <div class="remarks" style="line-height: .28rem">
+                <span class="colorred margin15">提示:</span><span class="color9a">获得《中小学教师资格考试合格证明》不等同于获得教师资格，该证明只是申请认定教师资格的必备条件之一。请在合格证明有效期内，向当地教育行政部门申请认定相应的教师资格。具体认定政策和流程可登陆中国教师资格网或本省份教育行政部门网站查询。</span>
+            </div>
+        </div>
+
+
+        <!--未找到-->
+        <div id="notFound">
+            <div class="notFind">
+                <p>
+                    <span>未找到姓名:</span><span class="name"></span><span>，证件号码:</span><span class="code"></span><span>的信息</span>
+                </p>
+                <span class="findAgain">
+                重新查询
+                </span>
+            </div>
+            <div class="empty"></div>
+        </div>
+    </div>
+</div>
+
+<!--分享蒙版-->
+<div id="shareMask">
+    <div  class="clear">
+        <img th:src="@{${staticDomain}+'/image/wap/resultSerch/img/arrow.png'}" class="arrow">
+    </div>
+    <p class="explain">点击右上角</p>
+    <p class="explain">分享到微信群或朋友圈</p>
+    <div class="hr"></div>
+    <div class="whactImg">
+        <img th:src="@{${staticDomain}+'/image/wap/resultSerch/img/whactQ.png'}">
+        <img th:src="@{${staticDomain}+'/image/wap/resultSerch/img/whactP.png'}">
+    </div>
+    <div class="knowBtn">知道了</div>
+</div>
+
+<!--不是微信页面的分享模板-->
+<div class="webMark">
+    <img th:src="@{${staticDomain}+'/image/wap/resultSerch/img/closeBanner.png'}" class="close" onclick="closeMark()">
+    <div class="picBox">
+
+        <img src="" class="saveImg">
+        <div class="webMarkBg">
+            <!--<a href="" class="loadImg" download="" target="_blank">保存结果到手机</a>-->
+            <span>长按上方图片保存，或分享给朋友</span>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    //微信二次分享ajax调取签名
+    $.ajax({
+        type: "post",
+        url: "/commodity/share/wx",
+        data: {pageUrl:window.location.href},
+        success: function (data) {
+            if(data.code == 200) {
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: data.data.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
+                    timestamp: data.data.timestamp +'', // 必填，生成签名的时间戳
+                    nonceStr: data.data.noncestr, // 必填，生成签名的随机串
+                    signature: data.data.signature,// 必填，签名，见附录1
+                    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+
+            }
+        }
+    });
+</script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="//dl.ntalker.com/js/xn6/ntkfstat.js?siteid=kf_9751"></script>
+<script th:src="@{${staticDomain}+'/js/wap/resultSerch/js/resultSerch.js?v='+${staticVersion}}"></script>
+<!--<script src="//test2.duia.com:8080/resources/wap/resultSerch/js/resultSerch.js"></script>-->
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.PayOrderMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.PayOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_type" jdbcType="INTEGER" property="orderType" />
+    <result column="order_time" jdbcType="VARCHAR" property="orderTime" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="buy_mode" jdbcType="INTEGER" property="buyMode" />
+    <result column="promotion" jdbcType="INTEGER" property="promotion" />
+    <result column="promotion_id" jdbcType="INTEGER" property="promotionId" />
+    <result column="pay_num" jdbcType="VARCHAR" property="payNum" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="program_name" jdbcType="VARCHAR" property="programName" />
+    <result column="program_id" jdbcType="INTEGER" property="programId" />
+    <result column="course_type" jdbcType="INTEGER" property="courseType" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="realpay_price" jdbcType="DOUBLE" property="realpayPrice" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="is_old_user" jdbcType="INTEGER" property="isOldUser" />
+    <result column="benefit_price" jdbcType="INTEGER" property="benefitPrice" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="cost_price" jdbcType="DOUBLE" property="costPrice" />
+    <result column="bank_type" jdbcType="VARCHAR" property="bankType" />
+    <result column="pay_discount_detail_id" jdbcType="INTEGER" property="payDiscountDetailId" />
+    <result column="voucher_order" jdbcType="INTEGER" property="voucherOrder" />
+    <result column="voucher_detail_id" jdbcType="INTEGER" property="voucherDetailId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="teacherid" jdbcType="INTEGER" property="teacherid" />
+    <result column="teachername" jdbcType="VARCHAR" property="teachername" />
+    <result column="deadline" jdbcType="DATE" property="deadline" />
+    <result column="voucher" jdbcType="VARCHAR" property="voucher" />
+    <result column="audit_status" jdbcType="VARCHAR" property="auditStatus" />
+    <result column="back_content" jdbcType="VARCHAR" property="backContent" />
+    <result column="back_price" jdbcType="DOUBLE" property="backPrice" />
+    <result column="back_type" jdbcType="VARCHAR" property="backType" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="delete_mark" jdbcType="INTEGER" property="deleteMark" />
+    <result column="order_parent_id" jdbcType="INTEGER" property="orderParentId" />
+    <result column="order_batch" jdbcType="INTEGER" property="orderBatch" />
+    <result column="order_instal" jdbcType="INTEGER" property="orderInstal" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="os" jdbcType="INTEGER" property="os" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="turn_order_id" jdbcType="INTEGER" property="turnOrderId" />
+    <result column="is_turn_order" jdbcType="INTEGER" property="isTurnOrder" />
+    <result column="old_balance" jdbcType="DOUBLE" property="oldBalance" />
+    <result column="is_old" jdbcType="INTEGER" property="isOld" />
+    <result column="study_package_price" jdbcType="DOUBLE" property="studyPackagePrice" />
+    <result column="is_mail" jdbcType="INTEGER" property="isMail" />
+    <result column="qq_validate" jdbcType="VARCHAR" property="qqValidate" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="rate" jdbcType="DOUBLE" property="rate" />
+    <result column="order_multi" jdbcType="INTEGER" property="orderMulti" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+
+    <select id="findChildsPayOrder" resultMap="BaseResultMap">
+        SELECT
+        p.id,
+        p.user_id,
+        p.pay_num,
+        p.teacherid,
+        p.pay_status,
+        p.teachername,
+        p.type,
+        p.pay_type,
+        p.back_type,
+        p.realpay_price,
+        p.cost_price,
+        p.order_batch,
+        p.pay_discount_detail_id
+        FROM
+        pay_order p
+        WHERE
+        p.order_parent_id = #{orderParentId}
+    </select>
+
+    <select id="payOrderSuccess" resultType="int">
+        SELECT
+        count(p.id)
+        FROM
+        pay_order p
+        WHERE
+        p.order_parent_id = #{orderParentId} and p.pay_status='pay_status_success'
+    </select>
+
+    <select id="findPayStatusNonOrder" resultMap="BaseResultMap">
+      SELECT p.* FROM pay_order p
+      WHERE
+      p.pay_status = 'pay_status_non'
+      AND
+      id IN
+      <foreach collection="orderIds" item="id" open="(" close=")" separator=",">
+          #{id}
+      </foreach>
+    </select>
+</mapper>

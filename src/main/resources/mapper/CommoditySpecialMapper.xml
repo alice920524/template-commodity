@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CommoditySpecialMapper">
+    <resultMap id="BaseResultMap" type="com.duia.commodity.model.CommoditySpecial">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sku_id" jdbcType="INTEGER" property="skuId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cost_price" jdbcType="DOUBLE" property="costPrice"/>
+        <result column="real_price" jdbcType="DOUBLE" property="realPrice"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="shelf_on_time" jdbcType="TIMESTAMP" property="shelfOnTime"/>
+        <result column="shelf_off_time" jdbcType="TIMESTAMP" property="shelfOffTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="is_discount" jdbcType="INTEGER" property="isDiscount"/>
+        <result column="discount_price" jdbcType="VARCHAR" property="discountPrice"/>
+        <result column="is_change" jdbcType="INTEGER" property="isChange"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="updator" jdbcType="INTEGER" property="updator"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="benefit_mark" jdbcType="INTEGER" property="benefitMark"/>
+        <result column="benefit_price" jdbcType="INTEGER" property="benefitPrice"/>
+        <result column="has_limit" jdbcType="INTEGER" property="hasLimit" />
+        <result column="limit_amount" jdbcType="INTEGER" property="limitAmount" />
+        <result column="gua_type" jdbcType="INTEGER" property="guaType" />
+        <result column="voucher_able" jdbcType="INTEGER" property="voucherAble" />
+        <result column="coupon" jdbcType="INTEGER" property="coupon" />
+    </resultMap>
+    <!--商品ID查询套餐组合集合-->
+    <select id="selectByComIdAndType" resultType="com.duia.commodity.common.dto.CommoditySpecialBaseDTO">
+        SELECT
+        cs.id,
+        cs.name,
+        cs.type,
+        cs.cost_price AS costPrice,
+        cs.real_price AS realpayPrice,
+        cs.discount_price AS discountPrice,
+        cs.voucher_able AS  voucherAble
+        FROM
+        commodity_special cs
+        LEFT JOIN commodity_special_relation csr ON cs.id = csr.special_id
+        LEFT JOIN terminal_display td ON td.relation_id = cs.id and td.relation_type = cs.type
+        WHERE
+        csr.com_id = #{comId} and cs.type = #{type} and status = 1 and td.terminal = #{appType} ORDER  by cs.gua_type DESC
+    </select>
+
+    <select id="selectCountByComIdAndType" resultType="int">
+        SELECT
+          count(DISTINCT cs.id)
+        FROM
+        commodity_special cs
+        LEFT JOIN commodity_special_relation csr ON cs.id = csr.special_id
+        LEFT JOIN terminal_display td ON td.relation_id = cs.id and td.relation_type = cs.type
+        WHERE
+        csr.com_id = #{comId} and cs.type = #{type} and status = 1 and td.terminal = #{appType}
+    </select>
+
+    <!--<select id="countBySpecialIdAndComIds" resultType="int">-->
+        <!--SELECT-->
+        <!--count(csr.id)-->
+        <!--FROM-->
+        <!--commodity_special_relation csr-->
+        <!--WHERE-->
+        <!--csr.special_id = #{specialId}-->
+        <!--AND csr.com_id IN-->
+        <!--<foreach item="item" index="index" collection="comIds" open="(" separator="," close=")">-->
+            <!--#{item}-->
+        <!--</foreach>-->
+    <!--</select>-->
+
+    <!--套餐和组合的总个数以及最大优惠金额-->
+    <select id="selectTzCountByComIdAndType" resultType="double">
+        SELECT
+        cs.max_discount
+        FROM
+        commodity_special cs
+        LEFT JOIN commodity_special_relation csr ON cs.id = csr.special_id
+        LEFT JOIN terminal_display td ON td.relation_id = cs.id and td.relation_type = cs.type
+        WHERE
+        csr.com_id = #{comId} and cs.type IN(1,2) and status = 1 and td.terminal = #{appType}
+    </select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CommodityExtraBuyingRelationMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.CommodityExtraBuyingRelation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="com_id" jdbcType="INTEGER" property="comId" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="extra_price" jdbcType="DOUBLE" property="extraPrice" />
+    <result column="address_mark" jdbcType="INTEGER" property="addressMark" />
+    <result column="book_type" jdbcType="INTEGER" property="bookType" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+  </resultMap>
+
+  <select id="selectCommodity" resultType="com.duia.commodity.common.dto.CommodityDTO">
+    SELECT
+    cebr.extra_price AS price,
+    c.real_price AS realPrice,
+    c.id,
+    c.name,
+    c.type,
+    c.class_type_id AS classTypeId,
+    c.course_type as courseType,
+    c.cover_url AS coverUrl,
+    c.cover_url_three AS wapCoverUrl,
+    c.first_price AS  firstPrice,
+    c.second_price AS secondPrice,
+    cebr.address_mark AS addressMark,
+    cebr.gua_mul AS guaMul,
+    cebr.gua_type AS guaType
+    FROM
+    commodity_extra_buying_relation cebr
+    INNER JOIN
+    commodity c
+    ON cebr.com_id = c.id
+    WHERE
+    cebr.relation_id = #{relationId} AND cebr.type = #{type} AND cebr.com_id = #{comId}
+  </select>
+
+  <sql id="commodityExtraDTO">
+     c.id AS comId
+    ,c.name
+    ,c.class_type_id AS classTypeId
+    ,c.course_type as courseType
+    ,c.real_price AS realpayPrice
+    ,c.cost_price AS costPrice
+    ,c.first_price AS  firstPrice
+    ,c.second_price AS secondPrice
+    ,c.sku_id AS  skuId
+    ,cebr.address_mark AS hasStudyPack
+    ,cebr.extra_price AS extraPrice
+    ,cebr.relation_id AS extraRId
+    ,cebr.gua_type AS  guaType
+    ,cebr.gua_mul AS  guaMul
+
+  </sql>
+  <!-- 这两个上返回二类价格一类价格还有gua_mul 单品加价购列表 -->
+  <select id="findCommodityExtra" resultType="com.duia.commodity.common.dto.CommodityExtraDTO">
+    SELECT
+    <include refid="commodityExtraDTO"/>
+    FROM commodity_extra_buying_relation cebr
+    JOIN commodity c ON cebr.com_id = c.id
+    WHERE
+    cebr.type = #{comType}
+    AND cebr.relation_id = (
+    SELECT distinct td.relation_id
+    FROM terminal_display td
+    WHERE td.terminal = #{appType}
+    AND td.relation_type = 3
+    AND td.relation_id = (
+    SELECT ceb.id
+    FROM commodity_extra_buying ceb
+    WHERE
+    ceb.com_id =#{comId}
+    and ceb.status = 1
+    )
+    )
+  </select>
+
+  <select id="findSpecialCommodityExtra" resultType="com.duia.commodity.common.dto.CommodityExtraDTO">
+    SELECT
+    <include refid="commodityExtraDTO"/>
+    FROM commodity_extra_buying_relation cebr
+    INNER JOIN commodity c ON cebr.com_id = c.id
+    INNER JOIN terminal_display td on td.relation_id = cebr.relation_id and td.relation_type=cebr.type
+    WHERE
+    cebr.type = #{comType}
+    AND cebr.relation_id = #{specialId}
+    and td.terminal = #{appType}
+
+  </select>
+</mapper>

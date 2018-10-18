@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>支付订单</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payOrder.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payOrder.css?v='+${staticVersion}}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//union.tenpay.com/bankList/css_col4.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="http://test2.duia.com:8080/resources/web/payOrder/css/payOrder.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="http://union.tenpay.com/bankList/css_col4.css"/>-->
+    <style>
+        .long-logo {
+            width: 1110px;
+        }
+
+        #J-chooseBankList {
+            overflow: hidden;
+        }
+
+        .long-logo input {
+            display: none;
+        }
+
+        .long-logo li {
+            width: 158px;
+            height: 54px;
+            border: 1px solid #ddd;
+            margin-right: 24px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .long-logo li label {
+            border: none;
+            width: 158px;
+            height: 54px;
+            cursor: pointer;
+        }
+
+        #J-chooseBankList li:last-child {
+            display: none;
+        }
+
+        .icon-box1 {
+            background-position: 25px -312px;
+        }
+
+        .icon-box2 {
+            background-position: 35px -358px;
+        }
+
+        .icon-box3 {
+            background-position: 30px -268px;
+        }
+
+        .icon-box4 {
+            background-position: 25px -223px;
+        }
+
+        .icon-box5 {
+            background-position: 40px -453px;
+        }
+
+        .icon-box6 {
+            background-position: 20px -673px;
+        }
+
+        .icon-box7 {
+            background-position: 35px -175px;
+        }
+
+        .icon-box8 {
+            background-position: 28px -2px;
+        }
+
+        .icon-box9 {
+            background-position: 26px -499px;
+        }
+
+        .icon-box10 {
+            background-position: 25px -125px;
+        }
+
+        .icon-box11 {
+            background-position: 35px -582px;
+        }
+
+        .icon-box12 {
+            background-position: 27px -42px;
+        }
+
+        .long-logo .icon-box13 {
+            background-position: 0 -725px;
+            width: 100px;
+            height: 25px;
+            margin: 16px 0 0 30px;
+        }
+
+        .icon-box14 {
+            background-position: 25px -82px;
+        }
+
+        .icon-box15 {
+            background-position: 25px -537px;
+        }
+
+        .icon-box16 {
+            background-position: 30px -407px;
+        }
+
+        .long-logo .icon-box17 {
+            background-position: 0 -755px;
+            width: 75px;
+            height: 25px;
+            margin: 13px 0 0 40px;
+        }
+
+        .long-logo .icon-box18 {
+            background-position: 0 -790px;
+            width: 80px;
+            height: 25px;
+            margin: 16px 0 0 36px;
+        }
+
+        .long-logo .icon-box19 {
+            background-position: 0 -820px;
+            width: 110px;
+            height: 25px;
+            margin: 14px 0 0 20px;
+        }
+
+        .long-logo .icon-box20 {
+            background-position: 0 -848px;
+            width: 100px;
+            height: 30px;
+            margin: 13px 0 0 28px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+<!--支付tc-->
+<div style="display: none;" id="orderOpen">
+    <div class="pay-popBlack"></div>
+    <div class="pay-popup">
+        <a class="pay-close"></a>
+
+        <p class="pay-pop-tit1">请在新打开的页面上完成付款</p>
+
+        <p class="pay-pop-tit2">付款完成前请勿关闭此窗口</p>
+
+        <div class="pay-pop-btn">
+            <a class="pay-btn1">已完成付款</a>
+            <a class="pay-btn2">付款遇到问题</a>
+        </div>
+        <a class="pay-select">选择其他付款方式<i></i></a>
+    </div>
+</div>
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon pay-control" data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+
+                <p>确认订单信息</p>
+            </div>
+            <div class="pay-jd">
+                <span class="pay-num"></span>
+            </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+    <!--订单内容-->
+    <!--<div class="pay-content">-->
+    <!--<div class="pay-empty">-->
+    <!--<img src="/resources/web/payOrder/img/pay-empty.png">-->
+    <!--<p>订单中无任何商品，请尝试重新购买课程。</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--支付订单-->
+    <div class="pay-fp">
+        <div class="pay-fpOne paySucc">
+            <i class="pay-fpL"></i>
+
+            <div class="pay-fpR">
+                <div class="pay-success">
+                    <div class="pay-sl">
+                        <p class='pay-sl-tit'>订单提交成功，去付款咯~</p>
+
+                        <p class="pay-sl-ts">请在<span>48小时</span>内完成支付，超时后将取消订单</p>
+                    </div>
+                    <div class="pay-sr">
+                        <div class="pay-sr-money">
+                            <label>应付金额:</label>
+
+                            <p><em th:text="${#numbers.formatDecimal(price,1,1)}">2730</em><span>元</span></p>
+                        </div>
+                        <div class="pay-order-xq">订单详情<i data="pay-next"></i></div>
+                    </div>
+                </div>
+                <ul class="pay-ul">
+                    <li>
+                        <label>订单编号：</label>
+
+                        <p th:text="${payNum}" id="payNumber">1321324346546</p>
+                    </li>
+                    <li th:if="${address != null}">
+                        <label>收货地址：</label>
+
+                        <p style="width: 900px;height: auto;">
+                            <span th:text="${address.addressee}">猪小贱</span>
+                            <span th:text="${address.mobile}">18201337036</span>
+                            <span th:text="${address.province}">北京</span>
+                            <span th:text="${address.city}">北京市</span>
+                            <span th:text="${address.county}">丰台区</span>
+                            <span th:text="${address.detailAddress}" th:title="${address.detailAddress}">马家堡嘉园5里18号楼890</span>
+                        </p>
+                    </li>
+                    <li>
+                        <label>商品名称：</label>
+                        <div>
+                        <p th:each="name:${commodityNames}" th:text="${name}">高薪就业班</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="pay-orderCon">
+            <p class="pay-order-fs">选择支付方式</p>
+
+            <div class="pay-module" style="width: 1110px">
+                <p class="tit">支付平台</p>
+                <ul class="pay-terrace">
+                    <li><a class="pay-zfb" target="_blank" ></a></li>
+                    <li><a class="pay-wx" target="_blank" ></a></li>
+                    <li><a class="pay-cft" target="_blank" ></a></li>
+                    <!--<li><a class="pay-yl" target="_blank" ></a></li>-->
+                    <li><a class="pay-jdzf" target="_blank" ></a></li>
+                    <!--新加start-->
+                    <li th:if="${orderInstal ==0 && price>=1000}" ><a class="pay-haimi" id="pay-haimi"></a></li>
+                    <li th:if="${orderInstal ==0 && price>=1000&& #arrays.contains(#arrays.toArray({1,7,8,31,118,133,200,201,312,351,361,369,370,503,522,523,524,528,563,605,648,664,666,703,736,752,753,754,755,756,757,758,760}), sku)}" ><a class="pay-bd" id="pay-bd"></a></li>
+                    <li th:if="${orderInstal ==0 && price>=800}"><a class="pay-coffee" id="pay-coffee"></a></li>
+                    <!--新加end-->
+                </ul>
+            </div>
+            <div class="pay-module">
+                <p class="tit">网银支付</p>
+                <!--<div id="tenpayBankList"></div>-->
+                <!--<input type="hidden" name="bank_type_value" id="bank_type_value" value="0" />-->
+                <ul class="pay-terrace" id="tenpayBankList">
+                    <li><a class="pay-jh" bakeType="1003" target="_blank"></a></li>
+                    <li><a class="pay-zs" bakeType="1001" target="_blank"></a></li>
+                    <li><a class="pay-gs" bakeType="1002" target="_blank"></a></li>
+                    <li><a class="pay-ny" bakeType="1005" target="_blank"></a></li>
+                    <li><a class="pay-zg" bakeType="1052" target="_blank"></a></li>
+                    <li style="margin-right:0;"><a class="pay-xy" bakeType="1009" target="_blank"></a></li>
+                    <li><a class="pay-gf" bakeType="1027" target="_blank"></a></li>
+                    <li><a class="pay-gd" bakeType="1022" target="_blank"></a></li>
+                    <li><a class="pay-jt" bakeType="1020" target="_blank"></a></li>
+                    <li><a class="pay-bj" bakeType="1032" target="_blank"></a></li>
+                    <li><a class="pay-yz" bakeType="1028" target="_blank"></a></li>
+                    <li style="margin-right:0;" class="pay-loding">查看更多</li>
+
+                    <li data="none" style="display: none;margin-right:0;"><a class="pay-pf" bakeType="1004" target="_blank"></a></li>
+                    <li data="none" style="display: none;"><a class="pay-pa" bakeType="1010" target="_blank"></a></li>
+                    <li data="none" style="display: none;"><a class="pay-ms" bakeType="1006" target="_blank"></a></li>
+                    <li data="none" style="display: none;"><a class="pay-zx" bakeType="1021" target="_blank"></a></li>
+                    <li data="none" style="display: none;"><a class="pay-ns" bakeType="1082" target="_blank"></a></li>
+                    <!--<li><a class="pay-sz" bakeType="1008" target="_blank"></a></li>-->
+                    <li data="none" style="display: none;"><a class="pay-nj" bakeType="1054"
+                                                                             target="_blank"></a></li>
+                    <li data="none" style="display: none;margin-right:0;"><a class="pay-nb" bakeType="1056" target="_blank"></a></li>
+                    <li data="none" style="display: none;"><a class="pay-dy" bakeType="1076" target="_blank"></a></li>
+                </ul>
+            </div>
+            <div class="pay-module">
+                <p class="tit">银行汇款</p>
+
+                <div class="pay-hk">
+                    <div class="pay-hk-l"><i></i></div>
+                    <div class="pay-hk-r">
+                        <p>开户名：北京对啊网教育科技有限公司</p>
+
+                        <p>开户行：招商银行股份有限公司北京静安里支行</p>
+
+                        <p>账户号：1109 1209 5110 801</p>
+
+                        <p class="pay-color">(请咨询老师确认汇款金额，跨行或异地汇款手续费请咨询汇款银行)</p>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="pay-module payFp" style="margin-bottom: 0">-->
+            <!--<p class="tit">分批支付</p>-->
+
+            <!--<div class="pay-fp-mod">-->
+            <!--<p>如果网银或银行卡的限额不足以一次性付清订单，请选择分批支付，全部支付完成才开通课程学习权限。<a id="payFp">分批支付</a></p>-->
+            <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>
+<div class="isFp">
+    <div>
+        <i></i>
+
+        <div class="content">
+            <p>选择分批支付后，需要将全部子订单</p>
+
+            <p>支付完成后才能开通课程</p>
+        </div>
+        <div class="btn">
+            <a class="yes" style="margin-right: 20px;">确认</a>
+            <a class="no" href="javascript:void(0)">取消</a>
+        </div>
+    </div>
+</div>
+<!-- 相关协议弹窗 -->
+<div class="curAgrBack" show="false">
+    <div class="curriculumAgreement">
+        <h3>购课温馨提示</h3>
+        <div class="curAgrCon">
+            <div class="curAgrConHeight" style="overflow:hidden;">
+                <div class="serviceTips" id="userRegister">
+                    <script id="userRegister-template" type="text/html">
+                    <div class="termTime">
+                        <h4>班级信息</h4>
+                        <ul>
+                            {{each data[0].tips as value index}}
+                            <li>
+                                <em>{{value.name}}</em>
+                                {{if value.guaType == 0 || value.guaType == 1}}
+                                <p>
+                                    {{if value.hasEndDate == 1}}本期课程{{value.classEnd | dateFormat:'yyyy.MM.dd'}}结课，{{/if}}
+                                    质保期到{{value.deadline | dateFormat:'yyyy.MM.dd'}}</p>
+                                {{/if}}
+                                {{if value.guaType == 2 && value.allowGua == 0}}
+                                <p>
+                                    {{if value.hasEndDate == 1}}本期课程{{value.classEnd | dateFormat:'yyyy.MM.dd'}}结课，{{/if}}
+                                    质保期到{{value.deadline | dateFormat:'yyyy.MM.dd'}}</p>
+                                {{/if}}
+                                {{if value.guaType == 2 && value.allowGua == 1}}
+                                <p>
+                                    {{if value.hasEndDate == 1}}本期课程{{value.classEnd | dateFormat:'yyyy.MM.dd'}}结课，{{/if}}
+                                    质保期到{{value.delayFirst | dateFormat:'yyyy.MM.dd'}}，到期符合条件可逐年延期至{{value.deadline | dateFormat:'yyyy.MM.dd'}}</p>
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="agreementCon">
+                        {{each data as value index}}
+                        {{if index > 0}}
+                            {{if value.status == 99}}
+                            <div class="agreementList">
+                                {{each value.tips as mentCon index}}
+                                <h4>账号保护</h4>
+                                {{if value.comNumber > 1}}
+                                <em>包含账号保护课程：{{each mentCon.comName as titleName index}}{{if index < 1}}<i>“{{titleName}}”</i>{{/if}}{{if index > 0}}<i>、“{{titleName}}”</i>{{/if}}{{/each}}</em>
+                                {{/if}}
+                                <p>质保期内免费开启账号保护，异常登录时将启用人脸识别功能保护账号安全，账号保护期间仅供本人使用</p>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                            {{if value.status == 3}}
+                            <div class="agreementList">
+                                {{each value.tips as mentCon index}}
+                                <h4>质保期协议</h4>
+                                {{if value.comNumber > 1}}
+                                    <em>包含此协议课程：{{each mentCon.comName as titleName index}}{{if index < 1}}<i>“{{titleName}}”</i>{{/if}}{{if index > 0}}<i>、“{{titleName}}”</i>{{/if}}{{/each}}</em>
+                                {{/if}}
+                                <p>{{#mentCon.content}}</p>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                            {{if value.status == 4}}
+                            <div class="agreementList">
+                                {{each value.tips as mentCon index}}
+                                <h4>退款协议</h4>
+                                {{if value.comNumber > 1}}
+                                    <em>包含此协议课程：{{each mentCon.comName as titleName index}}{{if index < 1}}<i>“{{titleName}}”</i>{{/if}}{{if index > 0}}<i>、“{{titleName}}”</i>{{/if}}{{/each}}</em>
+                                {{/if}}
+                                <p>{{#mentCon.content}}</p>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                            {{if value.status == 6}}
+                            <div class="agreementList">
+                                {{each value.tips as mentCon index}}
+                                <h4>七天价保</h4>
+                                {{if value.comNumber > 1}}
+                                    <em>包含此协议课程：{{each mentCon.comName as titleName index}}{{if index < 1}}<i>“{{titleName}}”</i>{{/if}}{{if index > 0}}<i>、“{{titleName}}”</i>{{/if}}{{/each}}</em>
+                                {{/if}}
+                                <p>{{#mentCon.content}}</p>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                            {{if value.status == 2}}
+                            <div class="agreementList">
+                                {{each value.tips as mentCon index}}
+                                <h4>课程协议</h4>
+                                {{if value.comNumber > 1}}
+                                    <em>包含此协议课程：{{each mentCon.comName as titleName index}}{{if index < 1}}<i>“{{titleName}}”</i>{{/if}}{{if index > 0}}<i>、“{{titleName}}”</i>{{/if}}{{/each}}</em>
+                                {{/if}}
+                                <p>{{#mentCon.content}}</p>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                    </script>
+                </div>
+
+            </div>
+        </div>
+        <em class="curAgrInfo">请阅读完整内容后确认</em>
+        <div class="confirmAgreement">我同意</div>
+        <span></span>
+    </div>
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<input type="hidden" th:value="${payDomain}" id="payBasePath">
+<script th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="http://test2.duia.com:8080/dist/js/web/common/js/template.js" th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{${staticDomain} +'/js/web/payOrder/js/payOrder.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="http://test2.duia.com:8080/resources/web/payOrder/js/payOrder.js" charset="utf-8"></script>-->
+<script th:src="@{${staticDomain} +'/js/web/payOrder/js/payCommon.js?v='+${staticVersion}}"></script>
+<!--<script src="http://test2.duia.com:8080/resources/web/payOrder/js/payCommon.js" charset="utf-8"></script>-->
+</body>
+</html>

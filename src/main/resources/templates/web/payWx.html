@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>微信支付</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico" th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css"  href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"  th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css" th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist//style/web/payOrder/css/payWx.css" th:href="@{${staticDomain}+'/style/web/payOrder/css/payWx.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+</head>
+<body>
+<input type="hidden" th:value="${timeout}" id="timeout"/>
+<input type="hidden" th:value="${payNum}" id="payNum"/>
+<input type="hidden" th:value="${payDomain}" id="payBasePath">
+<div th:insert="~{web/header :: header('支付订单')}"></div>
+<div class="wx-wrap">
+   <div class="wx-content">
+       <div class="wx-l">
+           <i class="wx-icon"></i>
+           <p>二维码过期还剩<span id="wxTime"></span>，过期后请刷新页面重新获取</p>
+           <div class="wx-ewm"><a th:utext="${qrcode}"></a></div>
+           <a class="wx-btn">
+               <i></i>
+               <span>请使用微信二维码扫一扫<br/>扫描二维码支付</span>
+           </a>
+       </div>
+       <div class="wx-r">
+           <div class="wx-money">应付金额:<span th:text="${#numbers.formatDecimal(price,1,1)+'元'}">2730元</span></div>
+           <img src="//test2.duia.com:8080/resources/web/payOrder/img/pay-wxr.png" th:src="${staticDomain+'/image/web/payOrder/img/pay-wxr.png'}"/>
+       </div>
+   </div>
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="httpL//test2.duia.com:8082/dist/js/web/payOrder/js/payWx.js" th:src="@{${staticDomain} +'/js/web/payOrder/js/payWx.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

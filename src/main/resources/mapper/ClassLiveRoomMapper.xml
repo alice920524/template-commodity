@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.ClassLiveRoomMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.ClassLiveRoom">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="relation_type" jdbcType="INTEGER" property="relationType" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="lecture_id" jdbcType="INTEGER" property="lectureId" />
+    <result column="live_room_id" jdbcType="VARCHAR" property="liveRoomId" />
+    <result column="video_id" jdbcType="VARCHAR" property="videoId" />
+    <result column="video_down_id" jdbcType="VARCHAR" property="videoDownId" />
+    <result column="video_back_url" jdbcType="VARCHAR" property="videoBackUrl" />
+    <result column="mode" jdbcType="INTEGER" property="mode" />
+    <result column="verify" jdbcType="INTEGER" property="verify" />
+    <result column="publisher_pass" jdbcType="VARCHAR" property="publisherPass" />
+    <result column="play_pass" jdbcType="VARCHAR" property="playPass" />
+    <result column="video_length" jdbcType="VARCHAR" property="videoLength" />
+  </resultMap>
+</mapper>

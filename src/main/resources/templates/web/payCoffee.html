@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>咖啡易融支付-申请分期</title>
+    <link rel="icon" href="//test2.duia.com:8080/dist/image/web/common/img/favicon.ico"
+          th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/common/css/reset.css"
+          th:href="@{${staticDomain}+'/style/web/common/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/commodity/css/commodity.css"
+          th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payHeader.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payHeader.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" href="//test2.duia.com:8080/dist/style/web/payOrder/css/payOrder.css"
+          th:href="@{${staticDomain}+'/style/web/payOrder/css/payOrder.css?v='+${staticVersion}}"/>
+    <!--<link rel="stylesheet" type="text/css" href="//union.tenpay.com/bankList/css_col4.css"/>-->
+    <!------------------------新增start---------------------------->
+    <link rel="stylesheet" th:href="@{${staticDomain} +'/style/web/payOrder/css/payBd.css?v='+${staticVersion}}">
+    <!--<link rel="stylesheet"href="//test2.duia.com:8080/resources/web/payOrder/css/payBd.css">-->
+
+    <!------------------------新增end------------------------------>
+    <style>
+        .long-logo {
+            width: 1110px;
+        }
+
+        #J-chooseBankList {
+            overflow: hidden;
+        }
+
+        .long-logo input {
+            display: none;
+        }
+
+        .long-logo li {
+            width: 158px;
+            height: 54px;
+            border: 1px solid #ddd;
+            margin-right: 24px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .long-logo li label {
+            border: none;
+            width: 158px;
+            height: 54px;
+            cursor: pointer;
+        }
+
+        #J-chooseBankList li:last-child {
+            display: none;
+        }
+
+        .icon-box1 {
+            background-position: 25px -312px;
+        }
+
+        .icon-box2 {
+            background-position: 35px -358px;
+        }
+
+        .icon-box3 {
+            background-position: 30px -268px;
+        }
+
+        .icon-box4 {
+            background-position: 25px -223px;
+        }
+
+        .icon-box5 {
+            background-position: 40px -453px;
+        }
+
+        .icon-box6 {
+            background-position: 20px -673px;
+        }
+
+        .icon-box7 {
+            background-position: 35px -175px;
+        }
+
+        .icon-box8 {
+            background-position: 28px -2px;
+        }
+
+        .icon-box9 {
+            background-position: 26px -499px;
+        }
+
+        .icon-box10 {
+            background-position: 25px -125px;
+        }
+
+        .icon-box11 {
+            background-position: 35px -582px;
+        }
+
+        .icon-box12 {
+            background-position: 27px -42px;
+        }
+
+        .long-logo .icon-box13 {
+            background-position: 0 -725px;
+            width: 100px;
+            height: 25px;
+            margin: 16px 0 0 30px;
+        }
+
+        .icon-box14 {
+            background-position: 25px -82px;
+        }
+
+        .icon-box15 {
+            background-position: 25px -537px;
+        }
+
+        .icon-box16 {
+            background-position: 30px -407px;
+        }
+
+        .long-logo .icon-box17 {
+            background-position: 0 -755px;
+            width: 75px;
+            height: 25px;
+            margin: 13px 0 0 40px;
+        }
+
+        .long-logo .icon-box18 {
+            background-position: 0 -790px;
+            width: 80px;
+            height: 25px;
+            margin: 16px 0 0 36px;
+        }
+
+        .long-logo .icon-box19 {
+            background-position: 0 -820px;
+            width: 110px;
+            height: 25px;
+            margin: 14px 0 0 20px;
+        }
+
+        .long-logo .icon-box20 {
+            background-position: 0 -848px;
+            width: 100px;
+            height: 30px;
+            margin: 13px 0 0 28px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:insert="~{web/header :: header('订单支付')}"></div>
+<!--支付tc-->
+<div style="display: none;" id="orderOpen">
+    <div class="pay-popBlack"></div>
+    <div class="pay-popup">
+        <a class="pay-close"></a>
+
+        <p class="pay-pop-tit1">请在新打开的页面上完成付款</p>
+
+        <p class="pay-pop-tit2">付款完成前请勿关闭此窗口</p>
+
+        <div class="pay-pop-btn">
+            <a class="pay-btn1">已完成付款</a>
+            <a class="pay-btn2">付款遇到问题</a>
+        </div>
+        <a class="pay-select">选择其他付款方式<i></i></a>
+    </div>
+</div>
+<div class="payOrder">
+    <!--订单进度-->
+    <div class="pay-pro">
+        <div class="pay-proCon pay-control" data="pay-control">
+            <div class="pay-jdL">
+                <i></i>
+
+                <p>确认订单信息</p>
+            </div>
+            <div class="pay-jd">
+                <span class="pay-num"></span>
+            </div>
+            <div class="pay-jdL pay-jdR">
+                <i></i>
+
+                <p>支付订单</p>
+            </div>
+        </div>
+    </div>
+    <!--订单内容-->
+    <!--<div class="pay-content">-->
+    <!--<div class="pay-empty">-->
+    <!--<img src="/resources/web/payOrder/img/pay-empty.png">-->
+    <!--<p>订单中无任何商品，请尝试重新购买课程。</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!------------------------------新增start--------------------------------------->
+    <div class="payCoffee">
+        <div class="payBdCoffee-head clearfix">
+            <div class="fl payBdCoffee-head-left"></div>
+            <div class="fl payBdCoffee-head-right">
+                <p class="payBdCoffee-head-right-p1 font-24">你选择的<i style="color: #47c88a">咖啡易融</i>，请尽快完成贷款申请并支付尾款</p>
+                <p class="payBdCoffee-head-right-p2 clearfix">
+                    <i class="fl color-666 font-14">应付金额:</i>
+                    <!--<span class="fl color-fd6029 font-24">2730</span>-->
+                    <span class="fl color-fd6029 font-24" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="${#numbers.formatDecimal(childOrderList[0].realpayPrice+childOrderList[1].realpayPrice, 1, 1)}">2730</span>
+                    <em class="fl color-fd6029 font-16">元</em>
+                </p>
+            </div>
+        </div>
+        <div class="payBdCoffee-main-div">
+            <p class="pay-type-name font-18 color-333">咖啡易融</p>
+            <p class="pay-type-text font-14 color-333">请先验证咖啡易融的贷款信息，然后进行款项支付</p>
+            <div class="pay-check clearfix">
+                <div class="fl pay-type-logo payCoffee-logo"></div>
+                <div class="fl loan-price-text font-14 color-333">咖啡易融贷款<i class="color-fd6029" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:text="${#numbers.formatDecimal(childOrderList[0].realpayPrice, 1, 1)}+'元'">9000.0元</i></div>
+                <div class="fl placeholder-father js-placeholder-father placeholder-realName-father js-placeholder-realName-father">
+                    <input type="text" class="placeholder-input-realName" name="realName" maxlength="15" />
+                    <label class="placeholder-label-realName font-14 color-999">真实姓名</label>
+                    <div class="tip js-tip"></div>
+                </div>
+                <div class="fl placeholder-father js-placeholder-father placeholder-telephone-father js-placeholder-telephone-father">
+                    <input type="text" class="placeholder-input-telephone" name="telephone" maxlength="11" oninput="this.value=this.value.replace(/\D/g,'');" />
+                    <label class="placeholder-label-telephone font-14 color-999">手机号</label>
+                    <div class="tip js-tip"></div>
+                </div>
+                <div class="fl placeholder-father js-placeholder-father placeholder-checkCode-father js-placeholder-checkCode-father">
+                    <input type="text" class="placeholder-input-checkCode" name="checkCode" />
+                    <label class="placeholder-label-checkCode font-14 color-999">咖啡易融验证兑换码</label>
+                    <div class="tip js-tip"></div>
+                </div>
+                <div class="fl placeholder-father js-placeholder-father placeholder-number-father js-placeholder-number-father">
+                    <input type="text" class="placeholder-input-number" name="number" maxlength="2" oninput="this.value=this.value.replace(/\D/g,'');" />
+                    <label class="placeholder-label-number font-14 color-999">期数</label>
+                    <div class="tip js-tip"></div>
+                </div>
+                <div class="fl check-button font-14 color-fff tc" id="payCoffeeCheck">信息验证</div>
+                <div class="fr check-error-message font-12" style="margin-top: 10px;color: #fb3232;"><i></i><em class="js-check-error-messageIs">该咖啡易融验证码已用于其他订单，请勿重复使用</em></div>
+            </div>
+            <div class="pay_lcBox">
+                <p class="pay_lcTit">咖啡易融使用流程</p>
+                <ul class="pay_lc">
+                    <li>
+                        <p>1.下载咖啡易融APP </p>
+                        <img class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeeone.png'}">
+                    </li>
+                    <li class="pay_lcTwo" style="margin:0 178px;">
+                        <img class="payGe CopayGeone"  th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+
+                        <p>2.在咖啡易融APP上申请分期并得到验证码</p>
+                        <img  class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeetwo.png'}">
+
+                        <img class="payGe CopayGetwo" th:src="@{${staticDomain}+'/image/web/payOrder/img/payGe.png'}">
+
+                    </li>
+                    <li>
+                        <p>3.验证兑换码并支付首付款</p>
+                        <img  class="pay_lcimg" th:src="@{${staticDomain}+'/image/web/payOrder/img/coffeelast.png'}">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="payNum" th:if="${childOrderList!=null && #arrays.length(childOrderList)>0}" th:value="${childOrderList[0].payNum}" />
+    <input type="hidden" id="paidCount" th:if="${paidCount!=null}" th:value="${paidCount}" />
+    <input type="hidden" id="payBCType" value="2" />
+    <!------------------------------新增end----------------------------------------->
+</div>
+<div th:insert="~{web/footer :: footer('')}"></div>
+<input type="hidden" th:value="${payDomain}" id="payBasePath">
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="http://test2.duia.com:8080/dist/js/web/common/js/template.js"
+        th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript"
+        charset="utf-8"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payOrder.js?v='+${staticVersion}}"></script>
+<script type="text/javascript" th:src="@{${staticDomain} +'/js/web/payOrder/js/payCommon.js?v='+${staticVersion}}"></script>
+</body>
+</html>

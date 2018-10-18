@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.Course">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="order_index" jdbcType="INTEGER" property="orderIndex" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="cover_url" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="video_id" jdbcType="VARCHAR" property="videoId" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="publish_state" jdbcType="INTEGER" property="publishState" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="publish_cancel_time" jdbcType="TIMESTAMP" property="publishCancelTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="students_num" jdbcType="INTEGER" property="studentsNum" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="author_headline" jdbcType="VARCHAR" property="authorHeadline" />
+    <result column="author_pic" jdbcType="VARCHAR" property="authorPic" />
+    <result column="score_num" jdbcType="INTEGER" property="scoreNum" />
+    <result column="series" jdbcType="INTEGER" property="series" />
+    <result column="qqKey" jdbcType="VARCHAR" property="qqkey" />
+    <result column="qqTitle" jdbcType="VARCHAR" property="qqtitle" />
+    <result column="qqImgUrl" jdbcType="VARCHAR" property="qqimgurl" />
+    <result column="qq_describe" jdbcType="VARCHAR" property="qqDescribe" />
+    <result column="weixin_img_url" jdbcType="VARCHAR" property="weixinImgUrl" />
+    <result column="tempPrice" jdbcType="DOUBLE" property="tempprice" />
+    <result column="adPicture" jdbcType="VARCHAR" property="adpicture" />
+    <result column="adHref" jdbcType="VARCHAR" property="adhref" />
+    <result column="player_type" jdbcType="INTEGER" property="playerType" />
+    <result column="effective_time" jdbcType="INTEGER" property="effectiveTime" />
+    <result column="summary" jdbcType="LONGVARCHAR" property="summary" />
+  </resultMap>
+</mapper>

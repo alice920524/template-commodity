@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.CommodityPromotionMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.CommodityPromotion">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="INTEGER" property="sku" />
+    <result column="com_id" jdbcType="INTEGER" property="comId" />
+    <result column="com_type" jdbcType="INTEGER" property="comType" />
+    <result column="class_type_id" jdbcType="INTEGER" property="classTypeId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="rush_type" jdbcType="INTEGER" property="rushType" />
+    <result column="maximum" jdbcType="INTEGER" property="maximum" />
+    <result column="sales" jdbcType="INTEGER" property="sales" />
+    <result column="charge" jdbcType="INTEGER" property="charge" />
+    <result column="cost_price" jdbcType="DOUBLE" property="costPrice" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="first_price" jdbcType="DOUBLE" property="firstPrice" />
+    <result column="second_price" jdbcType="DOUBLE" property="secondPrice" />
+    <result column="course_type" jdbcType="INTEGER" property="courseType" />
+    <result column="gua_mul" jdbcType="INTEGER" property="guaMul" />
+    <result column="first_pro" jdbcType="INTEGER" property="firstPro" />
+    <result column="second_pro" jdbcType="INTEGER" property="secondPro" />
+  </resultMap>
+
+  <select id="selectCommodityPromotionOnLine" resultMap="BaseResultMap">
+    select
+    cp.id, cp.cost_price, cp.com_id, cp.class_type_id, cp.start_date, cp.end_date, cp.type, cp.first_price, cp.second_price, cp.course_type, cp.gua_mul, cp.first_pro, cp.second_pro
+    from commodity_promotion cp
+    <if test="appType != null and appType != ''">
+      INNER JOIN terminal_display td on cp.id = td.relation_id and td.relation_type = 4 and td.terminal = #{appType}
+    </if>
+    where cp.com_id = #{comId} and status = 1
+    and start_date <![CDATA[<]]> now() and end_date <![CDATA[>]]> now()
+    AND cp.type = 4
+    order by id desc limit 0, 1
+  </select>
+
+  <select id="selectInvalidLiveCommodityPromotion" resultType="com.duia.commodity.common.dto.CommodityPromotionDTO">
+    SELECT
+        cp.start_date AS startDate,
+        cp.end_date AS endDate,
+        cp.maximum,
+        cp.sales,
+        cp.charge,
+        cp.rush_type AS rushType,
+        cp.cost_price AS costPrice,
+        cp.`status`,
+        cp.first_price AS firstPrice,
+        cp.second_price AS secondPrice,
+        cp.type,
+        cp.course_type AS courseType
+    FROM
+        commodity_promotion cp
+    WHERE
+        cp.com_id = #{comId}
+        AND cp.type = #{activityType}
+        AND cp.com_type = 6
+        AND cp.`status` = 0
+        ORDER BY cp.id DESC
+        LIMIT 0,1
+  </select>
+
+
+  <update id="updateAddSales">
+    UPDATE commodity_promotion SET sales = sales + 1 WHERE id = #{id}
+  </update>
+
+  <update id="updateSubSales">
+    UPDATE commodity_promotion SET sales = sales - 1 WHERE id = #{id} AND sales > 0
+  </update>
+</mapper>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"
+      xmlns:th="//www.thymeleaf.org">
+<head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+    <title>课程选择</title>
+    <link rel="icon" th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">
+    <!--<link rel="icon" href="http://test2.duia.com:8080/dist/image/web/common/img/favicon.ico" th:href="@{${staticDomain}+'/image/web/common/img/favicon.ico'}" mce_href="/hf.ico" type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain} +'/style/web/common/css/reset.css?v='+${staticVersion}}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain} +'/style/web/order/css/order.css?v='+${staticVersion}}" />
+    <!--<link rel="stylesheet" type="text/css" href="http://test2.duia.com:8080/resources/web/order/css/order.css"  />-->
+    <link rel="stylesheet" type="text/css" th:href="@{${staticDomain}+'/style/web/commodity/css/commodity.css?v='+${staticVersion}}"/>
+    <script th:inline="javascript">
+        var imageBasePath = [[${tuDomain}]];
+        var _staticBasePath = [[${staticDomain}]];
+        var _itemDomain = [[${itemDomain}]];
+    </script>
+</head>
+<body>
+<div th:insert="~{web/header :: header('')}"></div>
+
+<div  class="section">
+    <div class="titleSel">
+        <a class="single" style="display:none;" href="javascript:void(0)" data="1" >单门课程购买</a>
+        <a class="pack">选择套餐</a>
+        <a class="comb">选择组合</a>
+    </div>
+    <div class="content" id="privilegeAll">
+        <script id="content-single-template" type="text/html">
+            {{if type==1}}
+            <div class="single singleCont" onclick="singleCont($(this))">
+                <div style="display: flex;display: -webkit-flex;">
+                    <div class="sing_pic">
+                        <a target="_blank" th:href="${itemDomain}+'/c/{{commodity.commodity.comId}}.html?appType=999&guaTypes={{commodity.commodity.guaType}}'"><img th:src="@{${tuDomain}+'/{{commodity.commodity.webImg}}'}" /></a>
+                        {{if commodity.commodity.courseType == 1}}
+                        <span class="sing_picZtkimg"></span>
+                        {{else}}
+                        <span class="sing_picXtbimg"></span>
+                        {{/if}}
+                    </div>
+                    <div class="sing_con">
+
+                        <p><a target="_blank" th:href="${itemDomain}+'/c/{{commodity.commodity.comId}}.html?appType=999&guaTypes={{commodity.commodity.guaType}}'">{{commodity.commodity.name}}</a></p>
+                        <span data-id="{{commodity.commodity.classTypeId}}">
+                            {{if commodity.commodity.agreements.indexOf(0) > -1}}
+                            <a class="studyBox">书<cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite></a>
+                            {{/if}}
+                            {{if commodity.commodity.agreements.indexOf(6) > -1}}
+                            <a class="priceBao" data-type="6">价</a>
+                            {{/if}}
+                            {{if commodity.commodity.agreements.indexOf(2) > -1 && commodity.commodity.insurance == null}}
+                            <a class="agree" data-type="2">议</a>
+                            {{/if}}
+                        </span>
+                    </div>
+                </div>
+                <div class="price"><span class="price_floating">¥&nbsp;<i>{{commodity.commodity.costPrice}}</i></span></div>
+                {{if commodity.commodity.insurance}}
+                <div class="Insurance" data-id="{{commodity.commodity.classTypeId}}"><i class="checkBtn" data-id="{{commodity.commodity.insurance.id}}" onclick="checked($(this))"></i><em data-type="1" title="{{commodity.commodity.insurance.name}}">{{commodity.commodity.insurance.name}}</em>
+                    <cite>¥&nbsp;<b>{{commodity.commodity.insurance.price}}</b></cite>
+                </div>
+                {{/if}}
+            </div>
+
+            {{else if type==2}}
+            <div class="pack">
+
+                <ul>
+                    {{each commodity as value index}}
+                    <li>
+                        <div class="select" onclick="taocan($(this))"></div>
+                        <div class="pack_con comb_con">
+                            <p class="specialTit" data-id="{{value.commoditySpecial.id}}">{{value.commoditySpecial.name}}</p>
+                            <div class="pack_course">
+                                <div class="packCheck" style="display:none"></div>
+                                <dl class="single" data-comid="{{value.commoditySpecial.comList[0].comId}}">
+                                    <dt class="sing_pic">
+                                        <a target="_blank" th:href="${itemDomain}+'/c/{{value.commoditySpecial.comList[0].comId}}.html?appType=999&guaTypes={{value.commoditySpecial.comList[0].guaType}}'"><img th:src="@{${tuDomain}+ '/{{value.commoditySpecial.comList[0].webImg}}'}" /></a>
+                                        {{if value.commoditySpecial.comList[0].courseType == 1}}
+                                        <span class="sing_picZtkimg"></span>
+                                        {{else}}
+                                        <span class="sing_picXtbimg"></span>
+                                        {{/if}}
+                                    </dt>
+                                    <dd class="sing_con">
+                                        <p><a target="_blank" th:href="${itemDomain}+'/c/{{value.commoditySpecial.comList[0].comId}}.html?appType=999&guaTypes={{value.commoditySpecial.comList[0].guaType}}'">{{value.commoditySpecial.comList[0].name}}</a></p>
+                                        {{value.commoditySpecial.comList[0].agreements}}
+                                        <span data-id="{{value.commoditySpecial.comList[0].classTypeId}}">
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(0) > -1}}
+                                            <a class="studyBox">书
+                                                {{if value.commoditySpecial.comList[0].bookType == 0}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                                {{else if value.commoditySpecial.comList[0].bookType == 1}}
+                                                    {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                                    {{else if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                                    {{/if}}
+                                                {{/if}}
+                                            </a>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(6) > -1}}
+                                            <a class="priceBao" data-type="6">价</a>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(2) > -1 && value.commoditySpecial.comList[0].insurance == null}}
+                                            <a class="agree" data-type="2">议</a>
+                                            {{/if}}
+                                        </span>
+                                        <em>¥&nbsp;{{value.commoditySpecial.comList[0].costPrice}}</em>
+                                        {{if value.commoditySpecial.comList[0].bookType == 1}}
+                                        <div class="teachMatesel">
+                                            {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                            <cite teamateval="1">初中教材</cite>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                            <cite teamateval="2">高中教材</cite>
+                                            {{/if}}
+                                            <i></i>
+                                            <ul>
+                                                {{if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                                <li type="1">初中教材</li>
+                                                {{/if}}
+                                                {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                                <li type="2">高中教材</li>
+                                                {{/if}}
+                                            </ul>
+                                        </div>
+                                        {{/if}}
+                                    </dd>
+                                </dl>
+                                {{if value.commoditySpecial.comList[0].insurance}}
+                                <div class="Insurance" data-id="{{value.commoditySpecial.comList[0].classTypeId}}"><i class="checkBtn" data-id="{{value.commoditySpecial.comList[0].insurance.id}}" onclick="checked($(this))"></i><em data-type="1" title="{{value.commoditySpecial.comList[0].insurance.name}}">{{value.commoditySpecial.comList[0].insurance.name}}</em><cite>¥&nbsp;<b>{{value.commoditySpecial.comList[0].insurance.price}}</b></cite></div>
+                                {{/if}}
+                            </div>
+                            <div class="packCourse">
+                                <div class="comRollclick"  onclick="comRoll($(this))" style="display:none;"></div>
+                                <h3 class="packCourseTit">包含套餐课程 <p><a class="packCbtnPrev"></a><em><i>1</i>/<i></i></em><a class="packCbtnNext"></a></p></h3>
+                                <div class="packCoursePage">
+                                    <div class="packCourseList">
+                                        {{each value.commoditySpecial.comList as value index}}
+                                        {{if index > 0}}
+                                        <div>
+                                            <div class="packCheck ok" style="display:none"></div>
+                                            <dl class="single" data-zhcomid="{{value.comId}}">
+                                                <dt class="sing_pic">
+                                                    <a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999&guaTypes={{value.guaType}}'"><img th:src="@{${tuDomain}+'/{{value.webImg}}'}" /></a>
+                                                    {{if value.courseType == 1}}
+                                                    <span class="sing_picZtkimg"></span>
+                                                    {{else}}
+                                                    <span class="sing_picXtbimg"></span>
+                                                    {{/if}}
+                                                </dt>
+                                                <dd class="sing_con">
+                                                    <p title="{{value.name}}"><a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999&guaTypes={{value.guaType}}'">{{value.name}}</a></p>
+                                                    <em>¥&nbsp;<b>{{value.costPrice}}</b></em>
+                                                    {{if value.bookType == 1}}
+                                                    <div class="teachMatesel">
+                                                        {{if value.bookTypeChecked == 1 || value.bookTypeChecked == 0}}
+                                                        <cite teamateval="1">初中教材</cite>
+                                                        {{/if}}
+                                                        {{if value.bookTypeChecked == 2}}
+                                                        <cite teamateval="2">高中教材</cite>
+                                                        {{/if}}
+                                                        <i></i>
+                                                        <ul>
+                                                            {{if value.bookTypeChecked == 2}}
+                                                            <li type="1">初中教材</li>
+                                                            {{/if}}
+                                                            {{if value.bookTypeChecked == 1 || value.bookTypeChecked == 0}}
+                                                            <li type="2">高中教材</li>
+                                                            {{/if}}
+                                                        </ul>
+                                                    </div>
+                                                    {{/if}}
+                                                </dd>
+                                            </dl>
+                                            {{if value.insurance}}
+                                            <div class="Insurance" data-id="{{value.classTypeId}}"><i class="checkBtn" data-id="{{value.insurance.id}}" onclick="checkbox($(this))"></i><em data-type="1" title="{{value.insurance.name}}">{{value.insurance.name}}</em><cite>¥&nbsp;<b>{{value.insurance.price}}</b></cite></div>
+                                            {{/if}}
+                                        </div>
+                                        {{/if}}
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price">
+                                <p>优惠价：</p>
+                                <span>¥&nbsp;<i data-money="{{value.commoditySpecial.costPrice}}">{{value.commoditySpecial.costPrice}}</i></span>
+                                <em data-money="{{value.commoditySpecial.realpayPrice}}">{{value.commoditySpecial.realpayPrice}}</em>
+                            </div>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{else if type==3}}
+            <div class="comb">
+                <ul>
+                    {{each commodity as value index}}
+                    <li>
+                        <div class="select" onclick="taocan($(this),{{index}})"></div>
+                        <div class="comb_con">
+                            <p class="specialTit" data-id="{{value.commoditySpecial.id}}">{{value.commoditySpecial.name}}</p>
+                            <div class="pack_course">
+                                <div class="packCheck" style="display:none"></div>
+                                <dl class="single" data-comid="{{value.commoditySpecial.comList[0].comId}}">
+                                    <dt class="sing_pic">
+                                        <a target="_blank" th:href="${itemDomain}+'/c/{{value.commoditySpecial.comList[0].comId}}.html?appType=999&guaTypes={{value.commoditySpecial.comList[0].guaType}}'"><img th:src="@{${tuDomain}+'/{{value.commoditySpecial.comList[0].webImg}}'}" /></a>
+                                        {{if value.commoditySpecial.comList[0].courseType == 1}}
+                                        <span class="sing_picZtkimg"></span>
+                                        {{else}}
+                                        <span class="sing_picXtbimg"></span>
+                                        {{/if}}
+                                    </dt>
+                                    <dd class="sing_con">
+                                        <p><a target="_blank" th:href="${itemDomain}+'/c/{{value.commoditySpecial.comList[0].comId}}.html?appType=999&guaTypes={{value.commoditySpecial.comList[0].guaType}}'">{{value.commoditySpecial.comList[0].name}}</a></p>
+                                        <span data-id="{{value.commoditySpecial.comList[0].classTypeId}}">
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(0) > -1}}
+                                            <a class="studyBox">书
+                                                {{if value.commoditySpecial.comList[0].bookType == 0}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送</cite>
+                                                {{else if value.commoditySpecial.comList[0].bookType == 1}}
+                                                    {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《初中教材》</cite>
+                                                    {{else if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                                    <cite class="ser_info">本课程包含学习教材，教材免邮费寄送；<br />您当前选择的是《高中教材》</cite>
+                                                    {{/if}}
+                                                {{/if}}
+                                            </a>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(6) > -1}}
+                                            <a class="priceBao" data-type="6">价</a>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].agreements.indexOf(2) > -1  && value.commoditySpecial.comList[0].insurance == null}}
+                                            <a class="agree" data-type="2">议</a>
+                                            {{/if}}
+                                        </span>
+                                        <em>¥&nbsp;{{value.commoditySpecial.comList[0].costPrice}}</em>
+                                        {{if value.commoditySpecial.comList[0].bookType == 1}}
+                                        <div class="teachMatesel">
+                                            {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                            <cite teamateval="1">初中教材</cite>
+                                            {{/if}}
+                                            {{if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                            <cite teamateval="2">高中教材</cite>
+                                            {{/if}}
+                                            <i></i>
+                                            <ul>
+                                                {{if value.commoditySpecial.comList[0].bookTypeChecked == 2}}
+                                                <li type="1">初中教材</li>
+                                                {{/if}}
+                                                {{if value.commoditySpecial.comList[0].bookTypeChecked == 1 || value.commoditySpecial.comList[0].bookTypeChecked == 0}}
+                                                <li type="2">高中教材</li>
+                                                {{/if}}
+                                            </ul>
+                                        </div>
+                                        {{/if}}
+                                    </dd>
+                                </dl>
+                                {{if value.commoditySpecial.comList[0].insurance}}
+                                <div class="Insurance" data-id="{{value.commoditySpecial.comList[0].classTypeId}}"><i class="checkBtn" data-id="{{value.commoditySpecial.comList[0].insurance.id}}" onclick="checked($(this))"></i><em data-type="1" title="{{value.commoditySpecial.comList[0].insurance.name}}">{{value.commoditySpecial.comList[0].insurance.name}}</em><cite>¥&nbsp;<b>{{value.commoditySpecial.comList[0].insurance.price}}</b></cite></div>
+                                {{/if}}
+                            </div>
+                            <div class="packCourse">
+                                <div class="comRollclick"  onclick="comRoll($(this))" style="display:none;"></div>
+                                <h3 class="packCourseTit">选择组合课程 <p><a class="packCbtnPrev"></a><em><i>1</i>/<i></i></em><a class="packCbtnNext"></a></p></h3>
+                                <div class="packCoursePage packCombinationPage">
+                                    <div class="packCourseList packCombinationList">
+                                        {{each value.commoditySpecial.comList as value index}}
+                                        {{if index > 0}}
+                                        <div>
+                                            <div class="packCheck" data-index="{{index}}" onclick="packCheckbed($(this))"></div>
+                                            <dl class="single" data-zhcomid="{{value.comId}}">
+                                                <dt class="sing_pic">
+                                                    <a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999&guaTypes={{value.guaType}}'"><img th:src="@{${tuDomain}+'/{{value.webImg}}'}" /></a>
+                                                    {{if value.courseType == 1}}
+                                                    <span class="sing_picZtkimg"></span>
+                                                    {{else}}
+                                                    <span class="sing_picXtbimg"></span>
+                                                    {{/if}}
+                                                </dt>
+                                                <dd class="sing_con">
+                                                    <p title="{{value.name}}"><a target="_blank" th:href="${itemDomain}+'/c/{{value.comId}}.html?appType=999&guaTypes={{value.guaType}}'">{{value.name}}</a></p>
+                                                    <em>¥&nbsp;<b>{{value.realpayPrice}}</b></em>
+                                                    {{if value.bookType == 1}}
+                                                    <div class="teachMatesel">
+                                                        {{if value.bookTypeChecked == 1 || value.bookTypeChecked == 0}}
+                                                        <cite teamateval="1">初中教材</cite>
+                                                        {{/if}}
+                                                        {{if value.bookTypeChecked == 2}}
+                                                        <cite teamateval="2">高中教材</cite>
+                                                        {{/if}}
+                                                        <i></i>
+                                                        <ul>
+                                                            {{if value.bookTypeChecked == 2}}
+                                                            <li type="1">初中教材</li>
+                                                            {{/if}}
+                                                            {{if value.bookTypeChecked == 1 || value.bookTypeChecked == 0}}
+                                                            <li type="2">高中教材</li>
+                                                            {{/if}}
+                                                        </ul>
+                                                    </div>
+                                                    {{/if}}
+                                                </dd>
+                                            </dl>
+                                            {{if value.insurance}}
+                                            <div class="Insurance" data-id="{{value.classTypeId}}"><i class="checkBtn" data-id="{{value.insurance.id}}" onclick="checkbox($(this))"></i><em data-type="1" title="{{value.insurance.name}}">{{value.insurance.name}}</em><cite>¥&nbsp;<b>{{value.insurance.price}}</b></cite></div>
+                                            {{/if}}
+                                        </div>
+                                        {{/if}}
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price">
+                                <p>优惠价：</p>
+                                <span>¥&nbsp;<i data-money="{{value.commoditySpecial.costPrice}}">{{value.commoditySpecial.costPrice}}</i></span>
+                                <em data-money="{{value.commoditySpecial.realpayPrice}}">{{value.commoditySpecial.realpayPrice}}</em>
+                            </div>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/if}}
+        </script>
+    </div>
+
+    <div class="chosen" >
+        <div class="left">
+            <p>您已选择：</p>
+            <span></span>
+        </div>
+        <div class="right">
+            <p id="privilegeD">合计：<span style="float: none;">¥&nbsp;<i></i></span></p>
+            <span></span>
+            <a id="orderNext">去报名</a>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- 弹框 -->
+<!-- 协议 -->
+<div class="alert alert_bg" style="display:none">
+    <div class="mark"></div>
+    <div class="alertCon">
+        <div class="title"></div>
+        <div class="content">
+
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)">知道了</a>
+        </div>
+        <span></span>
+    </div>
+</div>
+<!-- 七天假保 -->
+<div class="alert alert_price" style="display:none">
+    <div class="mark"></div>
+    <div class="alertCon">
+        <div class="title">七天价保</div>
+        <div class="content">
+
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)">知道了</a>
+        </div>
+        <span></span>
+    </div>
+</div>
+
+
+<div th:insert="~{web/footer :: footer('')}"></div>
+</body>
+<script src="//test2.duia.com:8080/dist/js/web/common/js/template.js"
+        th:src="@{${staticDomain} +'/js/web/common/js/template.js'}" type="text/javascript"
+        charset="utf-8"></script>
+<script src="//test2.duia.com:8080/dist/js/wap/common/js/common.js" th:src="@{${staticDomain} +'/js/wap/common/js/common.js'}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="//test2.duia.com:8080/resources/wap/common/js/common.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="//common.test.duia.com/common/js/jquery-1.9.1.js" th:src="@{${commonStaticDomain} +'/common/js/jquery-1.9.1.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="//common.test.duia.com/common/js/web4.0/tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/tools.js'}" type="text/javascript"></script>
+<script src="//common.test.duia.com/common/js/web4.0/duia_tools.js" th:src="@{${commonStaticDomain} +'/common/js/web4.0/duia_tools.js'}" type="text/javascript"></script>
+<script src="//test2.duia.com:8080/dev/js/web/order/js/privilegeAll.js?v=20180713" th:src="@{${staticDomain} +'/js/web/order/js/privilegeAll.js?v='+${staticVersion}}" type="text/javascript" charset="utf-8"></script>
+<!--<script src="//test2.duia.com:8080/resources/web/order/js/privilegeAll.js" type="text/javascript" charset="utf-8"></script>-->
+<style>
+    .sing_con time{
+        white-space: nowrap;
+        /*width: 140px;*/
+        overflow: hidden;
+        text-overflow:ellipsis;
+
+    }
+</style>
+<script>
+
+
+    $('body').on('mouseenter',' .period',function (e) {
+        elonmouseenter(e)
+    })
+    $('body').on('mouseout',' .period',function (e) {
+        elonmouseout(e)
+    })
+
+    function  elonmouseenter(event){
+
+        var e = event || window.event;
+        var xx = e.clientX
+        var yy = e.clientY
+        var txt =  $(e.target).text()
+        var p =  document.querySelector('.alertp');
+        if(!p){
+            var p = document.createElement('p');
+        }
+        p.style.left=xx+'px';
+        p.className='alertp';
+        p.style.position='fixed';
+        p.style.top=yy+"px";
+        p.innerHTML=txt
+        document.querySelector('body').appendChild(p)
+
+    }
+    function elonmouseout(e){
+        var p=	 document.querySelector('.alertp')
+        document.querySelector('body').removeChild(p)
+    }
+
+
+
+</script>
+</html>

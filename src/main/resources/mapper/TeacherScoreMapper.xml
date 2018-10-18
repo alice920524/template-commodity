@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duia.commodity.dao.TeacherScoreMapper">
+  <resultMap id="BaseResultMap" type="com.duia.commodity.model.TeacherScore">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="authority_user_id" jdbcType="INTEGER" property="authorityUserId" />
+    <result column="average_score" jdbcType="DOUBLE" property="averageScore" />
+    <result column="server_num" jdbcType="INTEGER" property="serverNum" />
+    <result column="teaching_time" jdbcType="INTEGER" property="teachingTime" />
+    <result column="fake_average_score" jdbcType="DOUBLE" property="fakeAverageScore" />
+    <result column="fake_server_num" jdbcType="INTEGER" property="fakeServerNum" />
+    <result column="fake_teaching_time" jdbcType="INTEGER" property="fakeTeachingTime" />
+    <result column="scorer_num" jdbcType="INTEGER" property="scorerNum" />
+    <result column="total_score_num" jdbcType="INTEGER" property="totalScoreNum" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
+  </resultMap>
+
+  <select id="selectTeacherByUserId" resultMap="BaseResultMap">
+    SELECT
+    id,
+    authority_user_id,
+    average_score,
+    server_num,
+    teaching_time,
+    fake_average_score,
+    fake_server_num,
+    fake_teaching_time,
+    scorer_num,
+    total_score_num,
+    status
+    FROM
+    teacher_score
+    WHERE
+    authority_user_id = #{userId}
+  </select>
+
+  <insert id="initTeacherScore">
+    INSERT INTO teacher_score
+    (id,
+    authority_user_id,
+    average_score,
+    server_num,
+    teaching_time,
+    fake_average_score,
+    fake_server_num,
+    fake_teaching_time,
+    scorer_num,
+    total_score_num,
+    status,
+    update_time,
+    updator)
+    values
+    (#{id},
+    #{authorityUserId},
+    #{averageScore},
+    #{serverNum},
+    #{teachingTime},
+    #{fakeAverageScore},
+    #{fakeServerNum},
+    #{fakeTeachingTime},
+    #{scorerNum},
+    #{totalScoreNum},
+    #{status},
+    #{updateTime},
+    #{updator})
+  </insert>
+
+</mapper>
